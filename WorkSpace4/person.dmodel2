@@ -1,0 +1,32 @@
+datatype String
+datatype Address
+datatype Integer
+datatype Date
+
+package com.example.model{
+ 
+    entity Person {
+    	service
+    	id: Integer
+        name: String
+        firstName: String
+        friends: many Person
+        address : Address
+        
+    }
+    
+    entity Address {
+        street: String
+        zip: String
+        city: String
+    }
+    
+    entity Diagnostic{
+    	import java.util.Date
+    	systolicPressure: Integer
+    	diastolicPressure: Integer
+    	bloodCholesterol: Integer
+    	heartRate: Integer
+    	date: Date
+    }
+}
