@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.EntityImpl#getSuperType <em>Super Type</em>}</li>
- *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.EntityImpl#isService <em>Service</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.EntityImpl#isPrincipal <em>Principal</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.EntityImpl#getImports <em>Imports</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.EntityImpl#getFeatures <em>Features</em>}</li>
  * </ul>
@@ -52,24 +52,24 @@ public class EntityImpl extends TypeImpl implements Entity
   protected Entity superType;
 
   /**
-   * The default value of the '{@link #isService() <em>Service</em>}' attribute.
+   * The default value of the '{@link #isPrincipal() <em>Principal</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isService()
+   * @see #isPrincipal()
    * @generated
    * @ordered
    */
-  protected static final boolean SERVICE_EDEFAULT = false;
+  protected static final boolean PRINCIPAL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isService() <em>Service</em>}' attribute.
+   * The cached value of the '{@link #isPrincipal() <em>Principal</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isService()
+   * @see #isPrincipal()
    * @generated
    * @ordered
    */
-  protected boolean service = SERVICE_EDEFAULT;
+  protected boolean principal = PRINCIPAL_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getImports() <em>Imports</em>}' containment reference list.
@@ -160,9 +160,9 @@ public class EntityImpl extends TypeImpl implements Entity
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isService()
+  public boolean isPrincipal()
   {
-    return service;
+    return principal;
   }
 
   /**
@@ -170,12 +170,12 @@ public class EntityImpl extends TypeImpl implements Entity
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setService(boolean newService)
+  public void setPrincipal(boolean newPrincipal)
   {
-    boolean oldService = service;
-    service = newService;
+    boolean oldPrincipal = principal;
+    principal = newPrincipal;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Dsl2Package.ENTITY__SERVICE, oldService, service));
+      eNotify(new ENotificationImpl(this, Notification.SET, Dsl2Package.ENTITY__PRINCIPAL, oldPrincipal, principal));
   }
 
   /**
@@ -237,8 +237,8 @@ public class EntityImpl extends TypeImpl implements Entity
       case Dsl2Package.ENTITY__SUPER_TYPE:
         if (resolve) return getSuperType();
         return basicGetSuperType();
-      case Dsl2Package.ENTITY__SERVICE:
-        return isService();
+      case Dsl2Package.ENTITY__PRINCIPAL:
+        return isPrincipal();
       case Dsl2Package.ENTITY__IMPORTS:
         return getImports();
       case Dsl2Package.ENTITY__FEATURES:
@@ -261,8 +261,8 @@ public class EntityImpl extends TypeImpl implements Entity
       case Dsl2Package.ENTITY__SUPER_TYPE:
         setSuperType((Entity)newValue);
         return;
-      case Dsl2Package.ENTITY__SERVICE:
-        setService((Boolean)newValue);
+      case Dsl2Package.ENTITY__PRINCIPAL:
+        setPrincipal((Boolean)newValue);
         return;
       case Dsl2Package.ENTITY__IMPORTS:
         getImports().clear();
@@ -289,8 +289,8 @@ public class EntityImpl extends TypeImpl implements Entity
       case Dsl2Package.ENTITY__SUPER_TYPE:
         setSuperType((Entity)null);
         return;
-      case Dsl2Package.ENTITY__SERVICE:
-        setService(SERVICE_EDEFAULT);
+      case Dsl2Package.ENTITY__PRINCIPAL:
+        setPrincipal(PRINCIPAL_EDEFAULT);
         return;
       case Dsl2Package.ENTITY__IMPORTS:
         getImports().clear();
@@ -314,8 +314,8 @@ public class EntityImpl extends TypeImpl implements Entity
     {
       case Dsl2Package.ENTITY__SUPER_TYPE:
         return superType != null;
-      case Dsl2Package.ENTITY__SERVICE:
-        return service != SERVICE_EDEFAULT;
+      case Dsl2Package.ENTITY__PRINCIPAL:
+        return principal != PRINCIPAL_EDEFAULT;
       case Dsl2Package.ENTITY__IMPORTS:
         return imports != null && !imports.isEmpty();
       case Dsl2Package.ENTITY__FEATURES:
@@ -335,8 +335,8 @@ public class EntityImpl extends TypeImpl implements Entity
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (service: ");
-    result.append(service);
+    result.append(" (principal: ");
+    result.append(principal);
     result.append(')');
     return result.toString();
   }

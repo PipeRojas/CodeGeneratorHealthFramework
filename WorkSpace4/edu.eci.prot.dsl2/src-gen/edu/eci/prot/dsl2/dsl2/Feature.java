@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Feature#getName <em>Name</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Feature#isMany <em>Many</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.Feature#isDiagnostic <em>Diagnostic</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.Feature#isTransient <em>Transient</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Feature#getType <em>Type</em>}</li>
  * </ul>
  *
@@ -76,6 +78,58 @@ public interface Feature extends EObject
    * @generated
    */
   void setMany(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Diagnostic</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Diagnostic</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Diagnostic</em>' attribute.
+   * @see #setDiagnostic(boolean)
+   * @see edu.eci.prot.dsl2.dsl2.Dsl2Package#getFeature_Diagnostic()
+   * @model
+   * @generated
+   */
+  boolean isDiagnostic();
+
+  /**
+   * Sets the value of the '{@link edu.eci.prot.dsl2.dsl2.Feature#isDiagnostic <em>Diagnostic</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Diagnostic</em>' attribute.
+   * @see #isDiagnostic()
+   * @generated
+   */
+  void setDiagnostic(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Transient</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Transient</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Transient</em>' attribute.
+   * @see #setTransient(boolean)
+   * @see edu.eci.prot.dsl2.dsl2.Dsl2Package#getFeature_Transient()
+   * @model
+   * @generated
+   */
+  boolean isTransient();
+
+  /**
+   * Sets the value of the '{@link edu.eci.prot.dsl2.dsl2.Feature#isTransient <em>Transient</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Transient</em>' attribute.
+   * @see #isTransient()
+   * @generated
+   */
+  void setTransient(boolean value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.

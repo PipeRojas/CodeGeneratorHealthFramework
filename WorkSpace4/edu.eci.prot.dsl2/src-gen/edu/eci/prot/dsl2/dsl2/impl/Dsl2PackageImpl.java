@@ -273,7 +273,7 @@ public class Dsl2PackageImpl extends EPackageImpl implements Dsl2Package
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getEntity_Service()
+  public EAttribute getEntity_Principal()
   {
     return (EAttribute)entityEClass.getEStructuralFeatures().get(1);
   }
@@ -333,9 +333,29 @@ public class Dsl2PackageImpl extends EPackageImpl implements Dsl2Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getFeature_Diagnostic()
+  {
+    return (EAttribute)featureEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFeature_Transient()
+  {
+    return (EAttribute)featureEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getFeature_Type()
   {
-    return (EReference)featureEClass.getEStructuralFeatures().get(2);
+    return (EReference)featureEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -386,13 +406,15 @@ public class Dsl2PackageImpl extends EPackageImpl implements Dsl2Package
 
     entityEClass = createEClass(ENTITY);
     createEReference(entityEClass, ENTITY__SUPER_TYPE);
-    createEAttribute(entityEClass, ENTITY__SERVICE);
+    createEAttribute(entityEClass, ENTITY__PRINCIPAL);
     createEReference(entityEClass, ENTITY__IMPORTS);
     createEReference(entityEClass, ENTITY__FEATURES);
 
     featureEClass = createEClass(FEATURE);
     createEAttribute(featureEClass, FEATURE__NAME);
     createEAttribute(featureEClass, FEATURE__MANY);
+    createEAttribute(featureEClass, FEATURE__DIAGNOSTIC);
+    createEAttribute(featureEClass, FEATURE__TRANSIENT);
     createEReference(featureEClass, FEATURE__TYPE);
   }
 
@@ -449,13 +471,15 @@ public class Dsl2PackageImpl extends EPackageImpl implements Dsl2Package
 
     initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEntity_SuperType(), this.getEntity(), null, "superType", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEntity_Service(), ecorePackage.getEBoolean(), "service", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEntity_Principal(), ecorePackage.getEBoolean(), "principal", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEntity_Imports(), this.getImport(), null, "imports", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEntity_Features(), this.getFeature(), null, "features", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(featureEClass, Feature.class, "Feature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFeature_Name(), ecorePackage.getEString(), "name", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFeature_Many(), ecorePackage.getEBoolean(), "many", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFeature_Diagnostic(), ecorePackage.getEBoolean(), "diagnostic", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFeature_Transient(), ecorePackage.getEBoolean(), "transient", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Type(), this.getType(), null, "type", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

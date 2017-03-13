@@ -49,12 +49,14 @@ public class Dsl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataTypeAccess().getNameAssignment_1(), "rule__DataType__NameAssignment_1");
 					put(grammarAccess.getEntityAccess().getNameAssignment_1(), "rule__Entity__NameAssignment_1");
 					put(grammarAccess.getEntityAccess().getSuperTypeAssignment_2_1(), "rule__Entity__SuperTypeAssignment_2_1");
-					put(grammarAccess.getEntityAccess().getServiceAssignment_4(), "rule__Entity__ServiceAssignment_4");
+					put(grammarAccess.getEntityAccess().getPrincipalAssignment_4(), "rule__Entity__PrincipalAssignment_4");
 					put(grammarAccess.getEntityAccess().getImportsAssignment_5(), "rule__Entity__ImportsAssignment_5");
 					put(grammarAccess.getEntityAccess().getFeaturesAssignment_6(), "rule__Entity__FeaturesAssignment_6");
 					put(grammarAccess.getFeatureAccess().getNameAssignment_0(), "rule__Feature__NameAssignment_0");
 					put(grammarAccess.getFeatureAccess().getManyAssignment_2(), "rule__Feature__ManyAssignment_2");
-					put(grammarAccess.getFeatureAccess().getTypeAssignment_3(), "rule__Feature__TypeAssignment_3");
+					put(grammarAccess.getFeatureAccess().getDiagnosticAssignment_3(), "rule__Feature__DiagnosticAssignment_3");
+					put(grammarAccess.getFeatureAccess().getTransientAssignment_4(), "rule__Feature__TransientAssignment_4");
+					put(grammarAccess.getFeatureAccess().getTypeAssignment_5(), "rule__Feature__TypeAssignment_5");
 				}
 			};
 		}

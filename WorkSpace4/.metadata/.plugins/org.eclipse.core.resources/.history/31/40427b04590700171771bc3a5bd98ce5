@@ -1,0 +1,46 @@
+grammar edu.eci.prot.dsl2.Dsl2 with org.eclipse.xtext.common.Terminals
+
+generate dsl2 "http://www.eci.edu/prot/dsl2/Dsl2"
+
+
+Domainmodel:
+    (elements+=PackageDeclaration)*;
+ 
+PackageDeclaration:
+    'package' name=QualifiedName '{'
+        (elements+=Entity)*
+    '}';
+ 
+ 
+QualifiedName:
+    ID ('.' ID)*;
+ 
+Import:
+    'import' importedNamespace=QualifiedNameWithWildcard;
+  
+QualifiedNameWithWildcard:
+    QualifiedName '.*'?;
+  
+Type:
+    DataType | EntityReference;
+  
+EntityReference:
+	entity=[Entity]
+;
+
+DataType:
+    type=PrimitiveType;
+    
+enum PrimitiveType:
+    Integer|String|Boolean|Byte|Character|Double|Float|Long|Short|Number|Date
+;
+ 
+Entity:
+    'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{'
+    	(principal?='principal')?
+    	(imports+=Import)*
+        (features+=Feature)*
+    '}';
+ 
+Feature:
+     name=ID ':' (many?='many')? type=Type;

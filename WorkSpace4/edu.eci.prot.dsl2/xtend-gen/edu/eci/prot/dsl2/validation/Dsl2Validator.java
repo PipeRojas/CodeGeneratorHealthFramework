@@ -3,7 +3,15 @@
  */
 package edu.eci.prot.dsl2.validation;
 
+import com.google.common.collect.Iterables;
+import edu.eci.prot.dsl2.dsl2.Dsl2Package;
+import edu.eci.prot.dsl2.dsl2.Entity;
+import edu.eci.prot.dsl2.dsl2.Feature;
+import edu.eci.prot.dsl2.dsl2.PackageDeclaration;
 import edu.eci.prot.dsl2.validation.AbstractDsl2Validator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
 /**
  * This class contains custom validation rules.
@@ -12,4 +20,38 @@ import edu.eci.prot.dsl2.validation.AbstractDsl2Validator;
  */
 @SuppressWarnings("all")
 public class Dsl2Validator extends AbstractDsl2Validator {
+  @Check
+  public void checkOnlyOnePrincipal(final Entity en) {
+    int counter = 0;
+    Iterable<Entity> _filter = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(en.eResource().getAllContents()), Entity.class);
+    for (final Entity e : _filter) {
+      boolean _isPrincipal = e.isPrincipal();
+      if (_isPrincipal) {
+        counter++;
+      }
+    }
+    if ((counter > 1)) {
+      this.error("Just one principal Entity must be present", Dsl2Package.Literals.ENTITY__PRINCIPAL);
+    } else {
+      if ((counter < 1)) {
+        this.error("At least one principal Entity must be present", Dsl2Package.Literals.ENTITY__PRINCIPAL);
+      }
+    }
+  }
+  
+  @Check
+  public void checkRightPackageName(final PackageDeclaration p) {
+    boolean _endsWith = p.getName().endsWith(".model");
+    boolean _not = (!_endsWith);
+    if (_not) {
+      this.error("Package name must end with \".model\".", Dsl2Package.Literals.PACKAGE_DECLARATION__ELEMENTS);
+    }
+  }
+  
+  @Check
+  public void checkManyCannotBeTransient(final Feature f) {
+    if ((f.isMany() && f.isTransient())) {
+      this.error("Feature with \"many\" property cannot have \"transient\" property", Dsl2Package.Literals.ENTITY__FEATURES);
+    }
+  }
 }

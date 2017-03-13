@@ -32,10 +32,10 @@ DataType:
  
 Entity:
     'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{'
-    	(service?='service')?
+    	(principal?='principal')?
     	(imports+=Import)*
         (features+=Feature)*
     '}';
  
 Feature:
-     name=ID ':' (many?='many')? type=[Type|QualifiedName];
+     name=ID ':' (many?='many')? (diagnostic?='diagnostic')? (transient?='transient')? type=[Type|QualifiedName];

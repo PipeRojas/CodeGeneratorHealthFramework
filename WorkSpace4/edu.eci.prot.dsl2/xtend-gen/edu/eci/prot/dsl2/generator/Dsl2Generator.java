@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import edu.eci.prot.dsl2.dsl2.Entity;
 import edu.eci.prot.dsl2.dsl2.Feature;
 import edu.eci.prot.dsl2.dsl2.Import;
+import edu.eci.prot.dsl2.generator.collections.JSModuleData;
 import java.util.ArrayList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -18,6 +19,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -33,58 +35,945 @@ public class Dsl2Generator extends AbstractGenerator {
   @Extension
   private IQualifiedNameProvider _iQualifiedNameProvider;
   
-  private ArrayList<Entity> classesToServe = new ArrayList<Entity>();
+  private Entity classToServe;
+  
+  private ArrayList<JSModuleData> appJSModules = new ArrayList<JSModuleData>();
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     Iterable<Entity> _filter = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), Entity.class);
     for (final Entity e : _filter) {
-      {
-        boolean _isService = e.isService();
-        if (_isService) {
-          this.classesToServe.add(e);
-        }
-        String _string = this._iQualifiedNameProvider.getFullyQualifiedName(e).toString("/");
-        String _plus = (_string + ".java");
-        fsa.generateFile(_plus, 
-          this.compile(e));
+      boolean _isPrincipal = e.isPrincipal();
+      if (_isPrincipal) {
+        this.classToServe = e;
       }
     }
-    for (final Entity e_1 : this.classesToServe) {
+    Iterable<Entity> _filter_1 = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), Entity.class);
+    for (final Entity e_1 : _filter_1) {
       {
         String _string = this._iQualifiedNameProvider.getFullyQualifiedName(e_1).toString("/");
-        String _name = e_1.getName();
-        String _plus = ("/model/" + _name);
-        String _replace = _string.replace(_plus, "");
-        String _plus_1 = (_replace + "/services/");
-        String _name_1 = e_1.getName();
-        String _plus_2 = (_plus_1 + _name_1);
-        String _plus_3 = (_plus_2 + "Services.java");
-        fsa.generateFile(_plus_3, 
-          this.compileServiceInterface(e_1));
-        String _string_1 = this._iQualifiedNameProvider.getFullyQualifiedName(e_1).toString("/");
-        String _name_2 = e_1.getName();
-        String _plus_4 = ("/model/" + _name_2);
-        String _replace_1 = _string_1.replace(_plus_4, "");
-        String _plus_5 = (_replace_1 + "/services/");
-        String _name_3 = e_1.getName();
-        String _plus_6 = (_plus_5 + _name_3);
-        String _plus_7 = (_plus_6 + "ServicesImpl1.java");
-        fsa.generateFile(_plus_7, 
-          this.compileServiceImplementation(e_1));
-        String _string_2 = this._iQualifiedNameProvider.getFullyQualifiedName(e_1).toString("/");
-        String _name_4 = e_1.getName();
-        String _plus_8 = ("/model/" + _name_4);
-        String _replace_2 = _string_2.replace(_plus_8, "");
-        String _plus_9 = (_replace_2 + "/controller/");
-        String _name_5 = e_1.getName();
-        String _plus_10 = (_plus_9 + _name_5);
-        String _plus_11 = (_plus_10 + "Controller.java");
-        fsa.generateFile(_plus_11, 
-          this.compileRESTControllers(e_1));
+        String _plus = (_string + ".java");
+        fsa.generateFile(_plus, 
+          this.compile(e_1));
+        EList<Feature> _features = e_1.getFeatures();
+        for (final Feature fea : _features) {
+          boolean _isDiagnostic = fea.isDiagnostic();
+          if (_isDiagnostic) {
+            String _firstUpper = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_1 = ("/static/app/RegistersInvestigatorView" + _firstUpper);
+            String _plus_2 = (_plus_1 + "/RegistersInvestigatorView");
+            String _firstUpper_1 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_3 = (_plus_2 + _firstUpper_1);
+            String _plus_4 = (_plus_3 + ".js");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_5 = (("myApp." + "RegistersInvestigatorView") + _firstUpper_2);
+            String _firstUpper_3 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_6 = ("RegistersInvestigatorView" + _firstUpper_3);
+            String _plus_7 = (_plus_6 + "/");
+            String _plus_8 = (_plus_7 + "RegistersInvestigatorView");
+            String _firstUpper_4 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_9 = (_plus_8 + _firstUpper_4);
+            String _plus_10 = (_plus_9 + ".js");
+            JSModuleData _jSModuleData = new JSModuleData(_plus_4, _plus_5, _plus_10);
+            this.appJSModules.add(_jSModuleData);
+            String _firstUpper_5 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_11 = ("/static/app/RegistersInvestigatorView" + _firstUpper_5);
+            String _plus_12 = (_plus_11 + "/");
+            String _plus_13 = (_plus_12 + "RegistersInvestigatorView");
+            String _firstUpper_6 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_14 = (_plus_13 + _firstUpper_6);
+            String _plus_15 = (_plus_14 + ".html");
+            fsa.generateFile(_plus_15, 
+              this.compileRegistersInvestigatorViewHtml(fea));
+            String _firstUpper_7 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_16 = ("/static/app/RegistersInvestigatorView" + _firstUpper_7);
+            String _plus_17 = (_plus_16 + "/");
+            String _plus_18 = (_plus_17 + "RegistersInvestigatorView");
+            String _firstUpper_8 = StringExtensions.toFirstUpper(fea.getName());
+            String _plus_19 = (_plus_18 + _firstUpper_8);
+            String _plus_20 = (_plus_19 + ".js");
+            fsa.generateFile(_plus_20, 
+              this.compileRegistersInvestigatorViewJS(fea));
+          }
+        }
       }
     }
-    this.classesToServe.clear();
+    if ((this.classToServe != null)) {
+      String _string = this._iQualifiedNameProvider.getFullyQualifiedName(this.classToServe).toString("/");
+      String _name = this.classToServe.getName();
+      String _plus = ("/model/" + _name);
+      String _replace = _string.replace(_plus, "");
+      String _plus_1 = (_replace + "/services/");
+      String _name_1 = this.classToServe.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      String _plus_3 = (_plus_2 + "Services.java");
+      fsa.generateFile(_plus_3, 
+        this.compileServiceInterface(this.classToServe));
+      String _string_1 = this._iQualifiedNameProvider.getFullyQualifiedName(this.classToServe).toString("/");
+      String _name_2 = this.classToServe.getName();
+      String _plus_4 = ("/model/" + _name_2);
+      String _replace_1 = _string_1.replace(_plus_4, "");
+      String _plus_5 = (_replace_1 + "/services/");
+      String _name_3 = this.classToServe.getName();
+      String _plus_6 = (_plus_5 + _name_3);
+      String _plus_7 = (_plus_6 + "ServicesImpl1.java");
+      fsa.generateFile(_plus_7, 
+        this.compileServiceImplementation(this.classToServe));
+      String _string_2 = this._iQualifiedNameProvider.getFullyQualifiedName(this.classToServe).toString("/");
+      String _name_4 = this.classToServe.getName();
+      String _plus_8 = ("/model/" + _name_4);
+      String _replace_2 = _string_2.replace(_plus_8, "");
+      String _plus_9 = (_replace_2 + "/controller/");
+      String _name_5 = this.classToServe.getName();
+      String _plus_10 = (_plus_9 + _name_5);
+      String _plus_11 = (_plus_10 + "Controller.java");
+      fsa.generateFile(_plus_11, 
+        this.compileRESTControllers(this.classToServe));
+      fsa.generateFile("/static/app/services/services.js", this.compileJSServices(this.classToServe));
+    }
+    fsa.generateFile(
+      "/static/app/app.js", 
+      this.compileAppJS(this.appJSModules));
+    fsa.generateFile(
+      "/static/app/index.html", 
+      this.compileIndexHtml(this.appJSModules));
+    this.appJSModules.clear();
+  }
+  
+  public CharSequence compileIndexHtml(final ArrayList<JSModuleData> modules) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<!DOCTYPE html>");
+    _builder.newLine();
+    _builder.append("<!--[if lt IE 7]>      <html lang=\"en\" ng-app=\"myApp\" class=\"no-chart lt-ie9 lt-ie8 lt-ie7\"> <![endif]-->");
+    _builder.newLine();
+    _builder.append("<!--[if IE 7]>         <html lang=\"en\" ng-app=\"myApp\" class=\"no-chart lt-ie9 lt-ie8\"> <![endif]-->");
+    _builder.newLine();
+    _builder.append("<!--[if IE 8]>         <html lang=\"en\" ng-app=\"myApp\" class=\"no-chart lt-ie9\"> <![endif]-->");
+    _builder.newLine();
+    _builder.append("<!--[if gt IE 8]><!--> <html lang=\"en\" ng-app=\"myApp\" class=\"no-js\"> <!--<![endif]-->");
+    _builder.newLine();
+    _builder.append("<head>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<![endif]-->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<meta charset=\"utf-8\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<title>My AngularJS App</title>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<meta name=\"description\" content=\"\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link rel=\"stylesheet\" href=\"bower_components/html5-boilerplate/dist/css/normalize.css\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link rel=\"stylesheet\" href=\"bower_components/html5-boilerplate/dist/css/main.css\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link rel=\"stylesheet\" href=\"app.css\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- Bootstrap Core CSS -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link href=\"/app/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- MetisMenu CSS -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link href=\"/app/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- Custom CSS -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link href=\"/app/dist/css/sb-admin-2.css\" rel=\"stylesheet\">");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- Custom Fonts -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<link href=\"/app/vendor/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"/app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- HTML5 Shim and Respond.chart IE8 support of HTML5 elements and media queries -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- WARNING: Respond.chart doesn\'t work if you view the page via file:// -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!--[if lt IE 9]>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>");
+    _builder.newLine();
+    _builder.append("</head>");
+    _builder.newLine();
+    _builder.append("<body>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!--[if lt IE 7]>");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("<p class=\"browsehappy\">You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.</p>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<![endif]-->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<div ng-view></div>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<div>Cliente Multiple app: v<span app-version></span></div>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- In production use:");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.chart\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("-->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"bower_components/angular/angular.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"bower_components/angular-route/angular-route.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"bower_components/angular-resource/angular-resource.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"bower_components/chart.js/dist/Chart.min.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"bower_components/angular-chart.js/dist/angular-chart.min.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"app.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"view1/view1.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"PatientAutorization/PatientAutorization.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"Templates/templatePatient.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"Templates/templateDoctor.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"Templates/templateInvestigator.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"HomeInvestigator/HomeInvestigator.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"PatientChoiceView/PatientChoiceView.js\"></script>");
+    _builder.newLine();
+    {
+      for(final JSModuleData m : modules) {
+        _builder.append("  ");
+        _builder.append("<script src=\"");
+        String _htmlSRCString = m.getHtmlSRCString();
+        _builder.append(_htmlSRCString, "  ");
+        _builder.append("\"></script>");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("  ");
+    _builder.append("<script src=\"/app/dist/js/sb-admin-2.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"services/services.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"components/version/version.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"components/version/version-directive.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"components/version/interpolate-filter.js\"></script><!-- jQuery -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"/app/vendor/jquery/jquery.min.js\"></script>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- Bootstrap Core JavaScript -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"/app/vendor/bootstrap/js/bootstrap.min.js\"></script>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<!-- Metis Menu Plugin JavaScript -->");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"/app/vendor/metisMenu/metisMenu.min.js\"></script>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</body>");
+    _builder.newLine();
+    _builder.append("</html>");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileAppJS(final ArrayList<JSModuleData> modules) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp\', [");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'ngRoute\',");
+    _builder.newLine();
+    {
+      for(final JSModuleData m : modules) {
+        _builder.append("  ");
+        _builder.append("\'");
+        String _jSAppModuleString = m.getJSAppModuleString();
+        _builder.append(_jSAppModuleString, "  ");
+        _builder.append("\',");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("  ");
+    _builder.append("\'myApp.view1\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.HomeInvestigator\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.PatientAutorization\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.PatientChoiceView\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.version\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'services.factory\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'chart.js\'");
+    _builder.newLine();
+    _builder.append("]).");
+    _builder.newLine();
+    _builder.append("config([\'$locationProvider\', \'$routeProvider\', function($locationProvider, $routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$locationProvider.hashPrefix(\'!\');");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.otherwise({redirectTo: \'/view1\'});");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileRegistersInvestigatorViewJS(final Feature f) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.RegistersInvestigatorView");
+    String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper);
+    _builder.append("\', [\'ngRoute\'])");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/RegistersInvestigatorView");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_1, "  ");
+    _builder.append("\', {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'RegistersInvestigatorView");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_2, "    ");
+    _builder.append("/RegistersInvestigatorView");
+    String _firstUpper_3 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_3, "    ");
+    _builder.append(".html\',");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("controller: \'RegistersInvestigatorView");
+    String _firstUpper_4 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_4, "    ");
+    _builder.append("Ctrl\'");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'RegistersInvestigatorView");
+    String _firstUpper_5 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_5);
+    _builder.append("Ctrl\', [\'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', \'");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("s\', \'$rootScope\', \'$scope\', function (");
+    String _firstLower_2 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_2);
+    _builder.append(", ");
+    String _firstLower_3 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_3);
+    _builder.append("s, $rootScope, $scope) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("     ");
+    String _firstLower_4 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_4, "     ");
+    _builder.append("s.get()");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("$scope.");
+    String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_5, "                    ");
+    _builder.append("sList=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                    ");
+    int intPropCounter = 0;
+    _builder.newLineIfNotEmpty();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        _builder.append("\t\t                    ");
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getType().getName().equals("Integer");
+          if (_equals) {
+            _builder.append("$scope.");
+            String _lastSegment = this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment();
+            _builder.append(_lastSegment);
+            _builder.append("=[];");
+            _builder.newLineIfNotEmpty();
+            _builder.append("//");
+            _builder.append(intPropCounter = (intPropCounter + 1));
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("$scope.labels=[];");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("$scope.diagnostics=[];");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("$scope.series = [\'Datos de Control del estudio\'];");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("for (var i = 0; i < $scope.");
+    String _firstLower_6 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_6, "                    ");
+    _builder.append("sList.length; i++) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append("if($scope.");
+    String _firstLower_7 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_7, "                        ");
+    _builder.append("sList[i].");
+    String _name = f.getName();
+    _builder.append(_name, "                        ");
+    _builder.append(".length >= 1){");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("$scope.");
+    String _firstLower_8 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_8, "                            ");
+    _builder.append("=$scope.");
+    String _firstLower_9 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_9, "                            ");
+    _builder.append("sList[i];");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("$scope.labels.push($scope.");
+    String _firstLower_10 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_10, "                            ");
+    _builder.append("Act.id);");
+    _builder.newLineIfNotEmpty();
+    {
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_1 : _iterable_1) {
+        _builder.append("        \t\t                    ");
+        Feature feature_1 = ((Feature) dat_1);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_1 = feature_1.getType().getName().equals("Integer");
+          if (_equals_1) {
+            _builder.append("var ");
+            String _lastSegment_1 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_1).getLastSegment();
+            _builder.append(_lastSegment_1);
+            _builder.append("Initial=0;");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                            ");
+    _builder.append("for(var n=0; n<$scope.");
+    String _firstLower_11 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_11, "                            ");
+    _builder.append("Act.");
+    String _name_1 = f.getName();
+    _builder.append(_name_1, "                            ");
+    _builder.append(".length; n++){");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                                ");
+    _builder.append("var dd=$scope.");
+    String _firstLower_12 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_12, "                                ");
+    _builder.append("Act.");
+    String _name_2 = f.getName();
+    _builder.append(_name_2, "                                ");
+    _builder.append("[n];");
+    _builder.newLineIfNotEmpty();
+    {
+      Iterable<EObject> _iterable_2 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_2 : _iterable_2) {
+        _builder.append("            \t\t                    ");
+        Feature feature_2 = ((Feature) dat_2);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_2 = feature_2.getType().getName().equals("Integer");
+          if (_equals_2) {
+            String _lastSegment_2 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_2).getLastSegment();
+            _builder.append(_lastSegment_2);
+            _builder.append("Initial=");
+            String _lastSegment_3 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_2).getLastSegment();
+            _builder.append(_lastSegment_3);
+            _builder.append("Initial+dd.");
+            String _lastSegment_4 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_2).getLastSegment();
+            _builder.append(_lastSegment_4);
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_3 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_3 : _iterable_3) {
+        _builder.append("        \t\t                    ");
+        Feature feature_3 = ((Feature) dat_3);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_3 = feature_3.getType().getName().equals("Integer");
+          if (_equals_3) {
+            _builder.append("$scope.");
+            String _lastSegment_5 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_3).getLastSegment();
+            _builder.append(_lastSegment_5);
+            _builder.append(".push(");
+            String _lastSegment_6 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_3).getLastSegment();
+            _builder.append(_lastSegment_6);
+            _builder.append("Initial/$scope.");
+            String _firstLower_13 = StringExtensions.toFirstLower(this.classToServe.getName());
+            _builder.append(_firstLower_13);
+            _builder.append("Act.");
+            String _name_3 = f.getName();
+            _builder.append(_name_3);
+            _builder.append(".length);");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                            ");
+    _builder.append("$scope.diagnostics.push($scope.");
+    String _firstLower_14 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_14, "                            ");
+    _builder.append("sList[i].diagnostics[0]);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("}");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_4 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_4 : _iterable_4) {
+        _builder.append("\t\t                    ");
+        Feature feature_4 = ((Feature) dat_4);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_4 = feature_4.getType().getName().equals("Integer");
+          if (_equals_4) {
+            String _lastSegment_7 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_4).getLastSegment();
+            _builder.append(_lastSegment_7);
+            _builder.append("Initial=0;");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("for(var j = 0; j < $scope.");
+    String _lastSegment_8 = this._iQualifiedNameProvider.getFullyQualifiedName(((EObject[])Conversions.unwrapArray(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()), EObject.class))[0]).getLastSegment();
+    _builder.append(_lastSegment_8, "                    ");
+    _builder.append("; j++) {");
+    _builder.newLineIfNotEmpty();
+    {
+      Iterable<EObject> _iterable_5 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_5 : _iterable_5) {
+        _builder.append("\t\t\t                    ");
+        Feature feature_5 = ((Feature) dat_5);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_5 = feature_5.getType().getName().equals("Integer");
+          if (_equals_5) {
+            String _lastSegment_9 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_5).getLastSegment();
+            _builder.append(_lastSegment_9);
+            _builder.append("Initial=");
+            String _lastSegment_10 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_5).getLastSegment();
+            _builder.append(_lastSegment_10);
+            _builder.append("Initial+$scope.");
+            String _lastSegment_11 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_5).getLastSegment();
+            _builder.append(_lastSegment_11);
+            _builder.append("[j];");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("$scope.todoData=[];");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_6 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_6 : _iterable_6) {
+        _builder.append("\t\t                    ");
+        Feature feature_6 = ((Feature) dat_6);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_6 = feature_6.getType().getName().equals("Integer");
+          if (_equals_6) {
+            _builder.append("$scope.todoData.push(");
+            String _lastSegment_12 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
+            _builder.append(_lastSegment_12);
+            _builder.append("Initial/$scope.");
+            String _lastSegment_13 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
+            _builder.append(_lastSegment_13);
+            _builder.append(".length);");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t\t\t\t");
+    _builder.append("$scope.todoLabels=[");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_7 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat_7 : _iterable_7) {
+        _builder.append("\t\t                    ");
+        Feature feature_7 = ((Feature) dat_7);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_7 = feature_7.getType().getName().equals("Integer");
+          if (_equals_7) {
+            _builder.append("\'");
+            String _firstUpper_6 = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment());
+            _builder.append(_firstUpper_6);
+            _builder.append("\'");
+            _builder.newLineIfNotEmpty();
+            {
+              if ((intPropCounter > 1)) {
+                _builder.append(",");
+                _builder.newLine();
+              }
+            }
+            _builder.append("//");
+            _builder.append(intPropCounter = (intPropCounter - 1));
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("];");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("alert(\"El paciente no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileRegistersInvestigatorViewHtml(final Feature f) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templateInvestigator.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h1 class=\"page-header\">Datos de control del estudio</h1>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-4\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("Datos Promedio por cada Dato Capturado");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<canvas  id=\"todoData\" class=\"chart chart-bar\"");
+    _builder.newLine();
+    _builder.append("                             ");
+    _builder.append("chart-data=\"todoData\" chart-labels=\"todoLabels\" chart-series=\"series\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</canvas>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-4 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        _builder.append("\t\t");
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getType().getName().equals("Integer");
+          if (_equals) {
+            _builder.append("\t\t");
+            _builder.append("<div class=\"col-lg-4\">");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<div class=\"panel panel-default\">");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<div class=\"panel-heading\">");
+            _builder.newLine();
+            _builder.append("\t\t                    ");
+            String _firstUpper = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment());
+            _builder.append(_firstUpper, "\t\t                    ");
+            _builder.append(" (Promedio de cada participante)");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<div class=\"panel-body\">");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<canvas  id=\"");
+            String _lastSegment = this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment();
+            _builder.append(_lastSegment, "\t\t");
+            _builder.append("\" class=\"chart chart-bar\"");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("chart-data=\"");
+            String _lastSegment_1 = this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment();
+            _builder.append(_lastSegment_1, "\t\t");
+            _builder.append("\" chart-labels=\"labels\" chart-series=\"series\">");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("</canvas>");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<!-- /.panel-body -->");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<!-- /.panel -->");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("<!-- /.col-lg-4 -->");
+            _builder.newLine();
+          }
+        }
+      }
+    }
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileJSServices(final Entity e) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'services.factory\', [\'ngRoute\', \'ngResource\'])");
+    _builder.newLine();
+    _builder.append(".factory(\'");
+    String _firstLower = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', function($resource){");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return $resource(\'/");
+    String _firstLower_1 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_1, "\t");
+    _builder.append("/:");
+    String _firstLower_2 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_2, "\t");
+    _builder.append("Id\',{id:\"@_");
+    String _firstLower_3 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_3, "\t");
+    _builder.append("Id\"},{get: { method: \'GET\'}});");
+    _builder.newLineIfNotEmpty();
+    _builder.append("})");
+    _builder.newLine();
+    _builder.append(".factory(\'");
+    String _firstLower_4 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_4);
+    _builder.append("s\', function($resource) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return $resource(\'/");
+    String _firstLower_5 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_5, "\t");
+    _builder.append("\',{},{ \'get\': { method: \'GET\', isArray: true}, \'update\': { method: \'PUT\', isArray: false}});");
+    _builder.newLineIfNotEmpty();
+    _builder.append("})");
+    _builder.newLine();
+    _builder.append(";");
+    _builder.newLine();
+    return _builder;
   }
   
   public CharSequence compileRESTControllers(final Entity e) {
@@ -525,6 +1414,11 @@ public class Dsl2Generator extends AbstractGenerator {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t    ");
+    _builder.append("import java.util.Date;");
+    _builder.newLine();
+    _builder.append("\t    ");
+    _builder.newLine();
     _builder.append("public class ");
     String _name = e.getName();
     _builder.append(_name);

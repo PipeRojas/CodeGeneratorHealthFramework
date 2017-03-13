@@ -22,13 +22,15 @@
     <genClasses ecoreClass="Dsl2.ecore#//DataType"/>
     <genClasses ecoreClass="Dsl2.ecore#//Entity">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Dsl2.ecore#//Entity/superType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Entity/service"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Entity/principal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Dsl2.ecore#//Entity/imports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Dsl2.ecore#//Entity/features"/>
     </genClasses>
     <genClasses ecoreClass="Dsl2.ecore#//Feature">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Feature/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Feature/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Feature/diagnostic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl2.ecore#//Feature/transient"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Dsl2.ecore#//Feature/type"/>
     </genClasses>
   </genPackages>

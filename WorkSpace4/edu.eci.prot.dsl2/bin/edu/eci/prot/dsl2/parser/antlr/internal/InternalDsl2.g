@@ -462,15 +462,15 @@ ruleEntity returns [EObject current=null]
 		}
 		(
 			(
-				lv_service_5_0='service'
+				lv_principal_5_0='principal'
 				{
-					newLeafNode(lv_service_5_0, grammarAccess.getEntityAccess().getServiceServiceKeyword_4_0());
+					newLeafNode(lv_principal_5_0, grammarAccess.getEntityAccess().getPrincipalPrincipalKeyword_4_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getEntityRule());
 					}
-					setWithLastConsumed($current, "service", true, "service");
+					setWithLastConsumed($current, "principal", true, "principal");
 				}
 			)
 		)?
@@ -573,13 +573,41 @@ ruleFeature returns [EObject current=null]
 		)?
 		(
 			(
+				lv_diagnostic_3_0='diagnostic'
+				{
+					newLeafNode(lv_diagnostic_3_0, grammarAccess.getFeatureAccess().getDiagnosticDiagnosticKeyword_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFeatureRule());
+					}
+					setWithLastConsumed($current, "diagnostic", true, "diagnostic");
+				}
+			)
+		)?
+		(
+			(
+				lv_transient_4_0='transient'
+				{
+					newLeafNode(lv_transient_4_0, grammarAccess.getFeatureAccess().getTransientTransientKeyword_4_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFeatureRule());
+					}
+					setWithLastConsumed($current, "transient", true, "transient");
+				}
+			)
+		)?
+		(
+			(
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getFeatureRule());
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getFeatureAccess().getTypeTypeCrossReference_3_0());
+					newCompositeNode(grammarAccess.getFeatureAccess().getTypeTypeCrossReference_5_0());
 				}
 				ruleQualifiedName
 				{

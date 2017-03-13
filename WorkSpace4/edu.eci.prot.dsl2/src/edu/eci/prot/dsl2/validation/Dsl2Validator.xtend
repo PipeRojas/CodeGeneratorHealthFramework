@@ -3,6 +3,11 @@
  */
 package edu.eci.prot.dsl2.validation
 
+import edu.eci.prot.dsl2.dsl2.Dsl2Package
+import edu.eci.prot.dsl2.dsl2.Entity
+import edu.eci.prot.dsl2.dsl2.Feature
+import edu.eci.prot.dsl2.dsl2.PackageDeclaration
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -21,5 +26,37 @@ class Dsl2Validator extends AbstractDsl2Validator {
 //					INVALID_NAME)
 //		}
 //	}
+
 	
+	@Check
+	def void checkOnlyOnePrincipal(Entity en) {
+		var counter=0;
+		for (e : en.eResource.allContents.toIterable.filter(Entity)){
+			if(e.principal){
+				counter++;
+			}
+		}
+		if(counter>1){
+			error('Just one principal Entity must be present', Dsl2Package.Literals.ENTITY__PRINCIPAL)
+		}else if(counter<1){
+			error('At least one principal Entity must be present', Dsl2Package.Literals.ENTITY__PRINCIPAL)
+		}
+	}
+	
+	
+	@Check
+	def void checkRightPackageName(PackageDeclaration p){
+		if(!(p.name).endsWith(".model")){
+			error('Package name must end with ".model".', Dsl2Package.Literals.PACKAGE_DECLARATION__ELEMENTS)
+		}
+	}
+	
+	@Check
+	def void checkManyCannotBeTransient(Feature f){
+		if(f.many&&f.transient){
+			error('Feature with "many" property cannot have "transient" property', Dsl2Package.Literals.ENTITY__FEATURES)
+		}
+	}
+	
+
 }

@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Entity#getSuperType <em>Super Type</em>}</li>
- *   <li>{@link edu.eci.prot.dsl2.dsl2.Entity#isService <em>Service</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.Entity#isPrincipal <em>Principal</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Entity#getImports <em>Imports</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.Entity#getFeatures <em>Features</em>}</li>
  * </ul>
@@ -53,30 +53,30 @@ public interface Entity extends Type
   void setSuperType(Entity value);
 
   /**
-   * Returns the value of the '<em><b>Service</b></em>' attribute.
+   * Returns the value of the '<em><b>Principal</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Service</em>' attribute isn't clear,
+   * If the meaning of the '<em>Principal</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Service</em>' attribute.
-   * @see #setService(boolean)
-   * @see edu.eci.prot.dsl2.dsl2.Dsl2Package#getEntity_Service()
+   * @return the value of the '<em>Principal</em>' attribute.
+   * @see #setPrincipal(boolean)
+   * @see edu.eci.prot.dsl2.dsl2.Dsl2Package#getEntity_Principal()
    * @model
    * @generated
    */
-  boolean isService();
+  boolean isPrincipal();
 
   /**
-   * Sets the value of the '{@link edu.eci.prot.dsl2.dsl2.Entity#isService <em>Service</em>}' attribute.
+   * Sets the value of the '{@link edu.eci.prot.dsl2.dsl2.Entity#isPrincipal <em>Principal</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Service</em>' attribute.
-   * @see #isService()
+   * @param value the new value of the '<em>Principal</em>' attribute.
+   * @see #isPrincipal()
    * @generated
    */
-  void setService(boolean value);
+  void setPrincipal(boolean value);
 
   /**
    * Returns the value of the '<em><b>Imports</b></em>' containment reference list.

@@ -3,15 +3,16 @@
  */
 package edu.eci.prot.dsl2.generator
 
+import com.google.inject.Inject
+import edu.eci.prot.dsl2.dsl2.Entity
+import edu.eci.prot.dsl2.dsl2.Feature
+import edu.eci.prot.dsl2.generator.collections.JSModuleData
+import java.util.ArrayList
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import edu.eci.prot.dsl2.dsl2.Entity
-import edu.eci.prot.dsl2.dsl2.Feature
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import com.google.inject.Inject
-import java.util.ArrayList
 
 /**
  * Generates code from your model files on save.
@@ -20,36 +21,337 @@ import java.util.ArrayList
  */
 class Dsl2Generator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
-	
-	ArrayList<Entity> classesToServe=new ArrayList<Entity>();
-	
+	Entity classToServe;
+	ArrayList<JSModuleData> appJSModules=new ArrayList<JSModuleData>();
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//Create POJO entities
 		for (e : resource.allContents.toIterable.filter(Entity)) {
-			if(e.service){
-				classesToServe.add(e);
+			if(e.principal){
+				classToServe=e;
 			}
+		}
+		for (e : resource.allContents.toIterable.filter(Entity)) {
+			
 			fsa.generateFile(
                 e.fullyQualifiedName.toString("/") + ".java",
                 e.compile)
-			
+			//Create Register Investigators Views
+	        for (Feature fea : e.features) {
+	        	if(fea.diagnostic){
+	        		appJSModules.add(new JSModuleData("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
+	        			"myApp."+"RegistersInvestigatorView"+fea.name.toFirstUpper,
+	        			"RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js"))
+	        		fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".html",
+                	fea.compileRegistersInvestigatorViewHtml);
+                	fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
+                	fea.compileRegistersInvestigatorViewJS);
+                	//println(cr.fullyQualifiedName.lastSegment.toFirstUpper)
+                	
+                	//fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",fea.compileRegistersInvestigatorViewJS);
+	        	}
+	        }
         }
         //Create services classes
-        for(e:classesToServe){
+        if(classToServe!==null){
         	fsa.generateFile(
-                ((e.fullyQualifiedName.toString("/").replace("/model/"+e.name, "")) + "/services/"+ e.name + "Services.java"),
-                e.compileServiceInterface);
-            fsa.generateFile(
-                ((e.fullyQualifiedName.toString("/").replace("/model/"+e.name, "")) + "/services/"+ e.name + "ServicesImpl1.java"),
-                e.compileServiceImplementation);
-            fsa.generateFile(
-                ((e.fullyQualifiedName.toString("/").replace("/model/"+e.name, "")) + "/controller/"+ e.name + "Controller.java"),
-                e.compileRESTControllers);
-        	//((e.fullyQualifiedName.toString("/").replace("/"+e.name, "")) + "/model/"+ e.name + ".java")
-        	
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/services/"+ classToServe.name + "Services.java"),
+	            classToServe.compileServiceInterface);
+	        fsa.generateFile(
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/services/"+ classToServe.name + "ServicesImpl1.java"),
+	            classToServe.compileServiceImplementation);
+	        fsa.generateFile(
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/controller/"+ classToServe.name + "Controller.java"),
+	            classToServe.compileRESTControllers);
+	        //Create JS Services
+	        fsa.generateFile("/static/app/services/services.js", classToServe.compileJSServices);
         }
-        classesToServe.clear;
+	   	//create app.js & index.html
+	   	fsa.generateFile(
+	            "/static/app/app.js",
+	            appJSModules.compileAppJS);
+        fsa.generateFile(
+	            "/static/app/index.html",
+	            appJSModules.compileIndexHtml);
+	   	appJSModules.clear;
 	}
+	
+	//Create index.html
+	def compileIndexHtml(ArrayList<JSModuleData> modules)
+		'''
+		<!DOCTYPE html>
+		<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-chart lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+		<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-chart lt-ie9 lt-ie8"> <![endif]-->
+		<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-chart lt-ie9"> <![endif]-->
+		<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+		<head>
+		
+		  <![endif]-->
+		  <meta charset="utf-8">
+		  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		  <title>My AngularJS App</title>
+		  <meta name="description" content="">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+		  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+		  <link rel="stylesheet" href="app.css">
+		  <!-- Bootstrap Core CSS -->
+		  <link href="/app/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+		  <!-- MetisMenu CSS -->
+		  <link href="/app/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+		
+		  <!-- Custom CSS -->
+		  <link href="/app/dist/css/sb-admin-2.css" rel="stylesheet">
+		
+		  <!-- Custom Fonts -->
+		  <link href="/app/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		  <script src="/app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+		
+		  <!-- HTML5 Shim and Respond.chart IE8 support of HTML5 elements and media queries -->
+		  <!-- WARNING: Respond.chart doesn't work if you view the page via file:// -->
+		  <!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		</head>
+		<body>
+		  <!--[if lt IE 7]>
+		      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		  <![endif]-->
+		
+		  <div ng-view></div>
+		
+		  <div>Cliente Multiple app: v<span app-version></span></div>
+		
+		  <!-- In production use:
+		  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.chart"></script>
+		  -->
+		  <script src="bower_components/angular/angular.js"></script>
+		  <script src="bower_components/angular-route/angular-route.js"></script>
+		  <script src="bower_components/angular-resource/angular-resource.js"></script>
+		  <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+		  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+		  <script src="app.js"></script>
+		  <script src="view1/view1.js"></script>
+		  <script src="PatientAutorization/PatientAutorization.js"></script>
+		  <script src="Templates/templatePatient.js"></script>
+		  <script src="Templates/templateDoctor.js"></script>
+		  <script src="Templates/templateInvestigator.js"></script>
+		  <script src="HomeInvestigator/HomeInvestigator.js"></script>
+		  <script src="PatientChoiceView/PatientChoiceView.js"></script>
+		  «FOR m: modules»
+		  <script src="«m.htmlSRCString»"></script>
+		  «ENDFOR»
+		  <script src="/app/dist/js/sb-admin-2.js"></script>
+		  <script src="services/services.js"></script>
+		  <script src="components/version/version.js"></script>
+		  <script src="components/version/version-directive.js"></script>
+		  <script src="components/version/interpolate-filter.js"></script><!-- jQuery -->
+		  <script src="/app/vendor/jquery/jquery.min.js"></script>
+		
+		  <!-- Bootstrap Core JavaScript -->
+		  <script src="/app/vendor/bootstrap/js/bootstrap.min.js"></script>
+		
+		  <!-- Metis Menu Plugin JavaScript -->
+		  <script src="/app/vendor/metisMenu/metisMenu.min.js"></script>
+		
+		
+		</body>
+		</html>
+		
+		'''
+	
+	//Create app.js
+	def compileAppJS(ArrayList<JSModuleData> modules)
+		'''
+		'use strict';
+		
+		angular.module('myApp', [
+		  'ngRoute',
+		  «FOR m : modules»
+		  '«m.JSAppModuleString»',
+		  «ENDFOR»
+		  'myApp.view1',
+		  'myApp.HomeInvestigator',
+		  'myApp.PatientAutorization',
+		  'myApp.PatientChoiceView',
+		  'myApp.version',
+		  'services.factory',
+		  'chart.js'
+		]).
+		config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+		  $locationProvider.hashPrefix('!');
+		
+		  $routeProvider.otherwise({redirectTo: '/view1'});
+		}]);
+		
+		'''
+	
+	//Feature must be diagnostic
+	def compileRegistersInvestigatorViewJS(Feature f)
+		'''
+		'use strict';
+		
+		angular.module('myApp.RegistersInvestigatorView«f.name.toFirstUpper»', ['ngRoute'])
+		
+		.config(['$routeProvider', function($routeProvider) {
+		  $routeProvider.when('/RegistersInvestigatorView«f.name.toFirstUpper»', {
+		    templateUrl: 'RegistersInvestigatorView«f.name.toFirstUpper»/RegistersInvestigatorView«f.name.toFirstUpper».html',
+		    controller: 'RegistersInvestigatorView«f.name.toFirstUpper»Ctrl'
+		  });
+		}])
+		
+		.controller('RegistersInvestigatorView«f.name.toFirstUpper»Ctrl', ['«classToServe.name.toFirstLower»', '«classToServe.name.toFirstLower»s', '$rootScope', '$scope', function («classToServe.name.toFirstLower», «classToServe.name.toFirstLower»s, $rootScope, $scope) {
+		     «classToServe.name.toFirstLower»s.get()
+		        .$promise.then(
+		                //success
+		                function( value ){
+		                    $scope.«classToServe.name.toFirstLower»sList=value;
+		                    «var intPropCounter=0»
+		                    «FOR dat: f.type.eAllContents.toIterable»
+		                    «var feature =dat as Feature»
+            				«IF(feature.type.name.equals("Integer"))»
+            				$scope.«dat.fullyQualifiedName.lastSegment»=[];
+            				//«intPropCounter=intPropCounter+1»
+		                    «ENDIF»
+		                    «ENDFOR»
+		                    $scope.labels=[];
+		                    $scope.diagnostics=[];
+		                    $scope.series = ['Datos de Control del estudio'];
+		                    for (var i = 0; i < $scope.«classToServe.name.toFirstLower»sList.length; i++) {
+		                        if($scope.«classToServe.name.toFirstLower»sList[i].«f.name».length >= 1){
+		                            $scope.«classToServe.name.toFirstLower»=$scope.«classToServe.name.toFirstLower»sList[i];
+		                            $scope.labels.push($scope.«classToServe.name.toFirstLower»Act.id);
+		                            «FOR dat: f.type.eAllContents.toIterable»
+        		                    «var feature =dat as Feature»
+                    				«IF(feature.type.name.equals("Integer"))»
+                    				var «dat.fullyQualifiedName.lastSegment»Initial=0;
+        		                    «ENDIF»
+        		                    «ENDFOR»
+		                            for(var n=0; n<$scope.«classToServe.name.toFirstLower»Act.«f.name».length; n++){
+		                                var dd=$scope.«classToServe.name.toFirstLower»Act.«f.name»[n];
+		                                «FOR dat: f.type.eAllContents.toIterable»
+            		                    «var feature =dat as Feature»
+                        				«IF(feature.type.name.equals("Integer"))»
+                        				«dat.fullyQualifiedName.lastSegment»Initial=«dat.fullyQualifiedName.lastSegment»Initial+dd.«dat.fullyQualifiedName.lastSegment»;
+            		                    «ENDIF»
+            		                    «ENDFOR»
+		                            }
+		                            «FOR dat: f.type.eAllContents.toIterable»
+        		                    «var feature =dat as Feature»
+                    				«IF(feature.type.name.equals("Integer"))»
+                    				$scope.«dat.fullyQualifiedName.lastSegment».push(«dat.fullyQualifiedName.lastSegment»Initial/$scope.«classToServe.name.toFirstLower»Act.«f.name».length);
+        		                    «ENDIF»
+        		                    «ENDFOR»
+		                            $scope.diagnostics.push($scope.«classToServe.name.toFirstLower»sList[i].diagnostics[0]);
+		                        }
+		                    }
+		                    «FOR dat: f.type.eAllContents.toIterable»
+		                    «var feature =dat as Feature»
+            				«IF(feature.type.name.equals("Integer"))»
+            				«dat.fullyQualifiedName.lastSegment»Initial=0;
+		                    «ENDIF»
+		                    «ENDFOR»
+		                    for(var j = 0; j < $scope.«(f.type.eAllContents.toIterable).get(0).fullyQualifiedName.lastSegment»; j++) {
+		                    	«FOR dat: f.type.eAllContents.toIterable»
+			                    «var feature =dat as Feature»
+	            				«IF(feature.type.name.equals("Integer"))»
+	            				«dat.fullyQualifiedName.lastSegment»Initial=«dat.fullyQualifiedName.lastSegment»Initial+$scope.«dat.fullyQualifiedName.lastSegment»[j];
+			                    «ENDIF»
+			                    «ENDFOR»
+		                    }
+		                    $scope.todoData=[];
+		                    «FOR dat: f.type.eAllContents.toIterable»
+		                    «var feature =dat as Feature»
+            				«IF(feature.type.name.equals("Integer"))»
+            				$scope.todoData.push(«dat.fullyQualifiedName.lastSegment»Initial/$scope.«dat.fullyQualifiedName.lastSegment».length);
+		                    «ENDIF»
+		                    «ENDFOR»
+							$scope.todoLabels=[
+		                    «FOR dat: f.type.eAllContents.toIterable»
+		                    «var feature =dat as Feature»
+            				«IF(feature.type.name.equals("Integer"))»
+            				'«dat.fullyQualifiedName.lastSegment.toFirstUpper»'
+            				«IF(intPropCounter>1)»
+            				,
+            				«ENDIF»
+            				//«intPropCounter=intPropCounter-1»
+		                    «ENDIF»
+		                    «ENDFOR»
+		                    ];
+		                },
+		                //error
+		                function( error ){
+		                    alert("El paciente no se encuentra registrado");
+		                }
+		        );
+		}]);
+		'''
+	def compileRegistersInvestigatorViewHtml(Feature f)
+		'''
+		<div ng-include="'/app/Templates/templateInvestigator.html'"></div>
+		<div id="page-wrapper">
+		    <div class="row">
+		        <div class="col-lg-12">
+		            <h1 class="page-header">Datos de control del estudio</h1>
+		        </div>
+		        <!-- /.col-lg-12 -->
+		    </div>
+		    <div class="row">
+		        <div class="col-lg-4">
+		            <div class="panel panel-default">
+		                <div class="panel-heading">
+		                    Datos Promedio por cada Dato Capturado
+		                </div>
+		                <div class="panel-body">
+		                    <canvas  id="todoData" class="chart chart-bar"
+		                             chart-data="todoData" chart-labels="todoLabels" chart-series="series">
+		                    </canvas>
+		                </div>
+		                <!-- /.panel-body -->
+		            </div>
+		            <!-- /.panel -->
+		        </div>
+		        <!-- /.col-lg-4 -->
+		    </div>
+		    <div class="row">
+				«FOR dat: f.type.eAllContents.toIterable»
+				«var feature =dat as Feature»
+				«IF(feature.type.name.equals("Integer"))»
+				<div class="col-lg-4">
+				<div class="panel panel-default">
+				<div class="panel-heading">
+		                    «dat.fullyQualifiedName.lastSegment.toFirstUpper» (Promedio de cada participante)
+				</div>
+				<div class="panel-body">
+				<canvas  id="«dat.fullyQualifiedName.lastSegment»" class="chart chart-bar"
+				chart-data="«dat.fullyQualifiedName.lastSegment»" chart-labels="labels" chart-series="series">
+				</canvas>
+				</div>
+				<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-4 -->
+		        «ENDIF»
+		        «ENDFOR»
+		    </div>
+		</div>
+		<!-- /#page-wrapper -->
+		'''
+	
+	def compileJSServices(Entity e)
+		'''
+		'use strict';
+		
+		angular.module('services.factory', ['ngRoute', 'ngResource'])
+		.factory('«e.name.toFirstLower»', function($resource){
+			return $resource('/«e.name.toFirstLower»/:«e.name.toFirstLower»Id',{id:"@_«e.name.toFirstLower»Id"},{get: { method: 'GET'}});
+		})
+		.factory('«e.name.toFirstLower»s', function($resource) {
+			return $resource('/«e.name.toFirstLower»',{},{ 'get': { method: 'GET', isArray: true}, 'update': { method: 'PUT', isArray: false}});
+		})
+		;
+		'''
 	
 	def compileRESTControllers(Entity e)
 		'''
@@ -167,6 +469,8 @@ package
         «FOR i : e.imports»
 import «i.importedNamespace»;
 	    «ENDFOR»
+	    import java.util.Date;
+	    
 public class «e.name» «IF e.superType !== null»extends «e.superType.fullyQualifiedName» «ENDIF»{
 	public «e.name»(){}
 	private Integer id;

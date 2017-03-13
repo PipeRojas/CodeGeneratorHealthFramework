@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.FeatureImpl#getName <em>Name</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.FeatureImpl#isMany <em>Many</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.FeatureImpl#isDiagnostic <em>Diagnostic</em>}</li>
+ *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.FeatureImpl#isTransient <em>Transient</em>}</li>
  *   <li>{@link edu.eci.prot.dsl2.dsl2.impl.FeatureImpl#getType <em>Type</em>}</li>
  * </ul>
  *
@@ -71,6 +73,46 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * @ordered
    */
   protected boolean many = MANY_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isDiagnostic() <em>Diagnostic</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isDiagnostic()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean DIAGNOSTIC_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isDiagnostic() <em>Diagnostic</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isDiagnostic()
+   * @generated
+   * @ordered
+   */
+  protected boolean diagnostic = DIAGNOSTIC_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isTransient() <em>Transient</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTransient()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean TRANSIENT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isTransient() <em>Transient</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTransient()
+   * @generated
+   * @ordered
+   */
+  protected boolean transient_ = TRANSIENT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -154,6 +196,52 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isDiagnostic()
+  {
+    return diagnostic;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDiagnostic(boolean newDiagnostic)
+  {
+    boolean oldDiagnostic = diagnostic;
+    diagnostic = newDiagnostic;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Dsl2Package.FEATURE__DIAGNOSTIC, oldDiagnostic, diagnostic));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isTransient()
+  {
+    return transient_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTransient(boolean newTransient)
+  {
+    boolean oldTransient = transient_;
+    transient_ = newTransient;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Dsl2Package.FEATURE__TRANSIENT, oldTransient, transient_));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Type getType()
   {
     if (type != null && type.eIsProxy())
@@ -206,6 +294,10 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return getName();
       case Dsl2Package.FEATURE__MANY:
         return isMany();
+      case Dsl2Package.FEATURE__DIAGNOSTIC:
+        return isDiagnostic();
+      case Dsl2Package.FEATURE__TRANSIENT:
+        return isTransient();
       case Dsl2Package.FEATURE__TYPE:
         if (resolve) return getType();
         return basicGetType();
@@ -228,6 +320,12 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return;
       case Dsl2Package.FEATURE__MANY:
         setMany((Boolean)newValue);
+        return;
+      case Dsl2Package.FEATURE__DIAGNOSTIC:
+        setDiagnostic((Boolean)newValue);
+        return;
+      case Dsl2Package.FEATURE__TRANSIENT:
+        setTransient((Boolean)newValue);
         return;
       case Dsl2Package.FEATURE__TYPE:
         setType((Type)newValue);
@@ -252,6 +350,12 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case Dsl2Package.FEATURE__MANY:
         setMany(MANY_EDEFAULT);
         return;
+      case Dsl2Package.FEATURE__DIAGNOSTIC:
+        setDiagnostic(DIAGNOSTIC_EDEFAULT);
+        return;
+      case Dsl2Package.FEATURE__TRANSIENT:
+        setTransient(TRANSIENT_EDEFAULT);
+        return;
       case Dsl2Package.FEATURE__TYPE:
         setType((Type)null);
         return;
@@ -273,6 +377,10 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case Dsl2Package.FEATURE__MANY:
         return many != MANY_EDEFAULT;
+      case Dsl2Package.FEATURE__DIAGNOSTIC:
+        return diagnostic != DIAGNOSTIC_EDEFAULT;
+      case Dsl2Package.FEATURE__TRANSIENT:
+        return transient_ != TRANSIENT_EDEFAULT;
       case Dsl2Package.FEATURE__TYPE:
         return type != null;
     }
@@ -294,6 +402,10 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
     result.append(name);
     result.append(", many: ");
     result.append(many);
+    result.append(", diagnostic: ");
+    result.append(diagnostic);
+    result.append(", transient: ");
+    result.append(transient_);
     result.append(')');
     return result.toString();
   }

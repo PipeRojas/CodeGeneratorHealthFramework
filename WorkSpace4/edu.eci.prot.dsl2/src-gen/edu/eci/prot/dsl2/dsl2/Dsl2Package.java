@@ -263,13 +263,13 @@ public interface Dsl2Package extends EPackage
   int ENTITY__SUPER_TYPE = TYPE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Service</b></em>' attribute.
+   * The feature id for the '<em><b>Principal</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ENTITY__SERVICE = TYPE_FEATURE_COUNT + 1;
+  int ENTITY__PRINCIPAL = TYPE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Imports</b></em>' containment reference list.
@@ -327,13 +327,31 @@ public interface Dsl2Package extends EPackage
   int FEATURE__MANY = 1;
 
   /**
+   * The feature id for the '<em><b>Diagnostic</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__DIAGNOSTIC = 2;
+
+  /**
+   * The feature id for the '<em><b>Transient</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__TRANSIENT = 3;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FEATURE__TYPE = 2;
+  int FEATURE__TYPE = 4;
 
   /**
    * The number of structural features of the '<em>Feature</em>' class.
@@ -342,7 +360,7 @@ public interface Dsl2Package extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE_FEATURE_COUNT = 3;
+  int FEATURE_FEATURE_COUNT = 5;
 
 
   /**
@@ -471,15 +489,15 @@ public interface Dsl2Package extends EPackage
   EReference getEntity_SuperType();
 
   /**
-   * Returns the meta object for the attribute '{@link edu.eci.prot.dsl2.dsl2.Entity#isService <em>Service</em>}'.
+   * Returns the meta object for the attribute '{@link edu.eci.prot.dsl2.dsl2.Entity#isPrincipal <em>Principal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Service</em>'.
-   * @see edu.eci.prot.dsl2.dsl2.Entity#isService()
+   * @return the meta object for the attribute '<em>Principal</em>'.
+   * @see edu.eci.prot.dsl2.dsl2.Entity#isPrincipal()
    * @see #getEntity()
    * @generated
    */
-  EAttribute getEntity_Service();
+  EAttribute getEntity_Principal();
 
   /**
    * Returns the meta object for the containment reference list '{@link edu.eci.prot.dsl2.dsl2.Entity#getImports <em>Imports</em>}'.
@@ -534,6 +552,28 @@ public interface Dsl2Package extends EPackage
    * @generated
    */
   EAttribute getFeature_Many();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.eci.prot.dsl2.dsl2.Feature#isDiagnostic <em>Diagnostic</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Diagnostic</em>'.
+   * @see edu.eci.prot.dsl2.dsl2.Feature#isDiagnostic()
+   * @see #getFeature()
+   * @generated
+   */
+  EAttribute getFeature_Diagnostic();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.eci.prot.dsl2.dsl2.Feature#isTransient <em>Transient</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Transient</em>'.
+   * @see edu.eci.prot.dsl2.dsl2.Feature#isTransient()
+   * @see #getFeature()
+   * @generated
+   */
+  EAttribute getFeature_Transient();
 
   /**
    * Returns the meta object for the reference '{@link edu.eci.prot.dsl2.dsl2.Feature#getType <em>Type</em>}'.
@@ -680,12 +720,12 @@ public interface Dsl2Package extends EPackage
     EReference ENTITY__SUPER_TYPE = eINSTANCE.getEntity_SuperType();
 
     /**
-     * The meta object literal for the '<em><b>Service</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Principal</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ENTITY__SERVICE = eINSTANCE.getEntity_Service();
+    EAttribute ENTITY__PRINCIPAL = eINSTANCE.getEntity_Principal();
 
     /**
      * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
@@ -728,6 +768,22 @@ public interface Dsl2Package extends EPackage
      * @generated
      */
     EAttribute FEATURE__MANY = eINSTANCE.getFeature_Many();
+
+    /**
+     * The meta object literal for the '<em><b>Diagnostic</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FEATURE__DIAGNOSTIC = eINSTANCE.getFeature_Diagnostic();
+
+    /**
+     * The meta object literal for the '<em><b>Transient</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FEATURE__TRANSIENT = eINSTANCE.getFeature_Transient();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.

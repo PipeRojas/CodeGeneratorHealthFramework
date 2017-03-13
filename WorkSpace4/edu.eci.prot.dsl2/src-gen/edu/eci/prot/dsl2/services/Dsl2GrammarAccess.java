@@ -221,8 +221,8 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cSuperTypeEntityCrossReference_2_1_0 = (CrossReference)cSuperTypeAssignment_2_1.eContents().get(0);
 		private final RuleCall cSuperTypeEntityQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cSuperTypeEntityCrossReference_2_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cServiceAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cServiceServiceKeyword_4_0 = (Keyword)cServiceAssignment_4.eContents().get(0);
+		private final Assignment cPrincipalAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cPrincipalPrincipalKeyword_4_0 = (Keyword)cPrincipalAssignment_4.eContents().get(0);
 		private final Assignment cImportsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cImportsImportParserRuleCall_5_0 = (RuleCall)cImportsAssignment_5.eContents().get(0);
 		private final Assignment cFeaturesAssignment_6 = (Assignment)cGroup.eContents().get(6);
@@ -231,13 +231,13 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Entity:
 		//	'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{'
-		//	service?='service'?
+		//	principal?='principal'?
 		//	imports+=Import*
 		//	features+=Feature*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{' service?='service'? imports+=Import*
+		//'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{' principal?='principal'? imports+=Import*
 		//features+=Feature* '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -268,11 +268,11 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//service?='service'?
-		public Assignment getServiceAssignment_4() { return cServiceAssignment_4; }
+		//principal?='principal'?
+		public Assignment getPrincipalAssignment_4() { return cPrincipalAssignment_4; }
 		
-		//'service'
-		public Keyword getServiceServiceKeyword_4_0() { return cServiceServiceKeyword_4_0; }
+		//'principal'
+		public Keyword getPrincipalPrincipalKeyword_4_0() { return cPrincipalPrincipalKeyword_4_0; }
 		
 		//imports+=Import*
 		public Assignment getImportsAssignment_5() { return cImportsAssignment_5; }
@@ -297,15 +297,19 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cManyAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cManyManyKeyword_2_0 = (Keyword)cManyAssignment_2.eContents().get(0);
-		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cTypeTypeCrossReference_3_0 = (CrossReference)cTypeAssignment_3.eContents().get(0);
-		private final RuleCall cTypeTypeQualifiedNameParserRuleCall_3_0_1 = (RuleCall)cTypeTypeCrossReference_3_0.eContents().get(1);
+		private final Assignment cDiagnosticAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cDiagnosticDiagnosticKeyword_3_0 = (Keyword)cDiagnosticAssignment_3.eContents().get(0);
+		private final Assignment cTransientAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cTransientTransientKeyword_4_0 = (Keyword)cTransientAssignment_4.eContents().get(0);
+		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cTypeTypeCrossReference_5_0 = (CrossReference)cTypeAssignment_5.eContents().get(0);
+		private final RuleCall cTypeTypeQualifiedNameParserRuleCall_5_0_1 = (RuleCall)cTypeTypeCrossReference_5_0.eContents().get(1);
 		
 		//Feature:
-		//	name=ID ':' many?='many'? type=[Type|QualifiedName];
+		//	name=ID ':' many?='many'? diagnostic?='diagnostic'? transient?='transient'? type=[Type|QualifiedName];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ':' many?='many'? type=[Type|QualifiedName]
+		//name=ID ':' many?='many'? diagnostic?='diagnostic'? transient?='transient'? type=[Type|QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -323,14 +327,26 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 		//'many'
 		public Keyword getManyManyKeyword_2_0() { return cManyManyKeyword_2_0; }
 		
+		//diagnostic?='diagnostic'?
+		public Assignment getDiagnosticAssignment_3() { return cDiagnosticAssignment_3; }
+		
+		//'diagnostic'
+		public Keyword getDiagnosticDiagnosticKeyword_3_0() { return cDiagnosticDiagnosticKeyword_3_0; }
+		
+		//transient?='transient'?
+		public Assignment getTransientAssignment_4() { return cTransientAssignment_4; }
+		
+		//'transient'
+		public Keyword getTransientTransientKeyword_4_0() { return cTransientTransientKeyword_4_0; }
+		
 		//type=[Type|QualifiedName]
-		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
+		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
 		
 		//[Type|QualifiedName]
-		public CrossReference getTypeTypeCrossReference_3_0() { return cTypeTypeCrossReference_3_0; }
+		public CrossReference getTypeTypeCrossReference_5_0() { return cTypeTypeCrossReference_5_0; }
 		
 		//QualifiedName
-		public RuleCall getTypeTypeQualifiedNameParserRuleCall_3_0_1() { return cTypeTypeQualifiedNameParserRuleCall_3_0_1; }
+		public RuleCall getTypeTypeQualifiedNameParserRuleCall_5_0_1() { return cTypeTypeQualifiedNameParserRuleCall_5_0_1; }
 	}
 	
 	
@@ -477,7 +493,7 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Entity:
 	//	'entity' name=ID ('extends' superType=[Entity|QualifiedName])? '{'
-	//	service?='service'?
+	//	principal?='principal'?
 	//	imports+=Import*
 	//	features+=Feature*
 	//	'}';
@@ -490,7 +506,7 @@ public class Dsl2GrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Feature:
-	//	name=ID ':' many?='many'? type=[Type|QualifiedName];
+	//	name=ID ':' many?='many'? diagnostic?='diagnostic'? transient?='transient'? type=[Type|QualifiedName];
 	public FeatureElements getFeatureAccess() {
 		return pFeature;
 	}

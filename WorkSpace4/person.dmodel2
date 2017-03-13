@@ -6,13 +6,13 @@ datatype Date
 package com.example.model{
  
     entity Person {
-    	service
+    	principal
     	id: Integer
         name: String
         firstName: String
         friends: many Person
         address : Address
-        
+        diagnostics : many diagnostic Diagnostic
     }
     
     entity Address {
@@ -22,7 +22,6 @@ package com.example.model{
     }
     
     entity Diagnostic{
-    	import java.util.Date
     	systolicPressure: Integer
     	diastolicPressure: Integer
     	bloodCholesterol: Integer

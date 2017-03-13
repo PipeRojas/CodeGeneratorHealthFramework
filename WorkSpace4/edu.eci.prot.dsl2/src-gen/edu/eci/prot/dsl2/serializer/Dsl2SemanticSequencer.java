@@ -99,7 +99,7 @@ public class Dsl2SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Entity returns Entity
 	 *
 	 * Constraint:
-	 *     (name=ID superType=[Entity|QualifiedName]? service?='service'? imports+=Import* features+=Feature*)
+	 *     (name=ID superType=[Entity|QualifiedName]? principal?='principal'? imports+=Import* features+=Feature*)
 	 */
 	protected void sequence_Entity(ISerializationContext context, Entity semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -111,7 +111,7 @@ public class Dsl2SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Feature returns Feature
 	 *
 	 * Constraint:
-	 *     (name=ID many?='many'? type=[Type|QualifiedName])
+	 *     (name=ID many?='many'? diagnostic?='diagnostic'? transient?='transient'? type=[Type|QualifiedName])
 	 */
 	protected void sequence_Feature(ISerializationContext context, Feature semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
