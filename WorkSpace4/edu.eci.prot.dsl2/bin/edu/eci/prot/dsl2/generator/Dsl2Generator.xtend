@@ -23,6 +23,7 @@ class Dsl2Generator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
 	Entity classToServe;
 	ArrayList<JSModuleData> appJSModules=new ArrayList<JSModuleData>();
+	ArrayList<String> diagnosticNames=new ArrayList<String>();
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//Create POJO entities
 		for (e : resource.allContents.toIterable.filter(Entity)) {
@@ -38,6 +39,7 @@ class Dsl2Generator extends AbstractGenerator {
 			//Create Register Investigators Views
 	        for (Feature fea : e.features) {
 	        	if(fea.diagnostic){
+	        		diagnosticNames.add(fea.name.toFirstUpper);
 	        		appJSModules.add(new JSModuleData("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
 	        			"myApp."+"RegistersInvestigatorView"+fea.name.toFirstUpper,
 	        			"RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js"))
@@ -45,6 +47,7 @@ class Dsl2Generator extends AbstractGenerator {
                 	fea.compileRegistersInvestigatorViewHtml);
                 	fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
                 	fea.compileRegistersInvestigatorViewJS);
+                	
                 	//println(cr.fullyQualifiedName.lastSegment.toFirstUpper)
                 	
                 	//fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",fea.compileRegistersInvestigatorViewJS);
@@ -72,8 +75,85 @@ class Dsl2Generator extends AbstractGenerator {
         fsa.generateFile(
 	            "/static/app/index.html",
 	            appJSModules.compileIndexHtml);
+        //Create Investigator Template
+        fsa.generateFile("/static/app/Templates/templateInvestigator.js",
+    	diagnosticNames.compileTemplateInvestigatorViewJS);
+    	fsa.generateFile("/static/app/Templates/templateInvestigator.html",
+    	diagnosticNames.compileTemplateInvestigatorViewHtml);
+    	
+    	//Clear actual collections
 	   	appJSModules.clear;
+	   	diagnosticNames.clear;
 	}
+	
+	//Create TemplateInvestigatorView
+	
+	def compileTemplateInvestigatorViewJS(ArrayList<String> diagnostics)
+	'''
+	'use strict';
+	
+	angular.module('myApp.templateInvestigator', ['ngRoute'])
+	
+	
+	.controller('templateInvestigatorCtrl', ['$rootScope', '$scope', '$location', function ($rootScope, $scope, $location) {
+	
+	      $scope.continueLogoutI=function(){
+	            $location.path("view1");
+	      };
+	      $scope.continueHomeI=function(){
+	            $location.path("HomeInvestigator");
+	      };
+		«FOR diag: diagnostics»
+		$scope.continueRegistersI«diag»=function(){
+		        $location.path("RegistersInvestigatorView«diag»");
+		  };
+		«ENDFOR»
+	}]);
+	'''
+	
+	
+	def compileTemplateInvestigatorViewHtml(ArrayList<String> diagnostics)
+	'''
+	<meta charset="windows-1252">
+	<div ng-controller="templateInvestigatorCtrl">
+	    <!-- Navigation -->
+	    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	        <div class="navbar-header">
+	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	        </div>
+	        <!-- /.navbar-header -->
+	
+	        <ul class="nav navbar-top-links navbar-right">
+	            <li><a ng-click="continueLogoutI()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+	            </li>
+	        </ul>
+	        <!-- /.navbar-top-links -->
+	
+	        <div class="navbar-default sidebar" role="navigation">
+	            <div class="sidebar-nav navbar-collapse">
+	                <ul class="nav" id="side-menu">
+	                    <li>
+	                        <a ng-click="continueHomeI()"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+	                    </li>
+	                    «FOR diag: diagnostics»
+	                    <li>
+	                    <a  ng-click="continueRegistersI«diag»()"><i class="fa fa-bar-chart-o fa-fw"></i> Registros del Estudio «diag» </a>
+	                    </li>                
+	                    «ENDFOR»
+	                </ul>
+	            </div>
+	            <!-- /.sidebar-collapse -->
+	        </div>
+	        <!-- /.navbar-static-side -->
+	    </nav>
+	</div>
+	'''
 	
 	//Create index.html
 	def compileIndexHtml(ArrayList<JSModuleData> modules)
@@ -133,8 +213,6 @@ class Dsl2Generator extends AbstractGenerator {
 		  <script src="app.js"></script>
 		  <script src="view1/view1.js"></script>
 		  <script src="PatientAutorization/PatientAutorization.js"></script>
-		  <script src="Templates/templatePatient.js"></script>
-		  <script src="Templates/templateDoctor.js"></script>
 		  <script src="Templates/templateInvestigator.js"></script>
 		  <script src="HomeInvestigator/HomeInvestigator.js"></script>
 		  <script src="PatientChoiceView/PatientChoiceView.js"></script>
@@ -170,6 +248,7 @@ class Dsl2Generator extends AbstractGenerator {
 		  «FOR m : modules»
 		  '«m.JSAppModuleString»',
 		  «ENDFOR»
+		  'myApp.templateInvestigator',
 		  'myApp.view1',
 		  'myApp.HomeInvestigator',
 		  'myApp.PatientAutorization',
@@ -216,7 +295,7 @@ class Dsl2Generator extends AbstractGenerator {
 		                    «ENDFOR»
 		                    $scope.labels=[];
 		                    $scope.diagnostics=[];
-		                    $scope.series = ['Datos de Control del estudio'];
+		                    $scope.series = ['Datos de Control del estudio «f.name.toFirstUpper»'];
 		                    for (var i = 0; i < $scope.«classToServe.name.toFirstLower»sList.length; i++) {
 		                        if($scope.«classToServe.name.toFirstLower»sList[i].«f.name».length >= 1){
 		                            $scope.«classToServe.name.toFirstLower»=$scope.«classToServe.name.toFirstLower»sList[i];
@@ -292,7 +371,7 @@ class Dsl2Generator extends AbstractGenerator {
 		<div id="page-wrapper">
 		    <div class="row">
 		        <div class="col-lg-12">
-		            <h1 class="page-header">Datos de control del estudio</h1>
+		            <h1 class="page-header">Datos de control del estudio «f.name.toFirstUpper»</h1>
 		        </div>
 		        <!-- /.col-lg-12 -->
 		    </div>

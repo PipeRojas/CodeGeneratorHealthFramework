@@ -39,6 +39,8 @@ public class Dsl2Generator extends AbstractGenerator {
   
   private ArrayList<JSModuleData> appJSModules = new ArrayList<JSModuleData>();
   
+  private ArrayList<String> diagnosticNames = new ArrayList<String>();
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     Iterable<Entity> _filter = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), Entity.class);
@@ -59,6 +61,7 @@ public class Dsl2Generator extends AbstractGenerator {
         for (final Feature fea : _features) {
           boolean _isDiagnostic = fea.isDiagnostic();
           if (_isDiagnostic) {
+            this.diagnosticNames.add(StringExtensions.toFirstUpper(fea.getName()));
             String _firstUpper = StringExtensions.toFirstUpper(fea.getName());
             String _plus_1 = ("/static/app/RegistersInvestigatorView" + _firstUpper);
             String _plus_2 = (_plus_1 + "/RegistersInvestigatorView");
@@ -137,7 +140,183 @@ public class Dsl2Generator extends AbstractGenerator {
     fsa.generateFile(
       "/static/app/index.html", 
       this.compileIndexHtml(this.appJSModules));
+    fsa.generateFile("/static/app/Templates/templateInvestigator.js", 
+      this.compileTemplateInvestigatorViewJS(this.diagnosticNames));
+    fsa.generateFile("/static/app/Templates/templateInvestigator.html", 
+      this.compileTemplateInvestigatorViewHtml(this.diagnosticNames));
     this.appJSModules.clear();
+    this.diagnosticNames.clear();
+  }
+  
+  public CharSequence compileTemplateInvestigatorViewJS(final ArrayList<String> diagnostics) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.templateInvestigator\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'templateInvestigatorCtrl\', [\'$rootScope\', \'$scope\', \'$location\', function ($rootScope, $scope, $location) {");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("$scope.continueLogoutI=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$location.path(\"view1\");");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("$scope.continueHomeI=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$location.path(\"HomeInvestigator\");");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("};");
+    _builder.newLine();
+    {
+      for(final String diag : diagnostics) {
+        _builder.append("\t");
+        _builder.append("$scope.continueRegistersI");
+        _builder.append(diag, "\t");
+        _builder.append("=function(){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("        ");
+        _builder.append("$location.path(\"RegistersInvestigatorView");
+        _builder.append(diag, "\t        ");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("  ");
+        _builder.append("};");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileTemplateInvestigatorViewHtml(final ArrayList<String> diagnostics) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<meta charset=\"windows-1252\">");
+    _builder.newLine();
+    _builder.append("<div ng-controller=\"templateInvestigatorCtrl\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- Navigation -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"navbar-header\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"sr-only\">Toggle navigation</span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</button>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">SB Admin v2.0</a>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-header -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<ul class=\"nav navbar-top-links navbar-right\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<li><a ng-click=\"continueLogoutI()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesión</a>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</li>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</ul>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-top-links -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"navbar-default sidebar\" role=\"navigation\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"sidebar-nav navbar-collapse\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<ul class=\"nav\" id=\"side-menu\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<li>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<a ng-click=\"continueHomeI()\"><i class=\"fa fa-dashboard fa-fw\"></i>Inicio</a>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</li>");
+    _builder.newLine();
+    {
+      for(final String diag : diagnostics) {
+        _builder.append("                    ");
+        _builder.append("<li>");
+        _builder.newLine();
+        _builder.append("                    ");
+        _builder.append("<a  ng-click=\"continueRegistersI");
+        _builder.append(diag, "                    ");
+        _builder.append("()\"><i class=\"fa fa-bar-chart-o fa-fw\"></i> Registros del Estudio ");
+        _builder.append(diag, "                    ");
+        _builder.append(" </a>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                    ");
+        _builder.append("</li>                ");
+        _builder.newLine();
+      }
+    }
+    _builder.append("                ");
+    _builder.append("</ul>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.sidebar-collapse -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-static-side -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</nav>");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    return _builder;
   }
   
   public CharSequence compileIndexHtml(final ArrayList<JSModuleData> modules) {
@@ -284,12 +463,6 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<script src=\"PatientAutorization/PatientAutorization.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
-    _builder.append("<script src=\"Templates/templatePatient.js\"></script>");
-    _builder.newLine();
-    _builder.append("  ");
-    _builder.append("<script src=\"Templates/templateDoctor.js\"></script>");
-    _builder.newLine();
-    _builder.append("  ");
     _builder.append("<script src=\"Templates/templateInvestigator.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
@@ -370,6 +543,9 @@ public class Dsl2Generator extends AbstractGenerator {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("  ");
+    _builder.append("\'myApp.templateInvestigator\',");
+    _builder.newLine();
     _builder.append("  ");
     _builder.append("\'myApp.view1\',");
     _builder.newLine();
@@ -516,8 +692,11 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("$scope.diagnostics=[];");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("$scope.series = [\'Datos de Control del estudio\'];");
-    _builder.newLine();
+    _builder.append("$scope.series = [\'Datos de Control del estudio ");
+    String _firstUpper_6 = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper_6, "                    ");
+    _builder.append("\'];");
+    _builder.newLineIfNotEmpty();
     _builder.append("                    ");
     _builder.append("for (var i = 0; i < $scope.");
     String _firstLower_6 = StringExtensions.toFirstLower(this.classToServe.getName());
@@ -735,8 +914,8 @@ public class Dsl2Generator extends AbstractGenerator {
           boolean _equals_7 = feature_7.getType().getName().equals("Integer");
           if (_equals_7) {
             _builder.append("\'");
-            String _firstUpper_6 = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment());
-            _builder.append(_firstUpper_6);
+            String _firstUpper_7 = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment());
+            _builder.append(_firstUpper_7);
             _builder.append("\'");
             _builder.newLineIfNotEmpty();
             {
@@ -791,8 +970,11 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<div class=\"col-lg-12\">");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<h1 class=\"page-header\">Datos de control del estudio</h1>");
-    _builder.newLine();
+    _builder.append("<h1 class=\"page-header\">Datos de control del estudio ");
+    String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+    _builder.append(_firstUpper, "            ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
     _builder.append("        ");
     _builder.append("</div>");
     _builder.newLine();
@@ -875,8 +1057,8 @@ public class Dsl2Generator extends AbstractGenerator {
             _builder.append("<div class=\"panel-heading\">");
             _builder.newLine();
             _builder.append("\t\t                    ");
-            String _firstUpper = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment());
-            _builder.append(_firstUpper, "\t\t                    ");
+            String _firstUpper_1 = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment());
+            _builder.append(_firstUpper_1, "\t\t                    ");
             _builder.append(" (Promedio de cada participante)");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
