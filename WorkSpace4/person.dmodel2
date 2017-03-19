@@ -1,5 +1,4 @@
 datatype String
-datatype Address
 datatype Integer
 datatype Date
 

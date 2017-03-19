@@ -4,6 +4,7 @@
 package edu.eci.prot.dsl2.validation;
 
 import com.google.common.collect.Iterables;
+import edu.eci.prot.dsl2.dsl2.DataType;
 import edu.eci.prot.dsl2.dsl2.Dsl2Package;
 import edu.eci.prot.dsl2.dsl2.Entity;
 import edu.eci.prot.dsl2.dsl2.Feature;
@@ -52,6 +53,123 @@ public class Dsl2Validator extends AbstractDsl2Validator {
   public void checkManyCannotBeTransient(final Feature f) {
     if ((f.isMany() && f.isTransient())) {
       this.error("Feature with \"many\" property cannot have \"transient\" property", Dsl2Package.Literals.ENTITY__FEATURES);
+    }
+  }
+  
+  @Check
+  public void checkValidDataType(final DataType d) {
+    boolean _not = (!(((((((((d.getName().equals("Byte") || d.getName().equals("Short")) || d.getName().equals("Integer")) || d.getName().equals("Long")) || d.getName().equals("Float")) || d.getName().equals("Double")) || d.getName().equals("Char")) || d.getName().equals("String")) || d.getName().equals("Boolean")) || d.getName().equals("Date")));
+    if (_not) {
+      this.error("datatype must be a primitive type like: Byte or Short or Integer or Long or Float or Double or Character or String or Boolean or Date", Dsl2Package.Literals.ABSTRACT_ELEMENT__NAME);
+    }
+  }
+  
+  @Check
+  public void checkNameAndIdForPrincipalEntity(final Entity e) {
+    boolean flagName = false;
+    boolean flagId = false;
+    boolean _isPrincipal = e.isPrincipal();
+    if (_isPrincipal) {
+      for (int i = 0; ((i < e.getFeatures().size()) && (!(flagName && flagId))); i++) {
+        if ((e.getFeatures().get(i).getName().equals("id") && e.getFeatures().get(i).getType().getName().equals("Integer"))) {
+          flagId = true;
+        } else {
+          if ((e.getFeatures().get(i).getName().equals("name") && e.getFeatures().get(i).getType().getName().equals("String"))) {
+            flagName = true;
+          }
+        }
+      }
+      if (((!flagId) || (!flagName))) {
+        this.error("If entity is principal, must have id of type Integer and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
+      }
+    }
+  }
+  
+  public void checkDiagnosticMustHaveDate(final Feature f) {
+    boolean ans = false;
+    boolean _isDiagnostic = f.isDiagnostic();
+    if (_isDiagnostic) {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for (final EObject inFea : _iterable) {
+        {
+          Feature feature = ((Feature) inFea);
+          if ((feature.getName().equals("date") && feature.getType().getName().equals("Date"))) {
+            ans = true;
+          }
+        }
+      }
+      if ((!ans)) {
+        String _name = f.getName();
+        String _plus = (_name + " feature is a diagnostic, so its entity must have an feature called \'date\' of type \'Date\'");
+        this.error(_plus, Dsl2Package.Literals.FEATURE__TYPE);
+      }
+    }
+  }
+  
+  @Check
+  public void checkDiagnosticCannotBeDatatype(final Feature d) {
+    if ((d.isDiagnostic() && (((((((((d.getType().getName().equals("Byte") || d.getType().getName().equals("Short")) || d.getType().getName().equals("Integer")) || d.getType().getName().equals("Long")) || d.getType().getName().equals("Float")) || d.getType().getName().equals("Double")) || d.getType().getName().equals("Char")) || d.getType().getName().equals("String")) || d.getType().getName().equals("Boolean")) || d.getType().getName().equals("Date")))) {
+      this.error("Diagnostic feature must reference an entity and not an datatype", Dsl2Package.Literals.FEATURE__TYPE);
+    } else {
+      boolean _isDiagnostic = d.isDiagnostic();
+      if (_isDiagnostic) {
+        this.checkDiagnosticMustHaveDate(d);
+      }
+    }
+  }
+  
+  @Check
+  public void checkDiagnosticMustBeMany(final Feature f) {
+    if ((f.isDiagnostic() && (!f.isMany()))) {
+      this.error("Every Diagnostic feature must be Many", Dsl2Package.Literals.FEATURE__MANY);
+    }
+  }
+  
+  @Check
+  public void checkCommentFeaturePrimitiveFeatures(final Feature f) {
+    boolean ans = true;
+    boolean hasDate = false;
+    boolean hasTitle = false;
+    if ((f.isMany() && (!f.isDiagnostic()))) {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for (final EObject dat : _iterable) {
+        {
+          Feature feature = ((Feature) dat);
+          if ((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date")))) {
+            ans = false;
+          } else {
+            if ((feature.getType().getName().equals("Date") && feature.getName().equals("date"))) {
+              hasDate = true;
+            } else {
+              if ((feature.getType().getName().equals("String") && feature.getName().equals("title"))) {
+                hasTitle = true;
+              }
+            }
+          }
+        }
+      }
+      if ((!hasDate)) {
+        this.error("At least one feature of comment feature must be called \'date\' and have \'Date\' type", Dsl2Package.Literals.FEATURE__TYPE);
+      } else {
+        if ((!hasTitle)) {
+          this.error("At least one feature of comment feature must be called \'title and have \'String\' type", Dsl2Package.Literals.FEATURE__TYPE);
+        }
+      }
+    }
+    if ((!ans)) {
+      String _name = f.getName();
+      String _plus = (_name + " feature is a comment feature and must have features of types String, Integer or Date only");
+      this.error(_plus, Dsl2Package.Literals.FEATURE__TYPE);
+    }
+  }
+  
+  @Check
+  public void checkManyFeatureCannotBePrimitive(final Feature d) {
+    boolean _isMany = d.isMany();
+    if (_isMany) {
+      if ((((((((((d.getType().getName().equals("Byte") || d.getType().getName().equals("Short")) || d.getType().getName().equals("Integer")) || d.getType().getName().equals("Long")) || d.getType().getName().equals("Float")) || d.getType().getName().equals("Double")) || d.getType().getName().equals("Char")) || d.getType().getName().equals("String")) || d.getType().getName().equals("Boolean")) || d.getType().getName().equals("Date"))) {
+        this.error("Features with \'many\' token cannot be primitive types", Dsl2Package.Literals.FEATURE__TYPE);
+      }
     }
   }
 }

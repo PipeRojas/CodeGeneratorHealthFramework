@@ -23,12 +23,15 @@ class Dsl2Generator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
 	Entity classToServe;
 	ArrayList<JSModuleData> appJSModules=new ArrayList<JSModuleData>();
-	ArrayList<String> diagnosticNames=new ArrayList<String>();
+	ArrayList<Feature> diagnostics=new ArrayList<Feature>();
+	ArrayList<Feature> comments=new ArrayList<Feature>();
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//Create POJO entities
 		for (e : resource.allContents.toIterable.filter(Entity)) {
 			if(e.principal){
 				classToServe=e;
+				
+				
 			}
 		}
 		for (e : resource.allContents.toIterable.filter(Entity)) {
@@ -38,19 +41,59 @@ class Dsl2Generator extends AbstractGenerator {
                 e.compile)
 			//Create Register Investigators Views
 	        for (Feature fea : e.features) {
+	        	//Finding diagnostics
 	        	if(fea.diagnostic){
-	        		diagnosticNames.add(fea.name.toFirstUpper);
+	        		diagnostics.add(fea);
+	        		
+	        		//Add InvestigatorView Path
+	        		
 	        		appJSModules.add(new JSModuleData("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
 	        			"myApp."+"RegistersInvestigatorView"+fea.name.toFirstUpper,
 	        			"RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js"))
+        			
+        			//Create InvestigatorRegister View
+        			
 	        		fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".html",
                 	fea.compileRegistersInvestigatorViewHtml);
                 	fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
                 	fea.compileRegistersInvestigatorViewJS);
                 	
+                	//Add RegisterDoctorView Path
+                	
+	        		
+	        		appJSModules.add(new JSModuleData("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js",
+	        			"myApp.RegisterDoctorView"+fea.name.toFirstUpper,
+	        			"RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js"))
+                	
+                	//Create RegisterDoctorView
+                	
+                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".html",
+                	fea.compileRegisterDoctorViewHtml);
+                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".js",
+                	fea.compileRegisterDoctorViewJS);
+                	
                 	//println(cr.fullyQualifiedName.lastSegment.toFirstUpper)
                 	
                 	//fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",fea.compileRegistersInvestigatorViewJS);
+	        	}else if(!fea.diagnostic&&fea.many){
+	        		
+	        		//Finding Comments
+	        		comments.add(fea);
+	        		
+	        		//Add CommentsDoctorView Path
+                	
+	        		
+	        		appJSModules.add(new JSModuleData("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js",
+	        			"myApp.CommentsDoctorView"+fea.name.toFirstUpper,
+	        			"CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js"))
+	        		
+	        		//Create CommentsDoctorView
+	        		
+	        		fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".html",
+                	fea.compileCommentsDoctorViewHtml);
+                	fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".js",
+                	fea.compileCommentsDoctorViewJS);
+	        		
 	        	}
 	        }
         }
@@ -67,28 +110,475 @@ class Dsl2Generator extends AbstractGenerator {
 	            classToServe.compileRESTControllers);
 	        //Create JS Services
 	        fsa.generateFile("/static/app/services/services.js", classToServe.compileJSServices);
+	        
+	        //Create HomeDoctor View
+		
+			fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.html",
+	    	classToServe.compileHomeDoctorHtml);
+	    	fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.js",
+	    	classToServe.compileHomeDoctorJS);
+	    	
+	    	//Create Investigator Template
+	        fsa.generateFile("/static/app/Templates/templateInvestigator.js",
+	    	diagnostics.compileTemplateInvestigatorViewJS);
+	    	fsa.generateFile("/static/app/Templates/templateInvestigator.html",
+	    	diagnostics.compileTemplateInvestigatorViewHtml);
+	    	
+	    	//CreateDoctorTemplate
+	    	fsa.generateFile("/static/app/Templates/templateDoctor.js",
+	    	comments.compileTemplateDoctorViewJS);
+	    	fsa.generateFile("/static/app/Templates/templateDoctor.html",
+	    	comments.compileTemplateDoctorViewHtml);
+	    	
+	    	//create app.js & index.html
+		   	fsa.generateFile(
+		            "/static/app/app.js",
+		            appJSModules.compileAppJS);
+	        fsa.generateFile(
+		            "/static/app/index.html",
+		            appJSModules.compileIndexHtml);
         }
-	   	//create app.js & index.html
-	   	fsa.generateFile(
-	            "/static/app/app.js",
-	            appJSModules.compileAppJS);
-        fsa.generateFile(
-	            "/static/app/index.html",
-	            appJSModules.compileIndexHtml);
-        //Create Investigator Template
-        fsa.generateFile("/static/app/Templates/templateInvestigator.js",
-    	diagnosticNames.compileTemplateInvestigatorViewJS);
-    	fsa.generateFile("/static/app/Templates/templateInvestigator.html",
-    	diagnosticNames.compileTemplateInvestigatorViewHtml);
-    	
+	   	
     	//Clear actual collections
+    	comments.clear;
 	   	appJSModules.clear;
-	   	diagnosticNames.clear;
+	   	diagnostics.clear;
 	}
+	
+	
+	//Create CommentsDoctorView
+	
+	def compileCommentsDoctorViewJS(Feature comment)
+	'''
+	'use strict';
+	
+	angular.module('myApp.CommentsDoctorView«comment.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/CommentsDoctorView«comment.name.toFirstUpper»', {
+	    templateUrl: 'CommentsDoctorView«comment.name.toFirstUpper»/CommentsDoctorView«comment.name.toFirstUpper».html',
+	    controller: 'CommentsDoctorView«comment.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('CommentsDoctorView«comment.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', function ($rootScope, $scope, «classToServe.name.toFirstLower») {
+	     $scope.foundCD=$rootScope.FindID;
+	     «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$rootScope.patientId})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $scope.«classToServe.name.toFirstLower»C=value;
+	                            $scope.comments=$scope.«classToServe.name.toFirstLower»C.comments;
+	                            if (typeof $scope.comments == "undefined"){
+	                                $scope.commentsY=false;
+	                                $scope.commentsTitle="No tiene ningún comentario";
+	                            }
+	                            if(typeof $scope.comments != "undefined"){
+	                                $scope.commentsY=true;
+	                            }
+	                        },
+	                        //error
+	                        function( error ){
+	                            console.log("Identificador no se encuentra registrado");
+	                        }
+	                );
+	
+	}]);
+	'''
+	
+	def compileCommentsDoctorViewHtml(Feature comment)
+	'''
+	<div ng-include="'/app/Templates/templateDoctor.html'"></div>
+	<div id="page-wrapper" ng-show="foundCD">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Comentarios de «comment.name.toFirstUpper»</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                </div>
+	                <!-- /.panel-heading -->
+	                <div class="panel-body">
+	                    <div ng-hide="commentsY">
+	                        {{commentsTitle}}
+	                    </div>
+	                    <div ng-show="commentsY">
+	                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+	                            <thead>
+	                            <tr>
+	                                <th>Comentarios</th>
+	                            </tr>
+	                            </thead>
+	                            <tbody>
+	                            <tr ng-repeat="c in comments" >
+	                                <td>
+	                                    <div class="panel panel-green">
+	                                    	«FOR dat: comment.type.eAllContents.toIterable»
+                    	                    «var feature =dat as Feature»
+                    	                    «IF(feature.type.name.equals("Date"))»
+                    	                    <div class="panel-footer">
+                    	                    	{{c.«feature.name» | date:"dd/MMMM/yyyy"}}
+                    	                    </div>
+                    	                    «ELSE»
+                    	                    <div class="panel-heading">
+                    	                    	{{c.«feature.name»}}
+                    	                    </div>
+                    	                    «ENDIF»
+                    	                    «ENDFOR»
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                            </tbody>
+	                        </table>
+	                        <!-- /.table-responsive -->
+	                    </div>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	'''
+	
+	//Create RegisterDoctorView
+	
+	def compileRegisterDoctorViewJS(Feature diagnostic)
+	'''
+	'use strict';
+	
+	angular.module('myApp.RegisterDoctorView«diagnostic.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/RegisterDoctorView«diagnostic.name.toFirstUpper»', {
+	    templateUrl: 'RegisterDoctorView«diagnostic.name.toFirstUpper»/RegisterDoctorView«diagnostic.name.toFirstUpper».html',
+	    controller: 'RegisterDoctorView«diagnostic.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('RegisterDoctorView«diagnostic.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', '«classToServe.name.toFirstLower»s', function ($rootScope, $scope, «classToServe.name.toFirstLower», «classToServe.name.toFirstLower»s) {
+	
+	    $scope.foundRD=$rootScope.FindID;
+	    «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$rootScope.patientId})
+	    .$promise.then(
+	            //success
+	            function( value ){
+	                $scope.principal=value;
+	                $scope.diagnostics=$scope.principal.diagnostics;
+	                «FOR dat: diagnostic.type.eAllContents.toIterable»
+                    «var feature =dat as Feature»
+    				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+    				$scope.«feature.name»=[];
+                    «ENDIF»
+                    «ENDFOR»
+	                $scope.labels=[];
+	                $scope.series = ['Datos de Control «diagnostic.name.toFirstUpper»'];
+	                for(var n=0; n<$scope.diagnostics.length; n++){
+	                    var dd=$scope.diagnostics[n];
+	                    «FOR dat: diagnostic.type.eAllContents.toIterable»
+                        «var feature =dat as Feature»
+        				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+        				$scope.«feature.name».push(dd.«feature.name»);
+                        «ENDIF»
+                        «ENDFOR»
+	                    var datee=new Date(dd.date);
+	                    var dia = datee.getDate();
+	                    var mes = parseInt(datee.getMonth()) + 1;
+	                    var year = datee.getFullYear();
+	                    var dated=dia+"/"+mes+"/"+year;
+	                    $scope.labels.push(dated);
+	                }
+	            },
+	            //error
+	            function( error ){
+	                console.log("Error");
+	            }
+	    );
+	
+	}]);
+	'''
+	
+	def compileRegisterDoctorViewHtml(Feature diagnostic)
+	'''
+	<div ng-include="'/app/Templates/templateDoctor.html'"></div>
+	<div id="page-wrapper" ng-show="foundRD">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Datos de control de {{principal.name}}</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                </div>
+	                <!-- /.panel-heading -->
+	                <div class="panel-body">
+	                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+	                        <thead>
+	                        <tr>
+	                        	«FOR dat: diagnostic.type.eAllContents.toIterable»
+			                    «var feature =dat as Feature»
+	            				«IF((feature.type.name.equals("Date"))||(feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+	            				<th>«dat.fullyQualifiedName.lastSegment.toFirstUpper»</th>
+			                    «ENDIF»
+			                    «ENDFOR»
+	                        </tr>
+	                        </thead>
+	                        <tbody>
+	                        <tr ng-repeat="d in diagnostics" >
+	                        	«FOR dat: diagnostic.type.eAllContents.toIterable»
+                				«var feature =dat as Feature»
+                				«IF((feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+                				<td>{{d.«feature.name»}}</td>
+                				«ENDIF»
+                				«IF(feature.type.name.equals("Date"))»
+                				<td>{{d.«feature.name» | date:"dd/MMMM/yyyy"}}</td>
+                				«ENDIF»
+                				«ENDFOR»
+	                        </tr>
+	                        </tbody>
+	                    </table>
+	                    <!-- /.table-responsive -->
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <div class="row">
+	    	«FOR dat: diagnostic.type.eAllContents.toIterable»
+			«var feature =dat as Feature»
+			«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						«feature.name.toFirstUpper»
+					</div>
+					<div class="panel-body">
+						<canvas  id="«feature.name»" class="chart chart-bar"
+							chart-data="«feature.name»" chart-labels="labels" chart-series="series">
+						</canvas>
+					</div>
+				<!-- /.panel-body -->
+				</div>
+			<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-4 -->
+			«ENDIF»
+			«ENDFOR»
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	'''
+	
+	
+	//Create HomeDoctor View
+	
+	def compileHomeDoctorJS(Entity e)
+	'''
+	'use strict';
+	
+	angular.module('myApp.HomeDoctor', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/HomeDoctor', {
+	    templateUrl: 'HomeDoctor/HomeDoctor.html',
+	    controller: 'HomeDoctorCtrl'
+	  });
+	}])
+	
+	.controller('HomeDoctorCtrl', ['$rootScope', '$scope', '«e.name.toFirstLower»','$location', function ($rootScope, $scope, «e.name.toFirstLower»,$location) {
+	
+	    $rootScope.FindID=false;
+	    $rootScope.patientId=null;
+	    $scope.found=false;
+	    $scope.pId=null;
+	    $rootScope.patientId=$scope.pId;
+	    $scope.consultar=function(){
+	        $rootScope.patientId=$scope.pId;
+	        «classToServe.name.toFirstLower».get({«e.name.toFirstLower»Id:""+$rootScope.patientId})
+	        .$promise.then(
+	                //success
+	                function( value ){
+	                    $rootScope.FindID=true;
+	                    $scope.principal=value;
+	                },
+	                //error
+	                function( error ){
+	                    alert("Identificador no se encuentra registrado");
+	                }
+	        );
+	
+	    };
+	    $scope.NuevaConsulta=function(){
+	        $rootScope.FindID=false;
+	    };
+	
+	}]);
+	'''
+	
+	def compileHomeDoctorHtml(Entity e)
+	'''
+	<div ng-include="'/app/Templates/templateDoctor.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Consulta los datos de control</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	        <div ng-hide="FindID">
+	            <label> Identificador a consultar</label>
+	            <br><br>
+	            <input type="number" ng-model="pId">
+	            <br><br>
+	
+	            <button type="button" class="btn btn-success" ng-click="consultar()">Consultar Datos</button>
+	            <br><br>
+	        </div>
+	        <div ng-show="FindID">
+	            <button type="button" class="btn btn-success" ng-click="NuevaConsulta()">Nueva Consulta</button>
+	            <br><br>
+	        </div>
+	    </div>
+	
+	    <div class="row" ng-show="FindID">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Datos de {{principal.name}}
+	                </div>
+	                <div class="panel-body">
+	                    <h2> Número de Identificación
+	                        <br><br>
+	                        <small> {{principal.id}} </small>
+	                    </h2>
+	                    <br><br>
+	                    «FOR feature : e.features»
+	                    «IF(!feature.many)»
+	                    <h2> «feature.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{principal.«feature.name»}} </small>
+	                    </h2>
+	                    <br><br>
+	                    «ENDIF»
+	                    «ENDFOR»
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	'''
+	
+	//Create TemplateDoctorView
+	
+	def compileTemplateDoctorViewJS(ArrayList<Feature> comments)
+	'''
+	'use strict';
+	
+	angular.module('myApp.templateDoctor', ['ngRoute'])
+	
+	.controller('templateDoctorCtrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', '$location', function ($rootScope, $scope, «classToServe.name.toFirstLower», $location) {
+	
+	      $scope.continueLogoutD=function(){
+	            $location.path("view1");
+	      };
+	      $scope.continueHomeD=function(){
+	            $location.path("HomeDoctor");
+	      };
+	      «FOR diag : diagnostics»
+	      $scope.continueRegistersP«diag.name.toFirstUpper»=function(){
+	      		$location.path("RegisterDoctorView«diag.name.toFirstUpper»");
+	      };
+	      «ENDFOR»
+			«FOR comm: comments»
+$scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
+        $location.path("CommentRegister«comm.name.toFirstUpper»");
+  };
+  $scope.continueCommentView«comm.name.toFirstUpper»=function(){
+        $location.path("CommentsDoctorView«comm.name.toFirstUpper»");
+  };
+			«ENDFOR»
+	}]);
+	'''
+	
+	
+	def compileTemplateDoctorViewHtml(ArrayList<Feature> comments)
+	'''
+	<div ng-controller="templateDoctorCtrl">
+	    <!-- Navigation -->
+	    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	        <div class="navbar-header">
+	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	        </div>
+	        <!-- /.navbar-header -->
+	
+	        <ul class="nav navbar-top-links navbar-right">
+	            <li><a ng-click="continueLogoutD()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+	            </li>
+	        </ul>
+	        <!-- /.navbar-top-links -->
+	
+	        <div class="navbar-default sidebar" role="navigation">
+	            <div class="sidebar-nav navbar-collapse">
+	                <ul class="nav" id="side-menu">
+	                    <li>
+	                        <a ng-click="continueHomeD()"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+	                    </li>
+	                    «FOR diag: diagnostics»
+	                    <li>
+	                        <a  ng-click="continueRegistersP«diag.name.toFirstUpper»()"><i class="fa fa-bar-chart-o fa-fw"></i> Registros de «diag.name.toFirstUpper»</a>
+	                    </li>
+                		«ENDFOR»
+	                    <li>
+	                        <a><i class="fa fa-edit fa-fw"></i> Recomendaciones</a>
+	                        <ul class="nav nav-second-level">
+	                        	«FOR comm: comments»
+	                        	<li>
+	                        		<a ng-click="continueCommentView«comm.name.toFirstUpper»()">Ver Comentarios «comm.name.toFirstUpper»</a>
+	                        	</li>
+	                        	<li>
+	                        		<a ng-click="continueCommentRegister«comm.name.toFirstUpper»()">Registrar Nuevo Comentario «comm.name.toFirstUpper»</a>
+	                        	</li>
+	                        	«ENDFOR»
+	                        </ul>
+	                        <!-- /.nav-second-level -->
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.sidebar-collapse -->
+	        </div>
+	        <!-- /.navbar-static-side -->
+	    </nav>
+	</div>
+	'''
 	
 	//Create TemplateInvestigatorView
 	
-	def compileTemplateInvestigatorViewJS(ArrayList<String> diagnostics)
+	def compileTemplateInvestigatorViewJS(ArrayList<Feature> diagnostics)
 	'''
 	'use strict';
 	
@@ -104,15 +594,15 @@ class Dsl2Generator extends AbstractGenerator {
 	            $location.path("HomeInvestigator");
 	      };
 		«FOR diag: diagnostics»
-		$scope.continueRegistersI«diag»=function(){
-		        $location.path("RegistersInvestigatorView«diag»");
+		$scope.continueRegistersI«diag.name.toFirstUpper»=function(){
+		        $location.path("RegistersInvestigatorView«diag.name.toFirstUpper»");
 		  };
 		«ENDFOR»
 	}]);
 	'''
 	
 	
-	def compileTemplateInvestigatorViewHtml(ArrayList<String> diagnostics)
+	def compileTemplateInvestigatorViewHtml(ArrayList<Feature> diagnostics)
 	'''
 	<meta charset="windows-1252">
 	<div ng-controller="templateInvestigatorCtrl">
@@ -143,7 +633,7 @@ class Dsl2Generator extends AbstractGenerator {
 	                    </li>
 	                    «FOR diag: diagnostics»
 	                    <li>
-	                    <a  ng-click="continueRegistersI«diag»()"><i class="fa fa-bar-chart-o fa-fw"></i> Registros del Estudio «diag» </a>
+	                    <a  ng-click="continueRegistersI«diag.name.toFirstUpper»()"><i class="fa fa-bar-chart-o fa-fw"></i> Registros del Estudio «diag.name.toFirstUpper» </a>
 	                    </li>                
 	                    «ENDFOR»
 	                </ul>
@@ -214,7 +704,9 @@ class Dsl2Generator extends AbstractGenerator {
 		  <script src="view1/view1.js"></script>
 		  <script src="PatientAutorization/PatientAutorization.js"></script>
 		  <script src="Templates/templateInvestigator.js"></script>
+		  <script src="Templates/templateDoctor.js"></script>
 		  <script src="HomeInvestigator/HomeInvestigator.js"></script>
+		  <script src="HomeDoctor/HomeDoctor.js"></script>
 		  <script src="PatientChoiceView/PatientChoiceView.js"></script>
 		  «FOR m: modules»
 		  <script src="«m.htmlSRCString»"></script>
@@ -248,11 +740,13 @@ class Dsl2Generator extends AbstractGenerator {
 		  «FOR m : modules»
 		  '«m.JSAppModuleString»',
 		  «ENDFOR»
+		  'myApp.templateDoctor',
 		  'myApp.templateInvestigator',
 		  'myApp.view1',
 		  'myApp.HomeInvestigator',
 		  'myApp.PatientAutorization',
 		  'myApp.PatientChoiceView',
+		  'myApp.HomeDoctor',
 		  'myApp.version',
 		  'services.factory',
 		  'chart.js'
@@ -288,7 +782,7 @@ class Dsl2Generator extends AbstractGenerator {
 		                    «var intPropCounter=0»
 		                    «FOR dat: f.type.eAllContents.toIterable»
 		                    «var feature =dat as Feature»
-            				«IF(feature.type.name.equals("Integer"))»
+            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
             				$scope.«dat.fullyQualifiedName.lastSegment»=[];
             				//«intPropCounter=intPropCounter+1»
 		                    «ENDIF»
@@ -296,13 +790,14 @@ class Dsl2Generator extends AbstractGenerator {
 		                    $scope.labels=[];
 		                    $scope.diagnostics=[];
 		                    $scope.series = ['Datos de Control del estudio «f.name.toFirstUpper»'];
+		                    $scope.principalAndDiagnostic=[];
 		                    for (var i = 0; i < $scope.«classToServe.name.toFirstLower»sList.length; i++) {
 		                        if($scope.«classToServe.name.toFirstLower»sList[i].«f.name».length >= 1){
 		                            $scope.«classToServe.name.toFirstLower»=$scope.«classToServe.name.toFirstLower»sList[i];
 		                            $scope.labels.push($scope.«classToServe.name.toFirstLower»Act.id);
 		                            «FOR dat: f.type.eAllContents.toIterable»
         		                    «var feature =dat as Feature»
-                    				«IF(feature.type.name.equals("Integer"))»
+                    				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
                     				var «dat.fullyQualifiedName.lastSegment»Initial=0;
         		                    «ENDIF»
         		                    «ENDFOR»
@@ -310,14 +805,22 @@ class Dsl2Generator extends AbstractGenerator {
 		                                var dd=$scope.«classToServe.name.toFirstLower»Act.«f.name»[n];
 		                                «FOR dat: f.type.eAllContents.toIterable»
             		                    «var feature =dat as Feature»
-                        				«IF(feature.type.name.equals("Integer"))»
+                        				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
                         				«dat.fullyQualifiedName.lastSegment»Initial=«dat.fullyQualifiedName.lastSegment»Initial+dd.«dat.fullyQualifiedName.lastSegment»;
             		                    «ENDIF»
             		                    «ENDFOR»
+		$scope.principalAndDiagnostic.push([$scope.«classToServe.name.toFirstLower»Act.id, $scope.«classToServe.name.toFirstLower»Act.name
+		«FOR dat: f.type.eAllContents.toIterable»
+        «var feature =dat as Feature»
+		«IF((feature.type.name.equals("Date"))||(feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+		, dd.«dat.fullyQualifiedName.lastSegment»
+        «ENDIF»
+        «ENDFOR» 
+		]);
 		                            }
 		                            «FOR dat: f.type.eAllContents.toIterable»
         		                    «var feature =dat as Feature»
-                    				«IF(feature.type.name.equals("Integer"))»
+                    				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
                     				$scope.«dat.fullyQualifiedName.lastSegment».push(«dat.fullyQualifiedName.lastSegment»Initial/$scope.«classToServe.name.toFirstLower»Act.«f.name».length);
         		                    «ENDIF»
         		                    «ENDFOR»
@@ -326,14 +829,14 @@ class Dsl2Generator extends AbstractGenerator {
 		                    }
 		                    «FOR dat: f.type.eAllContents.toIterable»
 		                    «var feature =dat as Feature»
-            				«IF(feature.type.name.equals("Integer"))»
+            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
             				«dat.fullyQualifiedName.lastSegment»Initial=0;
 		                    «ENDIF»
 		                    «ENDFOR»
 		                    for(var j = 0; j < $scope.«(f.type.eAllContents.toIterable).get(0).fullyQualifiedName.lastSegment»; j++) {
 		                    	«FOR dat: f.type.eAllContents.toIterable»
 			                    «var feature =dat as Feature»
-	            				«IF(feature.type.name.equals("Integer"))»
+	            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
 	            				«dat.fullyQualifiedName.lastSegment»Initial=«dat.fullyQualifiedName.lastSegment»Initial+$scope.«dat.fullyQualifiedName.lastSegment»[j];
 			                    «ENDIF»
 			                    «ENDFOR»
@@ -341,14 +844,14 @@ class Dsl2Generator extends AbstractGenerator {
 		                    $scope.todoData=[];
 		                    «FOR dat: f.type.eAllContents.toIterable»
 		                    «var feature =dat as Feature»
-            				«IF(feature.type.name.equals("Integer"))»
+            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
             				$scope.todoData.push(«dat.fullyQualifiedName.lastSegment»Initial/$scope.«dat.fullyQualifiedName.lastSegment».length);
 		                    «ENDIF»
 		                    «ENDFOR»
 							$scope.todoLabels=[
 		                    «FOR dat: f.type.eAllContents.toIterable»
 		                    «var feature =dat as Feature»
-            				«IF(feature.type.name.equals("Integer"))»
+            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
             				'«dat.fullyQualifiedName.lastSegment.toFirstUpper»'
             				«IF(intPropCounter>1)»
             				,
@@ -395,7 +898,7 @@ class Dsl2Generator extends AbstractGenerator {
 		    <div class="row">
 				«FOR dat: f.type.eAllContents.toIterable»
 				«var feature =dat as Feature»
-				«IF(feature.type.name.equals("Integer"))»
+				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
 				<div class="col-lg-4">
 				<div class="panel panel-default">
 				<div class="panel-heading">
@@ -414,6 +917,52 @@ class Dsl2Generator extends AbstractGenerator {
 		        «ENDIF»
 		        «ENDFOR»
 		    </div>
+		    	<div class="row">
+		            <div class="col-lg-12">
+		                <div class="panel panel-default">
+		                    <div class="panel-heading">
+		                        Datos totales de cada control de los participantes del estudio.
+		                    </div>
+		                    <!-- /.panel-heading -->
+		                    <div class="panel-body">
+		                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+		                            <thead>
+		                            <tr>
+		                            	<th>Identificador</th>
+										<th>Nombre</th>
+		                                «FOR dat: f.type.eAllContents.toIterable»
+                        				«var feature =dat as Feature»
+                        				«IF((feature.type.name.equals("Date"))||(feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+                        				<th>«dat.fullyQualifiedName.lastSegment.toFirstUpper»</th>
+                        				«ENDIF»
+                        				«ENDFOR»
+		                            </tr>
+		                            </thead>
+		                            <tbody>
+		                            <tr ng-repeat="d in principalAndDiagnostic" >
+		                            	<td>{{d[0]}}</td>
+										<td>{{d[1]}}</td>
+		                                «var nf=2»
+		                                «FOR dat: f.type.eAllContents.toIterable»
+                        				«var feature =dat as Feature»
+                        				«IF((feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+                        				<td>{{d[«nf++»]}}</td>
+                        				«ENDIF»
+                        				«IF(feature.type.name.equals("Date"))»
+                        				<td>{{d[«nf++»] | date:"dd/MMMM/yyyy"}}</td>
+                        				«ENDIF»
+                        				«ENDFOR»
+		                            </tr>
+		                            </tbody>
+		                        </table>
+		                        <!-- /.table-responsive -->
+		                    </div>
+		                    <!-- /.panel-body -->
+		                </div>
+		                <!-- /.panel -->
+		            </div>
+		            <!-- /.col-lg-12 -->
+		        </div>
 		</div>
 		<!-- /#page-wrapper -->
 		'''

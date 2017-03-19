@@ -1,0 +1,51 @@
+datatype String
+datatype Integer
+datatype Date
+datatype Float
+
+package com.example.model{
+ 
+    entity Person {
+    	principal
+    	id: Integer
+        name: String
+        firstName: String
+        feedbacks: many Feedback
+        address : Address
+        diagnostics : many diagnostic Diagnostic
+        armAngles: many diagnostic ArmAngles
+        legAngles: many diagnostic LegAngles
+    }
+    
+    entity Address {
+        street: String
+        zip: String
+        city: String
+    }
+    
+    entity Diagnostic{
+    	systolicPressure: Integer
+    	diastolicPressure: Integer
+    	bloodCholesterol: Integer
+    	heartRate: Integer
+    	date: Date
+    }
+    
+    entity ArmAngles{
+    	upperAngle: Float
+    	lowerAngle: Float
+    	date: Date
+    }
+    
+    entity LegAngles{
+    	upperAngle: Float
+    	lowerAngle: Float
+    	date: Date
+    }
+    
+    entity Feedback{
+    	title: String
+    	description: String
+    	date: Date
+    }
+}
