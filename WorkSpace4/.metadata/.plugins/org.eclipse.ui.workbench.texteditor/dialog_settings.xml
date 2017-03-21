@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="classToServe.name" key="selection"/>
-		<item value="false" key="casesensitive"/>
+		<item value="PatientRegister" key="selection"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="classToServe.name"/>
-			<item value="person"/>
-			<item value="Person"/>
-			<item value="d.name."/>
-			<item value="print"/>
-			<item value="IF(feature.type.name.equals(&quot;Integer&quot;))"/>
-			<item value="(feature.type.name.equals(&quot;Integer&quot;))"/>
-			<item value="registros"/>
+			<item value="PatientRegister"/>
+			<item value="HomeDoctor"/>
+			<item value="f.type.name.equals(&quot;Date&quot;)"/>
+			<item value="ControlRegister"/>
+			<item value="HomePatient"/>
+			<item value="[0]"/>
+			<item value="[i]"/>
+			<item value=".diagnostics"/>
 		</list>
 		<list key="replacehistory">
+			<item value="u"/>
+			<item value="o"/>
+			<item value="e"/>
+			<item value="Multiple Client"/>
 			<item value="d.type.name."/>
 			<item value="IF((feature.type.name.equals(&quot;Byte&quot;))||(feature.type.name.equals(&quot;Double&quot;))||(feature.type.name.equals(&quot;Float&quot;))||(feature.type.name.equals(&quot;Integer&quot;))||(feature.type.name.equals(&quot;Long&quot;))||(feature.type.name.equals(&quot;Short&quot;)))"/>
 			<item value="classToServe.name.toFirstLower"/>
 			<item value="e.name.toFirstLower"/>
-			<item value=".diagnostics."/>
-			<item value=".f.name."/>
-			<item value="«classToServe.name»Act"/>
-			<item value="«classToServe.name»sList"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="284" key="DIALOG_WIDTH"/>
+		<item value="385" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="391" key="DIALOG_HEIGHT"/>
+		<item value="439" key="DIALOG_HEIGHT"/>
 		<item value="8" key="DIALOG_X_ORIGIN"/>
-		<item value="123" key="DIALOG_Y_ORIGIN"/>
+		<item value="120" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

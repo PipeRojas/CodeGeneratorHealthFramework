@@ -10,8 +10,10 @@ import edu.eci.prot.dsl2.dsl2.Entity;
 import edu.eci.prot.dsl2.dsl2.Feature;
 import edu.eci.prot.dsl2.dsl2.PackageDeclaration;
 import edu.eci.prot.dsl2.validation.AbstractDsl2Validator;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
 /**
@@ -80,7 +82,10 @@ public class Dsl2Validator extends AbstractDsl2Validator {
         }
       }
       if (((!flagId) || (!flagName))) {
-        this.error("If entity is principal, must have id of type Integer and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
+        String _name = e.getName();
+        String _plus = ("If " + _name);
+        String _plus_1 = (_plus + " entity is principal, must have id of type Integer and name of type String features");
+        this.error(_plus_1, Dsl2Package.Literals.ENTITY__FEATURES);
       }
     }
   }
@@ -114,6 +119,34 @@ public class Dsl2Validator extends AbstractDsl2Validator {
       boolean _isDiagnostic = d.isDiagnostic();
       if (_isDiagnostic) {
         this.checkDiagnosticMustHaveDate(d);
+      }
+    }
+  }
+  
+  @Check
+  public void checkPrincipalIdCannotBeTransient(final Entity e) {
+    boolean _isPrincipal = e.isPrincipal();
+    if (_isPrincipal) {
+      EList<Feature> _features = e.getFeatures();
+      for (final Feature f : _features) {
+        if ((f.getName().equals("id") && f.isTransient())) {
+          this.error("Principal entity id cannot be transient", Dsl2Package.Literals.ENTITY__FEATURES);
+        }
+      }
+    }
+  }
+  
+  @Check
+  public void checkComposedFeaturesCannotHaveComposedFeatures(final Feature f) {
+    if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for (final EObject dat : _iterable) {
+        {
+          Feature feature = ((Feature) dat);
+          if ((feature.isMany() || (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(feature.getType().eAllContents())) > 0))) {
+            this.error("Features with attributes cannot have features with attributes in their attributes", Dsl2Package.Literals.FEATURE__TYPE);
+          }
+        }
       }
     }
   }
@@ -164,12 +197,87 @@ public class Dsl2Validator extends AbstractDsl2Validator {
   }
   
   @Check
+  public void checkDiagnosticFeaturePrimitiveFeatures(final Feature f) {
+    boolean ans = true;
+    boolean hasDate = false;
+    if ((f.isMany() && f.isDiagnostic())) {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for (final EObject dat : _iterable) {
+        {
+          Feature feature = ((Feature) dat);
+          if ((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date")))) {
+            ans = false;
+          } else {
+            if ((feature.getType().getName().equals("Date") && feature.getName().equals("date"))) {
+              hasDate = true;
+            }
+          }
+        }
+      }
+      if ((!hasDate)) {
+        this.error("At least one feature of diagnostic feature must be called \'date\' and have \'Date\' type", Dsl2Package.Literals.FEATURE__TYPE);
+      }
+    }
+    if ((!ans)) {
+      String _name = f.getName();
+      String _plus = (_name + " feature is a diagnostic feature and must have features of types String, Integer or Date only");
+      this.error(_plus, Dsl2Package.Literals.FEATURE__TYPE);
+    }
+  }
+  
+  @Check
   public void checkManyFeatureCannotBePrimitive(final Feature d) {
     boolean _isMany = d.isMany();
     if (_isMany) {
       if ((((((((((d.getType().getName().equals("Byte") || d.getType().getName().equals("Short")) || d.getType().getName().equals("Integer")) || d.getType().getName().equals("Long")) || d.getType().getName().equals("Float")) || d.getType().getName().equals("Double")) || d.getType().getName().equals("Char")) || d.getType().getName().equals("String")) || d.getType().getName().equals("Boolean")) || d.getType().getName().equals("Date"))) {
         this.error("Features with \'many\' token cannot be primitive types", Dsl2Package.Literals.FEATURE__TYPE);
       }
+    }
+  }
+  
+  @Check
+  public void checkOnlyAtomicFeaturesCanBeTransient(final Feature f) {
+    boolean _isTransient = f.isTransient();
+    if (_isTransient) {
+      int _size = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()));
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        this.error("Only atomic features (of primitive types) can be transient", Dsl2Package.Literals.FEATURE__TRANSIENT);
+      }
+    }
+  }
+  
+  @Check
+  public void checkEntityFeatureCanHaveTransientFeaturesIfIsNotMany(final Feature f) {
+    boolean _isMany = f.isMany();
+    if (_isMany) {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+      for (final EObject dat : _iterable) {
+        {
+          Feature feature = ((Feature) dat);
+          boolean _isTransient = feature.isTransient();
+          if (_isTransient) {
+            this.error("An entity feature can have transient features only if is not many", Dsl2Package.Literals.FEATURE__MANY);
+          }
+        }
+      }
+    }
+  }
+  
+  @Check
+  public void checkEntityNameStartsWithCapital(final Entity entity) {
+    boolean _isUpperCase = Character.isUpperCase(entity.getName().charAt(0));
+    boolean _not = (!_isUpperCase);
+    if (_not) {
+      this.error("Name should start with a capital", Dsl2Package.Literals.ABSTRACT_ELEMENT__NAME);
+    }
+  }
+  
+  @Check
+  public void checkFeatureNameStartsWithLower(final Feature feature) {
+    boolean _isUpperCase = Character.isUpperCase(feature.getName().charAt(0));
+    if (_isUpperCase) {
+      this.error("Name should start with a lower case", Dsl2Package.Literals.FEATURE__NAME);
     }
   }
 }

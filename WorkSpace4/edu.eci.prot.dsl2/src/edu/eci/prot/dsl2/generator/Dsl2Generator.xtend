@@ -30,76 +30,127 @@ class Dsl2Generator extends AbstractGenerator {
 		for (e : resource.allContents.toIterable.filter(Entity)) {
 			if(e.principal){
 				classToServe=e;
-				
-				
 			}
 		}
-		for (e : resource.allContents.toIterable.filter(Entity)) {
-			
-			fsa.generateFile(
-                e.fullyQualifiedName.toString("/") + ".java",
-                e.compile)
-			//Create Register Investigators Views
-	        for (Feature fea : e.features) {
-	        	//Finding diagnostics
-	        	if(fea.diagnostic){
-	        		diagnostics.add(fea);
-	        		
-	        		//Add InvestigatorView Path
-	        		
-	        		appJSModules.add(new JSModuleData("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
-	        			"myApp."+"RegistersInvestigatorView"+fea.name.toFirstUpper,
-	        			"RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js"))
-        			
-        			//Create InvestigatorRegister View
-        			
-	        		fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".html",
-                	fea.compileRegistersInvestigatorViewHtml);
-                	fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
-                	fea.compileRegistersInvestigatorViewJS);
-                	
-                	//Add RegisterDoctorView Path
-                	
-	        		
-	        		appJSModules.add(new JSModuleData("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js",
-	        			"myApp.RegisterDoctorView"+fea.name.toFirstUpper,
-	        			"RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js"))
-                	
-                	//Create RegisterDoctorView
-                	
-                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".html",
-                	fea.compileRegisterDoctorViewHtml);
-                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".js",
-                	fea.compileRegisterDoctorViewJS);
-                	
-                	//println(cr.fullyQualifiedName.lastSegment.toFirstUpper)
-                	
-                	//fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",fea.compileRegistersInvestigatorViewJS);
-	        	}else if(!fea.diagnostic&&fea.many){
-	        		
-	        		//Finding Comments
-	        		comments.add(fea);
-	        		
-	        		//Add CommentsDoctorView Path
-                	
-	        		
-	        		appJSModules.add(new JSModuleData("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js",
-	        			"myApp.CommentsDoctorView"+fea.name.toFirstUpper,
-	        			"CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js"))
-	        		
-	        		//Create CommentsDoctorView
-	        		
-	        		fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".html",
-                	fea.compileCommentsDoctorViewHtml);
-                	fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".js",
-                	fea.compileCommentsDoctorViewJS);
-	        		
-	        	}
+		if(classToServe!==null){
+			for (e : resource.allContents.toIterable.filter(Entity)) {
+				
+				fsa.generateFile(
+	                e.fullyQualifiedName.toString("/") + ".java",
+	                e.compile)
+				//Create Register Investigators Views
+		        for (Feature fea : e.features) {
+		        	//Finding diagnostics
+		        	if(fea.diagnostic){
+		        		diagnostics.add(fea);
+		        		
+		        		//Add InvestigatorView Path
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
+		        			"myApp."+"RegistersInvestigatorView"+fea.name.toFirstUpper,
+		        			"RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js"))
+	        			
+	        			//Create InvestigatorRegister View
+	        			
+		        		fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".html",
+	                	fea.compileRegistersInvestigatorViewHtml);
+	                	fsa.generateFile("/static/app/RegistersInvestigatorView"+fea.name.toFirstUpper+"/"+"RegistersInvestigatorView"+fea.name.toFirstUpper+".js",
+	                	fea.compileRegistersInvestigatorViewJS);
+	                	
+	                	//Add RegisterDoctorView Path
+	                	
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js",
+		        			"myApp.RegisterDoctorView"+fea.name.toFirstUpper,
+		        			"RegisterDoctorView"+fea.name.toFirstUpper+"/RegisterDoctorView"+fea.name.toFirstUpper+".js"))
+	                	
+	                	//Create RegisterDoctorView
+	                	
+	                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".html",
+	                	fea.compileRegisterDoctorViewHtml);
+	                	fsa.generateFile("/static/app/RegisterDoctorView"+fea.name.toFirstUpper+"/"+"RegisterDoctorView"+fea.name.toFirstUpper+".js",
+	                	fea.compileRegisterDoctorViewJS);
+	                	
+		        		//Add ControlRegister (Patient) Path
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/ControlRegister"+fea.name.toFirstUpper+"/"+"ControlRegister"+fea.name.toFirstUpper+".js",
+		        			"myApp.ControlRegister"+fea.name.toFirstUpper,
+		        			"ControlRegister"+fea.name.toFirstUpper+"/"+"ControlRegister"+fea.name.toFirstUpper+".js"))
+		        		
+		        		//Create ControlRegister (Patient)
+		        		
+		        		fsa.generateFile("/static/app/ControlRegister"+fea.name.toFirstUpper+"/"+"ControlRegister"+fea.name.toFirstUpper+".html",
+	                	fea.compileControlRegisterHtml);
+	                	fsa.generateFile("/static/app/ControlRegister"+fea.name.toFirstUpper+"/"+"ControlRegister"+fea.name.toFirstUpper+".js",
+	                	fea.compileControlRegisterJS);
+	                	
+	                	//Add ControlView (Patient) Path
+	                	
+		        		appJSModules.add(new JSModuleData("/static/app/ControlView"+fea.name.toFirstUpper+"/"+"ControlView"+fea.name.toFirstUpper+".js",
+		        			"myApp.ControlView"+fea.name.toFirstUpper,
+		        			"ControlView"+fea.name.toFirstUpper+"/"+"ControlView"+fea.name.toFirstUpper+".js"))
+
+	                	//Create ControlView (Patient)
+	                	
+	                	fsa.generateFile("/static/app/ControlView"+fea.name.toFirstUpper+"/"+"ControlView"+fea.name.toFirstUpper+".html",
+	                	fea.compileControlViewHtml);
+	                	fsa.generateFile("/static/app/ControlView"+fea.name.toFirstUpper+"/"+"ControlView"+fea.name.toFirstUpper+".js",
+	                	fea.compileControlViewJS);
+	                	
+	                	
+		        	}else if(!fea.diagnostic&&fea.many){
+		        		
+		        		//Finding Comments
+		        		comments.add(fea);
+		        		
+		        		//Add CommentsDoctorView Path
+	                	
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js",
+		        			"myApp.CommentsDoctorView"+fea.name.toFirstUpper,
+		        			"CommentsDoctorView"+fea.name.toFirstUpper+"/CommentsDoctorView"+fea.name.toFirstUpper+".js"))
+		        		
+		        		//Create CommentsDoctorView
+		        		
+		        		fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".html",
+	                	fea.compileCommentsDoctorViewHtml);
+	                	fsa.generateFile("/static/app/CommentsDoctorView"+fea.name.toFirstUpper+"/"+"CommentsDoctorView"+fea.name.toFirstUpper+".js",
+	                	fea.compileCommentsDoctorViewJS);
+		        		
+		        		//Add CommentsDoctorView Path
+	                	
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/CommentRegister"+fea.name.toFirstUpper+"/"+"CommentRegister"+fea.name.toFirstUpper+".js",
+		        			"myApp.CommentRegister"+fea.name.toFirstUpper,
+		        			"CommentRegister"+fea.name.toFirstUpper+"/"+"CommentRegister"+fea.name.toFirstUpper+".js"))
+		        		
+		        		//Create (Doctor) CommentRegister View
+		        		
+		        		fsa.generateFile("/static/app/CommentRegister"+fea.name.toFirstUpper+"/"+"CommentRegister"+fea.name.toFirstUpper+".html",
+	                	fea.compileCommentRegisterHtml);
+	                	fsa.generateFile("/static/app/CommentRegister"+fea.name.toFirstUpper+"/"+"CommentRegister"+fea.name.toFirstUpper+".js",
+	                	fea.compileCommentRegisterJS);
+		        		
+		        		//Add CommentsView (Patient) Path
+		        		
+		        		appJSModules.add(new JSModuleData("/static/app/CommentsView"+fea.name.toFirstUpper+"/"+"CommentsView"+fea.name.toFirstUpper+".js",
+		        			"myApp.CommentsView"+fea.name.toFirstUpper,
+		        			"CommentsView"+fea.name.toFirstUpper+"/"+"CommentsView"+fea.name.toFirstUpper+".js"))
+		        		
+		        		//Create CommentsView (Patient)
+		        		
+		        		fsa.generateFile("/static/app/CommentsView"+fea.name.toFirstUpper+"/"+"CommentsView"+fea.name.toFirstUpper+".html",
+	                	fea.compileCommentsViewHtml);
+	                	fsa.generateFile("/static/app/CommentsView"+fea.name.toFirstUpper+"/"+"CommentsView"+fea.name.toFirstUpper+".js",
+	                	fea.compileCommentsViewJS);
+		        		
+		        	}
+		        }
 	        }
-        }
-        //Create services classes
-        if(classToServe!==null){
-        	fsa.generateFile(
+	        
+	        //Create services classes
+	        
+	        fsa.generateFile(
 	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/services/"+ classToServe.name + "Services.java"),
 	            classToServe.compileServiceInterface);
 	        fsa.generateFile(
@@ -111,6 +162,13 @@ class Dsl2Generator extends AbstractGenerator {
 	        //Create JS Services
 	        fsa.generateFile("/static/app/services/services.js", classToServe.compileJSServices);
 	        
+	        //Create PatientRegister
+	        
+	        fsa.generateFile("/static/app/PatientRegister/PatientRegister.html",
+	    	classToServe.compilePatientRegisterHtml);
+	    	fsa.generateFile("/static/app/PatientRegister/PatientRegister.js",
+	    	classToServe.compilePatientRegisterJS);
+	        
 	        //Create HomeDoctor View
 		
 			fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.html",
@@ -118,17 +176,45 @@ class Dsl2Generator extends AbstractGenerator {
 	    	fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.js",
 	    	classToServe.compileHomeDoctorJS);
 	    	
+	    	//Create HomePatient
+	    	
+	        fsa.generateFile("/static/app/HomePatient/HomePatient.html",
+	    	classToServe.compileHomePatientHtml);
+	        fsa.generateFile("/static/app/HomePatient/HomePatient.js",
+	    	classToServe.compileHomePatientJS);
+	    	
+	    	//Create PatientProfile View
+	    	
+	    	fsa.generateFile("/static/app/PatientProfile/PatientProfile.html",
+	    	classToServe.compilePatientProfileHtml);
+	    	fsa.generateFile("/static/app/PatientProfile/PatientProfile.js",
+	    	classToServe.compilePatientProfileJS);
+	    	
+	    	//Create UpdatePatient View
+	    	
+	    	fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.html",
+	    	classToServe.compileUpdatePatientHtml);
+	    	fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.js",
+	    	classToServe.compileUpdatePatientJS);
+	    	
 	    	//Create Investigator Template
 	        fsa.generateFile("/static/app/Templates/templateInvestigator.js",
 	    	diagnostics.compileTemplateInvestigatorViewJS);
 	    	fsa.generateFile("/static/app/Templates/templateInvestigator.html",
 	    	diagnostics.compileTemplateInvestigatorViewHtml);
 	    	
-	    	//CreateDoctorTemplate
+	    	//Create DoctorTemplate
 	    	fsa.generateFile("/static/app/Templates/templateDoctor.js",
 	    	comments.compileTemplateDoctorViewJS);
 	    	fsa.generateFile("/static/app/Templates/templateDoctor.html",
 	    	comments.compileTemplateDoctorViewHtml);
+	    	
+	    	//Create Patient Template
+	    	
+	    	fsa.generateFile("/static/app/Templates/templatePatient.js",
+	    	diagnostics.compileTemplatePatientJS);
+	    	fsa.generateFile("/static/app/Templates/templatePatient.html",
+	    	diagnostics.compileTemplatePatientHtml);
 	    	
 	    	//create app.js & index.html
 		   	fsa.generateFile(
@@ -137,6 +223,12 @@ class Dsl2Generator extends AbstractGenerator {
 	        fsa.generateFile(
 		            "/static/app/index.html",
 		            appJSModules.compileIndexHtml);
+		            
+            //Create LoginView
+            fsa.generateFile("/static/app/LoginView/LoginView.js",
+	    	classToServe.compileLoginViewJS);
+	    	fsa.generateFile("/static/app/LoginView/LoginView.html",
+	    	classToServe.compileLoginViewHtml);
         }
 	   	
     	//Clear actual collections
@@ -144,6 +236,1250 @@ class Dsl2Generator extends AbstractGenerator {
 	   	appJSModules.clear;
 	   	diagnostics.clear;
 	}
+	
+	//Create UpdatePatient View
+	
+	def compileUpdatePatientJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.UpdatePatient', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/UpdatePatient', {
+	    templateUrl: 'UpdatePatient/UpdatePatient.html',
+	    controller: 'UpdatePatientCtrl'
+	  });
+	}])
+	
+	.controller('UpdatePatientCtrl', ['$rootScope', '$scope','«principal.name.toFirstLower»', '«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
+			
+			«FOR Feature f: principal.features»
+			«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
+			$scope.«f.name»=null;
+			«ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+			«FOR dat: f.type.eAllContents.toIterable»
+            «var feature =dat as Feature»
+            «IF(feature.transient)»
+            $scope.«f.name»«feature.name.toFirstUpper»=null;
+            «ENDIF»
+            «ENDFOR»
+			«ENDIF»
+			«ENDFOR»
+	        $rootScope.nameP=null;
+	
+	        $scope.update= function(){
+	            «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	                    .$promise.then(
+	                            //success
+	                            function( value ){
+	                                $scope.«principal.name.toFirstLower»T=value;
+	                                «FOR Feature f: principal.features»
+	                    			«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
+if($scope.«f.name»!=null){
+	$scope.«principal.name.toFirstLower»T.«f.name»=$scope.«f.name»;
+}
+	                    			«ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+	                    			«FOR dat: f.type.eAllContents.toIterable»
+	                                «var feature =dat as Feature»
+	                                «IF(feature.transient)»
+	                                if($scope.«f.name»«feature.name.toFirstUpper»!=null){
+	                                    $scope.«principal.name.toFirstLower»T.«f.name».«feature.name»=$scope.«f.name»«feature.name.toFirstUpper»;
+	                                }
+	                                «ENDIF»
+	                                «ENDFOR»
+	                    			«ENDIF»
+	                    			«ENDFOR»
+	                                «principal.name.toFirstLower»s.update($scope.«principal.name.toFirstLower»T)
+	                                .$promise.then(
+	                                    //success
+	                                    function(value){
+	                                        console.log("Registro Exitoso");
+	                                        alert("Registro Exitoso");
+	            							$location.path("HomePatient");
+	                                    },
+	                                    //error
+	                                    function( error ){
+	                                        console.log("El paciente no se pudo actualizar");
+	                                        alert("No se puedo registrar");
+	                                    }
+	
+	                                );
+	                            },
+	                            //error
+	                            function( error ){
+	                                alert("El Identificador no se encuentra registrado");
+	                            }
+	                    );
+
+	
+	        };
+	
+	}]);
+	'''
+	
+	def compileUpdatePatientHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="wrapper">
+	    <div id="page-wrapper">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header">Registra tus datos</h1>
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="panel panel-default">
+	                    </div>
+	                    <div class="panel-body">
+	                        <div class="row">
+	                            <div class="col-lg-6">
+	                                <form role="form">
+	                                    <div class="form-group">
+											«FOR Feature f: principal.features»
+	                                        	«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
+		                                        «IF(f.type.name.equals("String"))»
+<label> «f.name.toFirstUpper» </label>
+<br><br>
+<input type="text" ng-model="«f.name»">
+<br><br>
+		                                        «ELSEIF(f.type.name.equals("Integer"))»
+<label> «f.name.toFirstUpper» </label>
+<br><br>
+<input type="number" ng-model="«f.name»">
+<br><br>
+		                                        «ELSEIF(f.type.name.equals("Date"))»
+<label> «f.name.toFirstUpper» </label>
+<br><br>
+<input type="date" ng-model="«f.name»">
+<br><br>
+												«ENDIF»
+		                                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+	                                        	<label><h2> Datos de «f.name.toFirstUpper» </h2></label>
+	                                        	<br><br>
+				                                        «FOR dat: f.type.eAllContents.toIterable»
+					                                        «var feature =dat as Feature»
+					                                        «IF(feature.transient)»
+					                                        «IF(feature.type.name.equals("String"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="text" ng-model="«f.name»«feature.name.toFirstUpper»">
+					                                        <br><br>
+					                                        «ELSEIF(feature.type.name.equals("Integer"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="number" ng-model="«f.name»«feature.name.toFirstUpper»">
+					                                        <br><br>
+					                                        «ELSEIF(feature.type.name.equals("Date"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="date" ng-model="«f.name»«feature.name.toFirstUpper»">
+					                                        <br><br>
+					                                        «ENDIF»
+					                                        «ENDIF»
+				                                        «ENDFOR»
+		                                        «ENDIF»
+	                                        «ENDFOR»
+	                                    </div>
+	                                    <button type="submit" class="btn btn-default" ng-click="update()">Actualizar</button>
+	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
+	                                </form>
+	                            </div>
+	                        </div>
+	                        <!-- /.row (nested) -->
+	                    </div>
+	                    <!-- /.panel-body -->
+	                </div>
+	                <!-- /.panel -->
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	    </div>
+	    <!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	//Create PatientProfile View
+	
+	def compilePatientProfileJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.PatientProfile', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/PatientProfile', {
+	    templateUrl: 'PatientProfile/PatientProfile.html',
+	    controller: 'PatientProfileCtrl'
+	  });
+	}])
+	
+	.controller('PatientProfileCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»,$location) {
+	
+	    «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $scope.«principal.name.toFirstLower»=value;
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("El paciente no se encuentra registrado");
+	                        }
+	                );
+	    $scope.continueUP=function(){
+	        $location.path("UpdatePatient");
+	    };
+	
+	}]);
+	'''
+	
+	def compilePatientProfileHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Tus Datos</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	    <div class="row">
+	        <div class="col-lg-4">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Datos personales
+	                </div>
+	                <div class="panel-body">
+	                    <h2> Numero de Identificacion
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».id}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    <h2> Nombre
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».name}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    «FOR Feature f: principal.features»
+	                    «IF((!f.name.equals('id'))&&(!f.name.equals('name')))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF(f.type.name.equals("Date"))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name» | date:'yyyy-MM-dd'}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+                        <label><h1> Datos de «f.name.toFirstUpper» </h1></label>
+                        <br><br>
+                                «FOR dat: f.type.eAllContents.toIterable»
+                                    «var feature =dat as Feature»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ELSEIF(feature.type.name.equals("Date"))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name» | date:'yyyy-MM-dd'}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ENDIF»
+                                «ENDFOR»
+                        «ENDIF»
+                        «ENDIF»
+	                    «ENDFOR»
+	
+	                    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="continueUP()">Actualizar Datos</button>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-4 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	
+	//Create ControlView (Patient)
+	
+	def compileControlViewJS(Feature diagnostic)
+	'''
+	'use strict';
+	
+	angular.module('myApp.ControlView«diagnostic.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/ControlView«diagnostic.name.toFirstUpper»', {
+	    templateUrl: 'ControlView«diagnostic.name.toFirstUpper»/ControlView«diagnostic.name.toFirstUpper».html',
+	    controller: 'ControlView«diagnostic.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('ControlView«diagnostic.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', function ($rootScope, $scope, «classToServe.name.toFirstLower») {
+	    «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$rootScope.id«classToServe.name»})
+	    .$promise.then(
+	            //success
+	            function( value ){
+	                $scope.«classToServe.name.toFirstLower»=value;
+	                $scope.diagnostics=$scope.«classToServe.name.toFirstLower».«diagnostic.name»;
+	                «FOR dat : diagnostic.type.eAllContents.toIterable»
+                    «var feature=dat as Feature»
+                    «IF(!feature.name.equals("date"))»
+                    $scope.«feature.name»=[];
+                    «ENDIF»
+                    «ENDFOR»
+	                $scope.labels=[];
+	                $scope.series = ['Datos de Control'];
+	                for(var n=0; n<$scope.diagnostics.length; n++){
+	                    var dd=$scope.diagnostics[n];
+	                    «FOR dat : diagnostic.type.eAllContents.toIterable»
+                        «var feature=dat as Feature»
+                        «IF(feature.type.name.equals("Integer"))»
+                        $scope.«feature.name».push(dd.«feature.name»);
+                        «ENDIF»
+                        «ENDFOR»
+	                    var datee=new Date(dd.date);
+	                    var dia = datee.getDate();
+	                    var mes = parseInt(datee.getMonth()) + 1;
+	                    var year = datee.getFullYear();
+	                    var dated=dia+"/"+mes+"/"+year;
+	                    $scope.labels.push(dated);
+	                }
+	            },
+	            //error
+	            function( error ){
+	                alert("Error");
+	            }
+	    );
+	}]);
+	'''
+	
+	def compileControlViewHtml(Feature diagnostic)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Tus datos de control de «diagnostic.name.toFirstUpper»</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                </div>
+	                <!-- /.panel-heading -->
+	                <div class="panel-body">
+	                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+	                        <thead>
+	                        <tr>
+	                            <th>Fecha de control</th>
+	                            «FOR dat : diagnostic.type.eAllContents.toIterable»
+	                            «var feature=dat as Feature»
+	                            «IF(!feature.name.equals("date"))»
+	                            <th>«feature.name.toFirstUpper»</th>
+	                            «ENDIF»
+	                            «ENDFOR»
+	                        </tr>
+	                        </thead>
+	                        <tbody>
+	                        <tr ng-repeat="d in diagnostics" >
+	                            <td>{{d.date | date:"dd/MMMM/yyyy"}}</td>
+	                            «FOR dat : diagnostic.type.eAllContents.toIterable»
+	                            «var feature=dat as Feature»
+	                            «IF(!feature.name.equals("date"))»
+	                            <td>{{d.«feature.name»}}</td>
+	                            «ENDIF»
+	                            «ENDFOR»
+	                        </tr>
+	                        </tbody>
+	                    </table>
+	                    <!-- /.table-responsive -->
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	    <div class="row">
+		    «FOR dat : diagnostic.type.eAllContents.toIterable»
+		    «var feature=dat as Feature»
+		    «IF(feature.type.name.equals("Integer"))»
+		    <div class="col-lg-4">
+		    <div class="panel panel-default">
+		    <div class="panel-heading">
+		    «feature.name.toFirstUpper»
+		    </div>
+		    <div class="panel-body">
+		    <canvas  id="«feature.name»" class="chart chart-bar"
+		    chart-data="«feature.name»" chart-labels="labels" chart-series="series">
+		    </canvas>
+		    </div>
+		    <!-- /.panel-body -->
+		    </div>
+		    <!-- /.panel -->
+		    </div>
+		    <!-- /.col-lg-4 -->
+		    «ENDIF»
+		    «ENDFOR»
+	    </div>
+	</div>
+	<!-- /#page-wrapper -->
+	'''
+	
+	
+	//Create ControlRegister (Patient)
+	
+	def compileControlRegisterJS(Feature diagnostic)
+	'''
+	'use strict';
+	
+	angular.module('myApp.ControlRegister«diagnostic.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/ControlRegister«diagnostic.name.toFirstUpper»', {
+	    templateUrl: 'ControlRegister«diagnostic.name.toFirstUpper»/ControlRegister«diagnostic.name.toFirstUpper».html',
+	    controller: 'ControlRegister«diagnostic.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('ControlRegister«diagnostic.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»s','«classToServe.name.toFirstLower»','$http','$resource', '$location', function ($rootScope, $scope, «classToServe.name.toFirstLower»s,«classToServe.name.toFirstLower», $http, $resource, $location) {
+			$scope.date=null;
+			«FOR dat:diagnostic.type.eAllContents.toIterable»
+			«var feature =dat as Feature»
+			«IF(!feature.name.equals("date"))»
+			$scope.«feature.name»=null;
+			«ENDIF»
+			«ENDFOR»
+	
+	        $scope.saveRegister= function(){
+	            $scope.diagnostic={"date":$scope.date
+	            «FOR dat:diagnostic.type.eAllContents.toIterable»
+				«var feature =dat as Feature»
+				«IF(!feature.name.equals("date"))»
+				, "«feature.name»":$scope.«feature.name»
+				«ENDIF»
+				«ENDFOR»
+	            };
+	            «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$rootScope.id«classToServe.name»})
+	            .$promise.then(
+	                    //success
+	                    function( value ){
+	                        $scope.«classToServe.name.toFirstLower»T=value;
+	                        $scope.«classToServe.name.toFirstLower»T.«diagnostic.name».push($scope.diagnostic);
+	                        «classToServe.name.toFirstLower»s.update($scope.«classToServe.name.toFirstLower»T)
+	                        .$promise.then(
+	                            //success
+	                            function(value){
+	                                console.log("Patient update"+ $scope.«classToServe.name.toFirstLower»T.«diagnostic.name»);
+	                                $location.path("HomePatient");
+	                            },
+	                            //error
+	                            function( error ){
+	                                console.log("El «classToServe.name.toFirstLower» no se pudo actualizar");
+	                            }
+	
+	                        );
+	                    },
+	                    //error
+	                    function( error ){
+	                        alert("El Identificador no se encuentra registrado");
+	                    }
+	            );
+	        };
+	}]);
+	'''
+	
+	def compileControlRegisterHtml(Feature diagnostic)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="wrapper">
+	    <div id="page-wrapper">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header">Registra los datos de tu control de «diagnostic.name.toFirstUpper»</h1>
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="panel panel-default">
+	                    <div class="panel-heading">
+	                    </div>
+	                    <div class="panel-body">
+	                        <div class="row">
+	                            <div class="col-lg-6">
+	                                <form role="form">
+	                                    <div class="form-group">
+	
+	                                        <label>Fecha del control</label>
+	                                        <br><br>
+	                                        <input type="date" ng-model="date">
+	                                        <br><br>
+	
+	                                        «FOR dat:diagnostic.type.eAllContents.toIterable»
+                                			«var feature =dat as Feature»
+                                			«IF((feature.type.name.equals("Date"))&&(!feature.name.equals("date")))»
+                                			<label>«feature.name.toFirstUpper»</label>
+                                			<br><br>
+                                			<input type="date" ng-model="«feature.name»">
+                                			<br><br>
+                                			«ELSEIF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
+                                			<label> «feature.name.toFirstUpper» </label>
+                                			<br><br>
+                                			<input type="number" ng-model="«feature.name»">
+                                			<br><br>
+                                			«ELSEIF(feature.type.name.equals("String"))»
+                                			<label> «feature.name.toFirstUpper» </label>
+                                			<br><br>
+                                			<input type="String" ng-model="«feature.name»">
+                                			<br><br>
+                                			«ENDIF»
+                                			«ENDFOR»
+	                                    </div>
+	                                    <button type="submit" class="btn btn-default" ng-click="saveRegister()">Aceptar</button>
+	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
+	                                </form>
+	                            </div>
+	                        </div>
+	                        <!-- /.row (nested) -->
+	                    </div>
+	                    <!-- /.panel-body -->
+	                </div>
+	                <!-- /.panel -->
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	    </div>
+	    <!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	''' 
+	
+	//Create CommentsView (Patient)
+	
+	def compileCommentsViewJS(Feature comment)
+	'''
+	'use strict';
+	
+	angular.module('myApp.CommentsView«comment.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/CommentsView«comment.name.toFirstUpper»', {
+	    templateUrl: 'CommentsView«comment.name.toFirstUpper»/CommentsView«comment.name.toFirstUpper».html',
+	    controller: 'CommentsView«comment.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('CommentsView«comment.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', function ($rootScope, $scope, «classToServe.name.toFirstLower») {
+	
+	     «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$rootScope.id«classToServe.name»})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $scope.«classToServe.name.toFirstLower»C=value;
+	                            $scope.comments=$scope.«classToServe.name.toFirstLower»C.«comment.name»;
+	                            if (typeof $scope.comments == "undefined"){
+	                                $scope.commentsY=false;
+	                                $scope.commentsTitle="No tienes ningun comentario";
+	                            }
+	                            if(typeof $scope.comments != "undefined"){
+	                                $scope.commentsY=true;
+	                            }
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("Identificador no se encuentra registrado");
+	                        }
+	                );
+	
+	}]);
+	'''
+	
+	def compileCommentsViewHtml(Feature comment)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Comentarios de «comment.name.toFirstUpper»</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                </div>
+	                <!-- /.panel-heading -->
+	                <div class="panel-body">
+	                    <div ng-hide="commentsY">
+	                        {{commentsTitle}}
+	                    </div>
+	                    <div ng-show="commentsY">
+	                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+	                            <thead>
+	                            <tr>
+	                                <th>Comentarios «comment.name.toFirstUpper»</th>
+	                            </tr>
+	                            </thead>
+	                            <tbody>
+	                            <tr ng-repeat="c in comments" >
+	                                <td>
+	                                    <div class="panel panel-green">
+											«FOR dat: comment.type.eAllContents.toIterable»
+                    	                    «var feature =dat as Feature»
+                    	                    «IF(feature.type.name.equals("Date"))»
+                    	                    <div class="panel-footer">
+                    	                    	«feature.name.toFirstUpper»: {{c.«feature.name» | date:"dd/MMMM/yyyy"}}
+                    	                    </div>
+                    	                    «ELSE»
+                    	                    <div class="panel-heading">
+                    	                    	«feature.name.toFirstUpper»: {{c.«feature.name»}}
+                    	                    </div>
+                    	                    «ENDIF»
+                    	                    «ENDFOR»
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                            </tbody>
+	                        </table>
+	                        <!-- /.table-responsive -->
+	                    </div>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	'''
+	
+	//Create HomePatient
+	
+	def compileHomePatientJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.HomePatient', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/HomePatient', {
+	    templateUrl: 'HomePatient/HomePatient.html',
+	    controller: 'HomePatientCtrl'
+	  });
+	}])
+	
+	.controller('HomePatientCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»,$location) {
+	
+	      «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	            .$promise.then(
+	                    //success
+	                    function( value ){
+	                        $scope.«principal.name.toFirstLower»H=value;
+	                        «FOR Feature comm: comments»
+	                        $scope.commentsH«comm.name.toFirstUpper»=$scope.«principal.name.toFirstLower»H.«comm.name»;
+	                        if (typeof $scope.commentsH«comm.name.toFirstUpper» == "undefined"){
+	                            $scope.recomendacionesH«comm.name.toFirstUpper»="No tienes ninguna recomendacion sobre «comm.name.toFirstUpper»";
+	                            $scope.cantH«comm.name.toFirstUpper»=undefined;
+	                        }
+	                        if(typeof $scope.commentsH«comm.name.toFirstUpper» != "undefined"){
+	                            $scope.recomendacionesH«comm.name.toFirstUpper»="Comentarios sobre «comm.name.toFirstUpper» de tu medico!!";
+	                            $scope.cantH«comm.name.toFirstUpper»=$scope.commentsH«comm.name.toFirstUpper».length;
+	                        }
+	                        «ENDFOR»
+
+							«FOR Feature diag: diagnostics»
+							$scope.diagnosticsH«diag.name.toFirstUpper»=$scope.«principal.name.toFirstLower»H.«diag.name»;
+                            «FOR dat: diag.type.eAllContents.toIterable»
+                                «var feature =dat as Feature»
+                                «IF(feature.type.name.equals("Integer"))»
+                                $scope.«feature.name»«diag.name.toFirstUpper»=[];
+								«ENDIF»
+                            «ENDFOR»
+							$scope.labels«diag.name.toFirstUpper»=[];
+							$scope.series«diag.name.toFirstUpper» = ['Datos de Control «diag.name.toFirstUpper»'];
+							for(var n=0; n<$scope.diagnosticsH«diag.name.toFirstUpper».length; n++){
+								var dd=$scope.diagnosticsH«diag.name.toFirstUpper»[n];
+	                            «FOR dat: diag.type.eAllContents.toIterable»
+	                                «var feature =dat as Feature»
+	                                «IF(feature.type.name.equals("Integer"))»
+	                                $scope.«feature.name»«diag.name.toFirstUpper».push(dd.«feature.name»);
+	                                «ENDIF»
+	                            «ENDFOR»
+								var datee=new Date(dd.date);
+								var dia = datee.getDate();
+								var mes = parseInt(datee.getMonth()) + 1;
+								var year = datee.getFullYear();
+								var dated=dia+"/"+mes+"/"+year;
+								$scope.labels«diag.name.toFirstUpper».push(dated);
+							}
+							«ENDFOR»
+	                    },
+	                    //error
+	                    function( error ){
+	                        alert("El Identificador no se encuentra registrado");
+	                    }
+	            );
+	            «FOR Feature comm: comments»
+$scope.continueCS«comm.name.toFirstUpper»=function(){
+	          	$location.path("CommentsView«comm.name.toFirstUpper»");
+	          	};
+	            «ENDFOR»
+	}]);
+	'''
+	
+	def compileHomePatientHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templatePatient.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Bienvenido</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    «FOR Feature comm: comments»
+	    <!-- /.row -->
+	    <div class="row">
+	        <div class="col-lg-3 col-md-6">
+	            <div class="panel panel-primary">
+	                <div class="panel-heading">
+	                    <div class="row">
+	                        <div class="col-xs-3">
+	                            <i class="fa fa-comments fa-5x"></i>
+	                        </div>
+	                        <div class="col-xs-9 text-right">
+	                            <div class="huge">{{cantH«comm.name.toFirstUpper»}}</div>
+	                            <div>{{recomendacionesH«comm.name.toFirstUpper»}}</div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <a  ng-click="continueCS«comm.name.toFirstUpper»()">
+	                    <div class="panel-footer">
+	                        <span class="pull-left">Detalles</span>
+	                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                        <div class="clearfix"></div>
+	                    </div>
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	    «ENDFOR»
+		«FOR Feature diag: diagnostics»
+		<div class="row">
+			<br>
+			<h2>Registros de «diag.name.toFirstUpper»</h2>
+			<br>
+	    	«FOR data: diag.type.eAllContents.toIterable»
+	    	«var feature=data as Feature»
+	    	«IF(feature.type.name.equals("Integer"))»
+	    	<div class="col-lg-4">
+	    	<div class="panel panel-default">
+	    	<div class="panel-heading">
+	                    «feature.name.toFirstUpper»
+	    	</div>
+	    	<div class="panel-body">
+	    	<canvas  id="«feature.name»«diag.name.toFirstUpper»" class="chart chart-bar"
+	    	chart-data="«feature.name»«diag.name.toFirstUpper»" chart-labels="labels«diag.name.toFirstUpper»" chart-series="series«diag.name.toFirstUpper»">
+	    	</canvas>
+	    	</div>
+	    	<!-- /.panel-body -->
+	    	</div>
+	    	<!-- /.panel -->
+	    	</div>
+	    	<!-- /.col-lg-4 -->
+	    	«ENDIF»
+	    	«ENDFOR»
+		</div>
+		«ENDFOR»
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	
+	
+	'''
+	
+	//Create PatientRegister
+	
+	def compilePatientRegisterJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.PatientRegister', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/PatientRegister', {
+	    templateUrl: 'PatientRegister/PatientRegister.html',
+	    controller: 'PatientRegisterCtrl'
+	  });
+	}])
+	
+	.controller('PatientRegisterCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»s, $http, $resource, $location) {
+	        $scope.id=null;
+	        $scope.name=null;
+	        «FOR Feature f: principal.features»
+			«IF((!f.many)&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
+			«IF(f.type.eAllContents.toIterable.size==0)»
+$scope.«f.name»=null;
+			«ELSEIF(f.type.eAllContents.toIterable.size>0)»
+			«FOR dat:f.type.eAllContents.toIterable»
+			«var feature =dat as Feature»
+			$scope.«feature.name»=null;
+			«ENDFOR»
+			«ENDIF»
+			«ENDIF»
+			«ENDFOR»
+	        $rootScope.nameP=null;
+	        $scope.save= function(){
+	            $rootScope.id«principal.name.toFirstUpper»=$scope.id;
+	            $rootScope.«principal.name.toFirstLower»={"id":$scope.id,"name":$scope.name
+				«FOR Feature f: principal.features»
+				«IF((!f.many)&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
+				«IF(f.type.eAllContents.toIterable.size==0)»
+				, "«f.name»":$scope.«f.name»
+				«ELSEIF(f.type.eAllContents.toIterable.size>0)»
+				, "«f.name»":{
+				//«var count=f.type.eAllContents.toIterable.size»
+				«FOR dat:f.type.eAllContents.toIterable»
+				«var feature =dat as Feature»
+				"«feature.name»":$scope.«feature.name»«IF(count>1)», «ENDIF»
+				//«count--»
+				«ENDFOR»
+				}
+				«ENDIF»
+				«ELSEIF(f.many)»
+				, "«f.name»":[]
+				«ENDIF»
+				«ENDFOR»
+				};
+	            «principal.name.toFirstLower»s.save($rootScope.«principal.name.toFirstLower»,function(){
+	                console.info("Person saved   "+ $rootScope.«principal.name.toFirstLower».name);
+					$location.path("HomePatient");
+	            });
+	
+	        };
+	
+	}]);
+	'''
+	
+	def compilePatientRegisterHtml(Entity principal)
+	'''
+	<div id="wrapper">
+	    <div id="page-wrapper">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header">Nuevo Registro «principal.name»</h1>
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="panel panel-default">
+	                    </div>
+	                    <div class="panel-body">
+	                        <div class="row">
+	                            <div class="col-lg-6">
+	                                <form role="form">
+	                                    <div class="form-group">
+	                                        <label> Numero de identificacion </label>
+	                                        <br><br>
+	                                        <input type="number" ng-model="id">
+	                                        <br><br>
+	                                        <label> Nombre </label>
+	                                        <br><br>
+	                                        <input type="text" ng-model="name">
+	                                        <br><br>
+	                                        «FOR Feature f: principal.features»
+	                                        	«IF((!f.name.equals('id'))&&(!f.name.equals('name')))»
+		                                        «IF(f.type.name.equals("String"))»
+<label> «f.name.toFirstUpper» </label>
+	                                        	<br><br>
+			                                        <input type="text" ng-model="«f.name»">
+			                                        <br><br>
+		                                        «ELSEIF(f.type.name.equals("Integer"))»
+<label> «f.name.toFirstUpper» </label>
+			                                        <br><br>
+			                                        <input type="number" ng-model="«f.name»">
+			                                        <br><br>
+		                                        «ELSEIF(f.type.name.equals("Date"))»
+<label> «f.name.toFirstUpper» </label>
+			                                        <br><br>
+			                                        <input type="date" ng-model="«f.name»">
+			                                        <br><br>
+		                                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+		                                        <label><h2> Datos de «f.name.toFirstUpper» </h2></label>
+		                                        <br><br>
+				                                        «FOR dat: f.type.eAllContents.toIterable»
+					                                        «var feature =dat as Feature»
+					                                        «IF(feature.type.name.equals("String"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="text" ng-model="«feature.name»">
+					                                        <br><br>
+					                                        «ELSEIF(feature.type.name.equals("Integer"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="number" ng-model="«feature.name»">
+					                                        <br><br>
+					                                        «ELSEIF(feature.type.name.equals("Date"))»
+					                                        <label> «feature.name.toFirstUpper» </label>
+					                                        <br><br>
+					                                        <input type="date" ng-model="«feature.name»">
+					                                        <br><br>
+					                                        «ENDIF»
+				                                        «ENDFOR»
+		                                        «ENDIF»
+		                                        «ENDIF»
+	                                        «ENDFOR»
+	                                    </div>
+	                                    <button type="submit" class="btn btn-default" ng-click="save()">Aceptar</button>
+	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
+	                                </form>
+	                            </div>
+	                        </div>
+	                        <!-- /.row (nested) -->
+	                    </div>
+	                    <!-- /.panel-body -->
+	                </div>
+	                <!-- /.panel -->
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	    </div>
+	    <!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	//Create loginView
+	
+	def compileLoginViewJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.LoginView', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/LoginView', {
+	    templateUrl: 'LoginView/LoginView.html',
+	    controller: 'LoginViewCtrl'
+	  });
+	}])
+	
+	.controller('LoginViewCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»','«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
+	        $scope.«principal.name.toFirstLower»Id=null;
+	
+	        $scope.«principal.name.toFirstLower»=$rootScope.«principal.name.toFirstLower»;
+	        $scope.accept=function(){
+	            «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$scope.«principal.name.toFirstLower»Id})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $rootScope.«principal.name.toFirstLower»=value;
+	                            $rootScope.id«principal.name.toFirstUpper»=$scope.«principal.name.toFirstLower»Id;
+	                            $location.path("HomePatient");
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("El Identificador no se encuentra registrado");
+	                        }
+	                );
+	        };
+	}]);
+	'''
+	
+	def compileLoginViewHtml(Entity principal)
+	'''
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-4 col-md-offset-4">
+	            <div class="login-panel panel panel-default">
+	                <div class="panel-heading">
+	                    <h3 class="panel-title">Inicia sesion</h3>
+	                </div>
+	                <div class="panel-body">
+	                    <form role="form">
+	                        <fieldset>
+	                            <div class="form-group">
+	                                <label>Numero de Identificacion</label>
+	                                <input class="form-control" type="number" ng-model="«principal.name.toFirstLower»Id" autofocus>
+	                            </div>
+	                            <!-- Change this to a button or input when using this as a form -->
+	                            <a href="index.html" class="btn btn-lg btn-success btn-block" ng-click="accept()">Aceptar</a>
+	                        </fieldset>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	'''
+	
+	//Create TemplatePatient
+	
+	def compileTemplatePatientJS(ArrayList<Feature> diagnostics)
+	'''
+	'use strict';
+	
+	angular.module('myApp.templatePatient', ['ngRoute'])
+	
+	.controller('templatePatientCtrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', '$location', function ($rootScope, $scope, «classToServe.name.toFirstLower», $location) {
+	
+	      $scope.continuePerfil=function(){
+	            $location.path("PatientProfile");
+	      };
+	      $scope.continueLogout=function(){
+	            $location.path("view1");
+	      };
+	      $scope.continueHome=function(){
+	            $location.path("HomePatient");
+	      };
+	      
+	      «FOR comm : comments»
+	      $scope.continueComments«comm.name.toFirstUpper»=function(){
+	      	$location.path("CommentsView«comm.name.toFirstUpper»");
+	      };
+	      «ENDFOR»
+	      «FOR diag : diagnostics»
+	      $scope.continueCRegister«diag.name.toFirstUpper»=function(){
+	            $location.path("ControlRegister«diag.name.toFirstUpper»");
+	      };
+	      $scope.continueCView«diag.name.toFirstUpper»=function(){
+	            $location.path("ControlView«diag.name.toFirstUpper»");
+	      };
+	      «ENDFOR»
+	}]);
+	'''
+	
+	def compileTemplatePatientHtml(ArrayList<Feature> diagnostics)
+	'''
+	<div ng-controller="templatePatientCtrl">
+	    <!-- Navigation -->
+	    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	        <div class="navbar-header">
+	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="index.html">Multiple Client</a>
+	        </div>
+	        <!-- /.navbar-header -->
+	
+	        <ul class="nav navbar-top-links navbar-right">
+	            <li><a ng-click="continuePerfil()"><i class="fa fa-user fa-fw"></i> Perfil </a>
+	            </li>
+	            <li><a ng-click="continueLogout()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+	            </li>
+	        </ul>
+	        <!-- /.navbar-top-links -->
+	
+	        <div class="navbar-default sidebar" role="navigation">
+	            <div class="sidebar-nav navbar-collapse">
+	                <ul class="nav" id="side-menu">
+	                    <li>
+	                        <a ng-click="continueHome()"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+	                    </li>
+	        			«FOR comm: comments»
+	        			<li>
+	        			<a ng-click="continueComments«comm.name.toFirstUpper»()"><i class="fa fa-edit fa-fw"></i> Comentarios para «comm.name.toFirstUpper»</a>
+	        			</li>
+            			«ENDFOR»
+	                    <li>
+	                        <a><i class="fa fa-bar-chart-o fa-fw"></i> Registros de Diagnostico</a>
+	                        <ul class="nav nav-second-level">
+	                        	«FOR diag : diagnostics»
+	                        	<li>
+	                        	<a ng-click="continueCRegister«diag.name.toFirstUpper»()">Nuevo Registro «diag.name.toFirstUpper»</a>
+	                        	</li>
+	                        	<li>
+	                        	<a ng-click="continueCView«diag.name.toFirstUpper»()">Consultar Registros «diag.name.toFirstUpper»</a>
+	                        	</li>
+	                        	«ENDFOR»
+	                        </ul>
+	                        <!-- /.nav-second-level -->
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.sidebar-collapse -->
+	        </div>
+	        <!-- /.navbar-static-side -->
+	    </nav>
+	</div>
+	'''
+	
+	//Create (Doctor) CommentRegister View
+	
+	def compileCommentRegisterJS(Feature comment)
+	'''
+	'use strict';
+	
+	angular.module('myApp.CommentRegister«comment.name.toFirstUpper»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/CommentRegister«comment.name.toFirstUpper»', {
+	    templateUrl: 'CommentRegister«comment.name.toFirstUpper»/CommentRegister«comment.name.toFirstUpper».html',
+	    controller: 'CommentRegister«comment.name.toFirstUpper»Ctrl'
+	  });
+	}])
+	
+	.controller('CommentRegister«comment.name.toFirstUpper»Ctrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»','«classToServe.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «classToServe.name.toFirstLower», «classToServe.name.toFirstLower»s, $http, $resource, $location) {
+	        $scope.title=null;
+	        «FOR dat: comment.type.eAllContents.toIterable»
+            «var feature =dat as Feature»
+            «IF(!feature.name.equals("title")&&!feature.name.equals("date"))»
+            $scope.«feature.name»=null;
+            «ENDIF»
+            «ENDFOR»
+	        $scope.date=new Date();
+	        $scope.pId=$rootScope.patientId;
+	        $scope.foundC=$rootScope.FindID;
+	        $scope.saveComment= function(){
+	            $scope.comment={"date":$scope.date«FOR dat: comment.type.eAllContents.toIterable»
+	                        «var feature =dat as Feature»
+	                        «IF(!feature.name.equals("title")&&!feature.name.equals("date"))»
+	                        ,"«feature.name»":$scope.«feature.name»
+	                        «ENDIF»
+	                        «ENDFOR» ,"title":$scope.title};
+	            «classToServe.name.toFirstLower».get({«classToServe.name.toFirstLower»Id:""+$scope.pId})
+	            .$promise.then(
+	                    //success
+	                    function( value ){
+	                        $scope.principal=value;
+	                        $scope.principal.«comment.name».push($scope.comment);
+	                        «classToServe.name.toFirstLower»s.update($scope.principal)
+	                        .$promise.then(
+	                            //success
+	                            function(value){
+	                                $location.path("CommentsDoctorView«comment.name.toFirstUpper»");
+	                            },
+	                            //error
+	                            function( error ){
+	                                console.log("No se pudo actualizar");
+	                            }
+	
+	                        );
+	                    },
+	                    //error
+	                    function( error ){
+	                        alert("Identificador no se encuentra registrado");
+	                    }
+	            );
+	        };
+	}]);
+	'''
+	
+	def compileCommentRegisterHtml(Feature comment)
+	'''
+	<div ng-include="'/app/Templates/templateDoctor.html'"></div>
+	<div id="wrapper" ng-show="foundC">
+	    <div id="page-wrapper">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header">Registra Comentario «comment.name.toFirstUpper»</h1>
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="panel panel-default">
+	                    <div class="panel-heading">
+	                    </div>
+	                    <div class="panel-body">
+	                        <div class="row">
+	                            <div class="col-lg-6">
+	                                <form role="form">
+	                                    <div class="form-group">
+	                                        «FOR dat: comment.type.eAllContents.toIterable»
+                    	                    «var feature =dat as Feature»
+                    	                    «IF(feature.name.equals("title"))»
+                    	                    <label> «feature.name.toFirstUpper» </label>
+                    	                    <br><br>
+                    	                    <input type="String" ng-model="«feature.name»">
+                    	                    <br><br>
+                    	                    «ELSEIF((!feature.name.equals("date"))&&(feature.type.name.equals("Date")))»
+                    	                    <label> «feature.name.toFirstUpper» </label>
+                    	                    <br><br>
+                    	                    <input type="date" ng-model="«feature.name»">
+                    	                    <br><br>
+                    	                    «ELSEIF(feature.type.name.equals("Integer"))»
+                    	                    <label> «feature.name.toFirstUpper» </label>
+                    	                    <br><br>
+                    	                    <input type="number" ng-model="«feature.name»">
+                    	                    <br><br>
+                    	                    «ELSEIF(feature.type.name.equals("String"))»
+                    	                    <label> «feature.name.toFirstUpper» </label>
+                    	                    <br><br>
+                    	                    <textarea class="form-control" rows="3" ng-model="«feature.name»"></textarea>
+                    	                    <br><br>
+                    	                    «ENDIF»
+                    	                    «ENDFOR»
+	
+	                                    </div>
+	                                    <button type="submit" class="btn btn-default" ng-click="saveComment()">Aceptar</button>
+	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
+	                                </form>
+	                            </div>
+	                        </div>
+	                        <!-- /.row (nested) -->
+	                    </div>
+	                    <!-- /.panel-body -->
+	                </div>
+	                <!-- /.panel -->
+	            </div>
+	            <!-- /.col-lg-12 -->
+	        </div>
+	        <!-- /.row -->
+	    </div>
+	    <!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
 	
 	
 	//Create CommentsDoctorView
@@ -168,10 +1504,10 @@ class Dsl2Generator extends AbstractGenerator {
 	                        //success
 	                        function( value ){
 	                            $scope.«classToServe.name.toFirstLower»C=value;
-	                            $scope.comments=$scope.«classToServe.name.toFirstLower»C.comments;
+	                            $scope.comments=$scope.«classToServe.name.toFirstLower»C.«comment.name»;
 	                            if (typeof $scope.comments == "undefined"){
 	                                $scope.commentsY=false;
-	                                $scope.commentsTitle="No tiene ningún comentario";
+	                                $scope.commentsTitle="No tiene ningun comentario";
 	                            }
 	                            if(typeof $scope.comments != "undefined"){
 	                                $scope.commentsY=true;
@@ -211,7 +1547,7 @@ class Dsl2Generator extends AbstractGenerator {
 	                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                            <thead>
 	                            <tr>
-	                                <th>Comentarios</th>
+	                                <th>Comentarios «comment.name.toFirstUpper»</th>
 	                            </tr>
 	                            </thead>
 	                            <tbody>
@@ -222,11 +1558,11 @@ class Dsl2Generator extends AbstractGenerator {
                     	                    «var feature =dat as Feature»
                     	                    «IF(feature.type.name.equals("Date"))»
                     	                    <div class="panel-footer">
-                    	                    	{{c.«feature.name» | date:"dd/MMMM/yyyy"}}
+                    	                    	«feature.name.toFirstUpper»: {{c.«feature.name» | date:"dd/MMMM/yyyy"}}
                     	                    </div>
                     	                    «ELSE»
                     	                    <div class="panel-heading">
-                    	                    	{{c.«feature.name»}}
+                    	                    	«feature.name.toFirstUpper»: {{c.«feature.name»}}
                     	                    </div>
                     	                    «ENDIF»
                     	                    «ENDFOR»
@@ -272,7 +1608,7 @@ class Dsl2Generator extends AbstractGenerator {
 	            //success
 	            function( value ){
 	                $scope.principal=value;
-	                $scope.diagnostics=$scope.principal.diagnostics;
+	                $scope.diagnostics=$scope.principal.«diagnostic.name»;
 	                «FOR dat: diagnostic.type.eAllContents.toIterable»
                     «var feature =dat as Feature»
     				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
@@ -312,7 +1648,7 @@ class Dsl2Generator extends AbstractGenerator {
 	<div id="page-wrapper" ng-show="foundRD">
 	    <div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header">Datos de control de {{principal.name}}</h1>
+	            <h1 class="page-header">Datos de control de {{principal.name}} para «diagnostic.name.toFirstUpper»</h1>
 	        </div>
 	        <!-- /.col-lg-12 -->
 	    </div>
@@ -461,18 +1797,45 @@ class Dsl2Generator extends AbstractGenerator {
 	                    Datos de {{principal.name}}
 	                </div>
 	                <div class="panel-body">
-	                    <h2> Número de Identificación
+	                    <h2> Numero de Identificacion
 	                        <br><br>
 	                        <small> {{principal.id}} </small>
 	                    </h2>
 	                    <br><br>
-	                    «FOR feature : e.features»
-	                    «IF(!feature.many)»
-	                    <h2> «feature.name.toFirstUpper»
+	                    «FOR f : e.features»
+	                    «IF((!f.many)&&(f.type.eAllContents.toIterable.size==0))»
+	                    «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+	                    <h2> «f.name.toFirstUpper»
 	                        <br><br>
-	                        <small> {{principal.«feature.name»}} </small>
+	                        <small> {{principal.«f.name»}} </small>
 	                    </h2>
 	                    <br><br>
+	                    «ELSEIF(f.type.name.equals("Date"))»
+	                    <h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{principal.«f.name» | date:'yyyy-MM-dd'}} </small>
+	                    </h2>
+	                    <br><br>
+	                    «ENDIF»
+	                    «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+	                    <label><h1> Datos de «f.name.toFirstUpper» </h1></label>
+	                    <br><br>
+                                «FOR dat: f.type.eAllContents.toIterable»
+                                    «var feature =dat as Feature»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+                                    <h2> «feature.name»
+                                    <br><br>
+                                    <small> {{principal.«f.name».«feature.name»}} </small>
+                                    </h2>
+                                    <br><br>
+                                    «ELSEIF((feature.type.name.equals("Date")))»
+                                    <h2> «feature.name»
+                                    <br><br>
+                                    <small> {{principal.«f.name».«feature.name» | date:'yyyy-MM-dd'}} </small>
+                                    </h2>
+                                    <br><br>
+                                    «ENDIF»
+                                «ENDFOR»
 	                    «ENDIF»
 	                    «ENDFOR»
 	                </div>
@@ -532,12 +1895,12 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	            <a class="navbar-brand" href="index.html">Multiple Client</a>
 	        </div>
 	        <!-- /.navbar-header -->
 	
 	        <ul class="nav navbar-top-links navbar-right">
-	            <li><a ng-click="continueLogoutD()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+	            <li><a ng-click="continueLogoutD()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
 	            </li>
 	        </ul>
 	        <!-- /.navbar-top-links -->
@@ -615,12 +1978,12 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	            <a class="navbar-brand" href="index.html">Multiple Client</a>
 	        </div>
 	        <!-- /.navbar-header -->
 	
 	        <ul class="nav navbar-top-links navbar-right">
-	            <li><a ng-click="continueLogoutI()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+	            <li><a ng-click="continueLogoutI()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
 	            </li>
 	        </ul>
 	        <!-- /.navbar-top-links -->
@@ -702,11 +2065,17 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 		  <script src="app.js"></script>
 		  <script src="view1/view1.js"></script>
+		  <script src="LoginView/LoginView.js"></script>
 		  <script src="PatientAutorization/PatientAutorization.js"></script>
 		  <script src="Templates/templateInvestigator.js"></script>
 		  <script src="Templates/templateDoctor.js"></script>
+		  <script src="Templates/templatePatient.js"></script>
 		  <script src="HomeInvestigator/HomeInvestigator.js"></script>
 		  <script src="HomeDoctor/HomeDoctor.js"></script>
+		  <script src="HomePatient/HomePatient.js"></script>
+		  <script src="UpdatePatient/UpdatePatient.js"></script>
+		  <script src="PatientProfile/PatientProfile.js"></script>
+		  <script src="PatientRegister/PatientRegister.js"></script>
 		  <script src="PatientChoiceView/PatientChoiceView.js"></script>
 		  «FOR m: modules»
 		  <script src="«m.htmlSRCString»"></script>
@@ -741,8 +2110,14 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		  '«m.JSAppModuleString»',
 		  «ENDFOR»
 		  'myApp.templateDoctor',
+		  'myApp.HomePatient',
+		  'myApp.UpdatePatient',
+		  'myApp.PatientProfile',
+		  'myApp.PatientRegister',
 		  'myApp.templateInvestigator',
+		  'myApp.templatePatient',
 		  'myApp.view1',
+		  'myApp.LoginView',
 		  'myApp.HomeInvestigator',
 		  'myApp.PatientAutorization',
 		  'myApp.PatientChoiceView',
@@ -793,7 +2168,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		                    $scope.principalAndDiagnostic=[];
 		                    for (var i = 0; i < $scope.«classToServe.name.toFirstLower»sList.length; i++) {
 		                        if($scope.«classToServe.name.toFirstLower»sList[i].«f.name».length >= 1){
-		                            $scope.«classToServe.name.toFirstLower»=$scope.«classToServe.name.toFirstLower»sList[i];
+		                            $scope.«classToServe.name.toFirstLower»Act=$scope.«classToServe.name.toFirstLower»sList[i];
 		                            $scope.labels.push($scope.«classToServe.name.toFirstLower»Act.id);
 		                            «FOR dat: f.type.eAllContents.toIterable»
         		                    «var feature =dat as Feature»
@@ -824,7 +2199,8 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
                     				$scope.«dat.fullyQualifiedName.lastSegment».push(«dat.fullyQualifiedName.lastSegment»Initial/$scope.«classToServe.name.toFirstLower»Act.«f.name».length);
         		                    «ENDIF»
         		                    «ENDFOR»
-		                            $scope.diagnostics.push($scope.«classToServe.name.toFirstLower»sList[i].diagnostics[0]);
+		                            
+		                            $scope.diagnostics.push($scope.«classToServe.name.toFirstLower»sList[i].«f.name»[0]);
 		                        }
 		                    }
 		                    «FOR dat: f.type.eAllContents.toIterable»
@@ -833,7 +2209,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
             				«dat.fullyQualifiedName.lastSegment»Initial=0;
 		                    «ENDIF»
 		                    «ENDFOR»
-		                    for(var j = 0; j < $scope.«(f.type.eAllContents.toIterable).get(0).fullyQualifiedName.lastSegment»; j++) {
+		                    for(var j = 0; j < $scope.«(f.type.eAllContents.toIterable).get(0).fullyQualifiedName.lastSegment».length; j++) {
 		                    	«FOR dat: f.type.eAllContents.toIterable»
 			                    «var feature =dat as Feature»
 	            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
@@ -991,6 +2367,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		import org.springframework.http.HttpStatus;
 		import org.springframework.http.ResponseEntity;
 		import org.springframework.web.bind.annotation.*;
+		import java.util.List;
 		
 		@RestController
 		@RequestMapping(value = "/«e.name.toFirstLower»")
@@ -1001,12 +2378,22 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		
 		    @RequestMapping(method = RequestMethod.GET)
 		    public ResponseEntity<?> get«e.name»s(){
-		        return new ResponseEntity<>(ps.get«e.name»s(), HttpStatus.ACCEPTED);
+		    	List<«e.name»> ans=ps.get«e.name»s();
+				if(ans!=null){
+					return new ResponseEntity<>(ans , HttpStatus.ACCEPTED);
+				}else{
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
 		    }
 		
 		    @RequestMapping(method = RequestMethod.GET, path = "/{«e.name.toFirstLower»Id}")
 		    public ResponseEntity<?> get«e.name»(@PathVariable Integer «e.name.toFirstLower»Id) {
-		        return new ResponseEntity<>(ps.get«e.name»(«e.name.toFirstLower»Id), HttpStatus.ACCEPTED);
+				«e.name» ans=ps.get«e.name»(«e.name.toFirstLower»Id);
+				if(ans!=null){
+					return new ResponseEntity<>(ans , HttpStatus.ACCEPTED);
+				}else{
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
 		    }
 		
 		    @RequestMapping(method = RequestMethod.POST)
@@ -1049,12 +2436,11 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		
 		    @Override
 		    public void update«e.name»(«e.name» p) {
-		        for («e.name» pe :
-		                «e.name.toFirstLower»List) {
-		            if (p.getId()==pe.getId()) {
-		                «e.name.toFirstLower»List.add(«e.name.toFirstLower»List.indexOf(pe), p);
-		            }
-		        }
+		    	for (int i = 0; i < «e.name.toFirstLower»List.size(); i++) {
+					if(p.getId().equals(«e.name.toFirstLower»List.get(i).getId())){
+    	                «e.name.toFirstLower»List.set(i, p);
+					}
+				}
 		    }
 		
 		
@@ -1063,7 +2449,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		        «e.name» ans=null;
 		        for («e.name» pe :
 		                «e.name.toFirstLower»List) {
-		            if(pe.getId()==pId){
+		            if(pe.getId().equals(pId)){
 		                ans=pe;
 		                break;
 		            }

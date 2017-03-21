@@ -21,6 +21,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -52,130 +53,274 @@ public class Dsl2Generator extends AbstractGenerator {
         this.classToServe = e;
       }
     }
-    Iterable<Entity> _filter_1 = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), Entity.class);
-    for (final Entity e_1 : _filter_1) {
-      {
-        String _string = this._iQualifiedNameProvider.getFullyQualifiedName(e_1).toString("/");
-        String _plus = (_string + ".java");
-        fsa.generateFile(_plus, 
-          this.compile(e_1));
-        EList<Feature> _features = e_1.getFeatures();
-        for (final Feature fea : _features) {
-          boolean _isDiagnostic = fea.isDiagnostic();
-          if (_isDiagnostic) {
-            this.diagnostics.add(fea);
-            String _firstUpper = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_1 = ("/static/app/RegistersInvestigatorView" + _firstUpper);
-            String _plus_2 = (_plus_1 + "/RegistersInvestigatorView");
-            String _firstUpper_1 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_3 = (_plus_2 + _firstUpper_1);
-            String _plus_4 = (_plus_3 + ".js");
-            String _firstUpper_2 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_5 = (("myApp." + "RegistersInvestigatorView") + _firstUpper_2);
-            String _firstUpper_3 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_6 = ("RegistersInvestigatorView" + _firstUpper_3);
-            String _plus_7 = (_plus_6 + "/");
-            String _plus_8 = (_plus_7 + "RegistersInvestigatorView");
-            String _firstUpper_4 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_9 = (_plus_8 + _firstUpper_4);
-            String _plus_10 = (_plus_9 + ".js");
-            JSModuleData _jSModuleData = new JSModuleData(_plus_4, _plus_5, _plus_10);
-            this.appJSModules.add(_jSModuleData);
-            String _firstUpper_5 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_11 = ("/static/app/RegistersInvestigatorView" + _firstUpper_5);
-            String _plus_12 = (_plus_11 + "/");
-            String _plus_13 = (_plus_12 + "RegistersInvestigatorView");
-            String _firstUpper_6 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_14 = (_plus_13 + _firstUpper_6);
-            String _plus_15 = (_plus_14 + ".html");
-            fsa.generateFile(_plus_15, 
-              this.compileRegistersInvestigatorViewHtml(fea));
-            String _firstUpper_7 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_16 = ("/static/app/RegistersInvestigatorView" + _firstUpper_7);
-            String _plus_17 = (_plus_16 + "/");
-            String _plus_18 = (_plus_17 + "RegistersInvestigatorView");
-            String _firstUpper_8 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_19 = (_plus_18 + _firstUpper_8);
-            String _plus_20 = (_plus_19 + ".js");
-            fsa.generateFile(_plus_20, 
-              this.compileRegistersInvestigatorViewJS(fea));
-            String _firstUpper_9 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_21 = ("/static/app/RegisterDoctorView" + _firstUpper_9);
-            String _plus_22 = (_plus_21 + "/RegisterDoctorView");
-            String _firstUpper_10 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_23 = (_plus_22 + _firstUpper_10);
-            String _plus_24 = (_plus_23 + ".js");
-            String _firstUpper_11 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_25 = ("myApp.RegisterDoctorView" + _firstUpper_11);
-            String _firstUpper_12 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_26 = ("RegisterDoctorView" + _firstUpper_12);
-            String _plus_27 = (_plus_26 + "/RegisterDoctorView");
-            String _firstUpper_13 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_28 = (_plus_27 + _firstUpper_13);
-            String _plus_29 = (_plus_28 + ".js");
-            JSModuleData _jSModuleData_1 = new JSModuleData(_plus_24, _plus_25, _plus_29);
-            this.appJSModules.add(_jSModuleData_1);
-            String _firstUpper_14 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_30 = ("/static/app/RegisterDoctorView" + _firstUpper_14);
-            String _plus_31 = (_plus_30 + "/");
-            String _plus_32 = (_plus_31 + "RegisterDoctorView");
-            String _firstUpper_15 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_33 = (_plus_32 + _firstUpper_15);
-            String _plus_34 = (_plus_33 + ".html");
-            fsa.generateFile(_plus_34, 
-              this.compileRegisterDoctorViewHtml(fea));
-            String _firstUpper_16 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_35 = ("/static/app/RegisterDoctorView" + _firstUpper_16);
-            String _plus_36 = (_plus_35 + "/");
-            String _plus_37 = (_plus_36 + "RegisterDoctorView");
-            String _firstUpper_17 = StringExtensions.toFirstUpper(fea.getName());
-            String _plus_38 = (_plus_37 + _firstUpper_17);
-            String _plus_39 = (_plus_38 + ".js");
-            fsa.generateFile(_plus_39, 
-              this.compileRegisterDoctorViewJS(fea));
-          } else {
-            if (((!fea.isDiagnostic()) && fea.isMany())) {
-              this.comments.add(fea);
+    if ((this.classToServe != null)) {
+      Iterable<Entity> _filter_1 = Iterables.<Entity>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), Entity.class);
+      for (final Entity e_1 : _filter_1) {
+        {
+          String _string = this._iQualifiedNameProvider.getFullyQualifiedName(e_1).toString("/");
+          String _plus = (_string + ".java");
+          fsa.generateFile(_plus, 
+            this.compile(e_1));
+          EList<Feature> _features = e_1.getFeatures();
+          for (final Feature fea : _features) {
+            boolean _isDiagnostic = fea.isDiagnostic();
+            if (_isDiagnostic) {
+              this.diagnostics.add(fea);
+              String _firstUpper = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_1 = ("/static/app/RegistersInvestigatorView" + _firstUpper);
+              String _plus_2 = (_plus_1 + "/RegistersInvestigatorView");
+              String _firstUpper_1 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_3 = (_plus_2 + _firstUpper_1);
+              String _plus_4 = (_plus_3 + ".js");
+              String _firstUpper_2 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_5 = (("myApp." + "RegistersInvestigatorView") + _firstUpper_2);
+              String _firstUpper_3 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_6 = ("RegistersInvestigatorView" + _firstUpper_3);
+              String _plus_7 = (_plus_6 + "/");
+              String _plus_8 = (_plus_7 + "RegistersInvestigatorView");
+              String _firstUpper_4 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_9 = (_plus_8 + _firstUpper_4);
+              String _plus_10 = (_plus_9 + ".js");
+              JSModuleData _jSModuleData = new JSModuleData(_plus_4, _plus_5, _plus_10);
+              this.appJSModules.add(_jSModuleData);
+              String _firstUpper_5 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_11 = ("/static/app/RegistersInvestigatorView" + _firstUpper_5);
+              String _plus_12 = (_plus_11 + "/");
+              String _plus_13 = (_plus_12 + "RegistersInvestigatorView");
+              String _firstUpper_6 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_14 = (_plus_13 + _firstUpper_6);
+              String _plus_15 = (_plus_14 + ".html");
+              fsa.generateFile(_plus_15, 
+                this.compileRegistersInvestigatorViewHtml(fea));
+              String _firstUpper_7 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_16 = ("/static/app/RegistersInvestigatorView" + _firstUpper_7);
+              String _plus_17 = (_plus_16 + "/");
+              String _plus_18 = (_plus_17 + "RegistersInvestigatorView");
+              String _firstUpper_8 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_19 = (_plus_18 + _firstUpper_8);
+              String _plus_20 = (_plus_19 + ".js");
+              fsa.generateFile(_plus_20, 
+                this.compileRegistersInvestigatorViewJS(fea));
+              String _firstUpper_9 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_21 = ("/static/app/RegisterDoctorView" + _firstUpper_9);
+              String _plus_22 = (_plus_21 + "/RegisterDoctorView");
+              String _firstUpper_10 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_23 = (_plus_22 + _firstUpper_10);
+              String _plus_24 = (_plus_23 + ".js");
+              String _firstUpper_11 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_25 = ("myApp.RegisterDoctorView" + _firstUpper_11);
+              String _firstUpper_12 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_26 = ("RegisterDoctorView" + _firstUpper_12);
+              String _plus_27 = (_plus_26 + "/RegisterDoctorView");
+              String _firstUpper_13 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_28 = (_plus_27 + _firstUpper_13);
+              String _plus_29 = (_plus_28 + ".js");
+              JSModuleData _jSModuleData_1 = new JSModuleData(_plus_24, _plus_25, _plus_29);
+              this.appJSModules.add(_jSModuleData_1);
+              String _firstUpper_14 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_30 = ("/static/app/RegisterDoctorView" + _firstUpper_14);
+              String _plus_31 = (_plus_30 + "/");
+              String _plus_32 = (_plus_31 + "RegisterDoctorView");
+              String _firstUpper_15 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_33 = (_plus_32 + _firstUpper_15);
+              String _plus_34 = (_plus_33 + ".html");
+              fsa.generateFile(_plus_34, 
+                this.compileRegisterDoctorViewHtml(fea));
+              String _firstUpper_16 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_35 = ("/static/app/RegisterDoctorView" + _firstUpper_16);
+              String _plus_36 = (_plus_35 + "/");
+              String _plus_37 = (_plus_36 + "RegisterDoctorView");
+              String _firstUpper_17 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_38 = (_plus_37 + _firstUpper_17);
+              String _plus_39 = (_plus_38 + ".js");
+              fsa.generateFile(_plus_39, 
+                this.compileRegisterDoctorViewJS(fea));
               String _firstUpper_18 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_40 = ("/static/app/CommentsDoctorView" + _firstUpper_18);
-              String _plus_41 = (_plus_40 + "/CommentsDoctorView");
+              String _plus_40 = ("/static/app/ControlRegister" + _firstUpper_18);
+              String _plus_41 = (_plus_40 + "/");
+              String _plus_42 = (_plus_41 + "ControlRegister");
               String _firstUpper_19 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_42 = (_plus_41 + _firstUpper_19);
-              String _plus_43 = (_plus_42 + ".js");
+              String _plus_43 = (_plus_42 + _firstUpper_19);
+              String _plus_44 = (_plus_43 + ".js");
               String _firstUpper_20 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_44 = ("myApp.CommentsDoctorView" + _firstUpper_20);
+              String _plus_45 = ("myApp.ControlRegister" + _firstUpper_20);
               String _firstUpper_21 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_45 = ("CommentsDoctorView" + _firstUpper_21);
-              String _plus_46 = (_plus_45 + "/CommentsDoctorView");
+              String _plus_46 = ("ControlRegister" + _firstUpper_21);
+              String _plus_47 = (_plus_46 + "/");
+              String _plus_48 = (_plus_47 + "ControlRegister");
               String _firstUpper_22 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_47 = (_plus_46 + _firstUpper_22);
-              String _plus_48 = (_plus_47 + ".js");
-              JSModuleData _jSModuleData_2 = new JSModuleData(_plus_43, _plus_44, _plus_48);
+              String _plus_49 = (_plus_48 + _firstUpper_22);
+              String _plus_50 = (_plus_49 + ".js");
+              JSModuleData _jSModuleData_2 = new JSModuleData(_plus_44, _plus_45, _plus_50);
               this.appJSModules.add(_jSModuleData_2);
               String _firstUpper_23 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_49 = ("/static/app/CommentsDoctorView" + _firstUpper_23);
-              String _plus_50 = (_plus_49 + "/");
-              String _plus_51 = (_plus_50 + "CommentsDoctorView");
+              String _plus_51 = ("/static/app/ControlRegister" + _firstUpper_23);
+              String _plus_52 = (_plus_51 + "/");
+              String _plus_53 = (_plus_52 + "ControlRegister");
               String _firstUpper_24 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_52 = (_plus_51 + _firstUpper_24);
-              String _plus_53 = (_plus_52 + ".html");
-              fsa.generateFile(_plus_53, 
-                this.compileCommentsDoctorViewHtml(fea));
+              String _plus_54 = (_plus_53 + _firstUpper_24);
+              String _plus_55 = (_plus_54 + ".html");
+              fsa.generateFile(_plus_55, 
+                this.compileControlRegisterHtml(fea));
               String _firstUpper_25 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_54 = ("/static/app/CommentsDoctorView" + _firstUpper_25);
-              String _plus_55 = (_plus_54 + "/");
-              String _plus_56 = (_plus_55 + "CommentsDoctorView");
+              String _plus_56 = ("/static/app/ControlRegister" + _firstUpper_25);
+              String _plus_57 = (_plus_56 + "/");
+              String _plus_58 = (_plus_57 + "ControlRegister");
               String _firstUpper_26 = StringExtensions.toFirstUpper(fea.getName());
-              String _plus_57 = (_plus_56 + _firstUpper_26);
-              String _plus_58 = (_plus_57 + ".js");
-              fsa.generateFile(_plus_58, 
-                this.compileCommentsDoctorViewJS(fea));
+              String _plus_59 = (_plus_58 + _firstUpper_26);
+              String _plus_60 = (_plus_59 + ".js");
+              fsa.generateFile(_plus_60, 
+                this.compileControlRegisterJS(fea));
+              String _firstUpper_27 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_61 = ("/static/app/ControlView" + _firstUpper_27);
+              String _plus_62 = (_plus_61 + "/");
+              String _plus_63 = (_plus_62 + "ControlView");
+              String _firstUpper_28 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_64 = (_plus_63 + _firstUpper_28);
+              String _plus_65 = (_plus_64 + ".js");
+              String _firstUpper_29 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_66 = ("myApp.ControlView" + _firstUpper_29);
+              String _firstUpper_30 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_67 = ("ControlView" + _firstUpper_30);
+              String _plus_68 = (_plus_67 + "/");
+              String _plus_69 = (_plus_68 + "ControlView");
+              String _firstUpper_31 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_70 = (_plus_69 + _firstUpper_31);
+              String _plus_71 = (_plus_70 + ".js");
+              JSModuleData _jSModuleData_3 = new JSModuleData(_plus_65, _plus_66, _plus_71);
+              this.appJSModules.add(_jSModuleData_3);
+              String _firstUpper_32 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_72 = ("/static/app/ControlView" + _firstUpper_32);
+              String _plus_73 = (_plus_72 + "/");
+              String _plus_74 = (_plus_73 + "ControlView");
+              String _firstUpper_33 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_75 = (_plus_74 + _firstUpper_33);
+              String _plus_76 = (_plus_75 + ".html");
+              fsa.generateFile(_plus_76, 
+                this.compileControlViewHtml(fea));
+              String _firstUpper_34 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_77 = ("/static/app/ControlView" + _firstUpper_34);
+              String _plus_78 = (_plus_77 + "/");
+              String _plus_79 = (_plus_78 + "ControlView");
+              String _firstUpper_35 = StringExtensions.toFirstUpper(fea.getName());
+              String _plus_80 = (_plus_79 + _firstUpper_35);
+              String _plus_81 = (_plus_80 + ".js");
+              fsa.generateFile(_plus_81, 
+                this.compileControlViewJS(fea));
+            } else {
+              if (((!fea.isDiagnostic()) && fea.isMany())) {
+                this.comments.add(fea);
+                String _firstUpper_36 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_82 = ("/static/app/CommentsDoctorView" + _firstUpper_36);
+                String _plus_83 = (_plus_82 + "/CommentsDoctorView");
+                String _firstUpper_37 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_84 = (_plus_83 + _firstUpper_37);
+                String _plus_85 = (_plus_84 + ".js");
+                String _firstUpper_38 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_86 = ("myApp.CommentsDoctorView" + _firstUpper_38);
+                String _firstUpper_39 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_87 = ("CommentsDoctorView" + _firstUpper_39);
+                String _plus_88 = (_plus_87 + "/CommentsDoctorView");
+                String _firstUpper_40 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_89 = (_plus_88 + _firstUpper_40);
+                String _plus_90 = (_plus_89 + ".js");
+                JSModuleData _jSModuleData_4 = new JSModuleData(_plus_85, _plus_86, _plus_90);
+                this.appJSModules.add(_jSModuleData_4);
+                String _firstUpper_41 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_91 = ("/static/app/CommentsDoctorView" + _firstUpper_41);
+                String _plus_92 = (_plus_91 + "/");
+                String _plus_93 = (_plus_92 + "CommentsDoctorView");
+                String _firstUpper_42 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_94 = (_plus_93 + _firstUpper_42);
+                String _plus_95 = (_plus_94 + ".html");
+                fsa.generateFile(_plus_95, 
+                  this.compileCommentsDoctorViewHtml(fea));
+                String _firstUpper_43 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_96 = ("/static/app/CommentsDoctorView" + _firstUpper_43);
+                String _plus_97 = (_plus_96 + "/");
+                String _plus_98 = (_plus_97 + "CommentsDoctorView");
+                String _firstUpper_44 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_99 = (_plus_98 + _firstUpper_44);
+                String _plus_100 = (_plus_99 + ".js");
+                fsa.generateFile(_plus_100, 
+                  this.compileCommentsDoctorViewJS(fea));
+                String _firstUpper_45 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_101 = ("/static/app/CommentRegister" + _firstUpper_45);
+                String _plus_102 = (_plus_101 + "/");
+                String _plus_103 = (_plus_102 + "CommentRegister");
+                String _firstUpper_46 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_104 = (_plus_103 + _firstUpper_46);
+                String _plus_105 = (_plus_104 + ".js");
+                String _firstUpper_47 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_106 = ("myApp.CommentRegister" + _firstUpper_47);
+                String _firstUpper_48 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_107 = ("CommentRegister" + _firstUpper_48);
+                String _plus_108 = (_plus_107 + "/");
+                String _plus_109 = (_plus_108 + "CommentRegister");
+                String _firstUpper_49 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_110 = (_plus_109 + _firstUpper_49);
+                String _plus_111 = (_plus_110 + ".js");
+                JSModuleData _jSModuleData_5 = new JSModuleData(_plus_105, _plus_106, _plus_111);
+                this.appJSModules.add(_jSModuleData_5);
+                String _firstUpper_50 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_112 = ("/static/app/CommentRegister" + _firstUpper_50);
+                String _plus_113 = (_plus_112 + "/");
+                String _plus_114 = (_plus_113 + "CommentRegister");
+                String _firstUpper_51 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_115 = (_plus_114 + _firstUpper_51);
+                String _plus_116 = (_plus_115 + ".html");
+                fsa.generateFile(_plus_116, 
+                  this.compileCommentRegisterHtml(fea));
+                String _firstUpper_52 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_117 = ("/static/app/CommentRegister" + _firstUpper_52);
+                String _plus_118 = (_plus_117 + "/");
+                String _plus_119 = (_plus_118 + "CommentRegister");
+                String _firstUpper_53 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_120 = (_plus_119 + _firstUpper_53);
+                String _plus_121 = (_plus_120 + ".js");
+                fsa.generateFile(_plus_121, 
+                  this.compileCommentRegisterJS(fea));
+                String _firstUpper_54 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_122 = ("/static/app/CommentsView" + _firstUpper_54);
+                String _plus_123 = (_plus_122 + "/");
+                String _plus_124 = (_plus_123 + "CommentsView");
+                String _firstUpper_55 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_125 = (_plus_124 + _firstUpper_55);
+                String _plus_126 = (_plus_125 + ".js");
+                String _firstUpper_56 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_127 = ("myApp.CommentsView" + _firstUpper_56);
+                String _firstUpper_57 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_128 = ("CommentsView" + _firstUpper_57);
+                String _plus_129 = (_plus_128 + "/");
+                String _plus_130 = (_plus_129 + "CommentsView");
+                String _firstUpper_58 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_131 = (_plus_130 + _firstUpper_58);
+                String _plus_132 = (_plus_131 + ".js");
+                JSModuleData _jSModuleData_6 = new JSModuleData(_plus_126, _plus_127, _plus_132);
+                this.appJSModules.add(_jSModuleData_6);
+                String _firstUpper_59 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_133 = ("/static/app/CommentsView" + _firstUpper_59);
+                String _plus_134 = (_plus_133 + "/");
+                String _plus_135 = (_plus_134 + "CommentsView");
+                String _firstUpper_60 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_136 = (_plus_135 + _firstUpper_60);
+                String _plus_137 = (_plus_136 + ".html");
+                fsa.generateFile(_plus_137, 
+                  this.compileCommentsViewHtml(fea));
+                String _firstUpper_61 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_138 = ("/static/app/CommentsView" + _firstUpper_61);
+                String _plus_139 = (_plus_138 + "/");
+                String _plus_140 = (_plus_139 + "CommentsView");
+                String _firstUpper_62 = StringExtensions.toFirstUpper(fea.getName());
+                String _plus_141 = (_plus_140 + _firstUpper_62);
+                String _plus_142 = (_plus_141 + ".js");
+                fsa.generateFile(_plus_142, 
+                  this.compileCommentsViewJS(fea));
+              }
             }
           }
         }
       }
-    }
-    if ((this.classToServe != null)) {
       String _string = this._iQualifiedNameProvider.getFullyQualifiedName(this.classToServe).toString("/");
       String _name = this.classToServe.getName();
       String _plus = ("/model/" + _name);
@@ -207,10 +352,26 @@ public class Dsl2Generator extends AbstractGenerator {
       fsa.generateFile(_plus_11, 
         this.compileRESTControllers(this.classToServe));
       fsa.generateFile("/static/app/services/services.js", this.compileJSServices(this.classToServe));
+      fsa.generateFile("/static/app/PatientRegister/PatientRegister.html", 
+        this.compilePatientRegisterHtml(this.classToServe));
+      fsa.generateFile("/static/app/PatientRegister/PatientRegister.js", 
+        this.compilePatientRegisterJS(this.classToServe));
       fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.html", 
         this.compileHomeDoctorHtml(this.classToServe));
       fsa.generateFile("/static/app/HomeDoctor/HomeDoctor.js", 
         this.compileHomeDoctorJS(this.classToServe));
+      fsa.generateFile("/static/app/HomePatient/HomePatient.html", 
+        this.compileHomePatientHtml(this.classToServe));
+      fsa.generateFile("/static/app/HomePatient/HomePatient.js", 
+        this.compileHomePatientJS(this.classToServe));
+      fsa.generateFile("/static/app/PatientProfile/PatientProfile.html", 
+        this.compilePatientProfileHtml(this.classToServe));
+      fsa.generateFile("/static/app/PatientProfile/PatientProfile.js", 
+        this.compilePatientProfileJS(this.classToServe));
+      fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.html", 
+        this.compileUpdatePatientHtml(this.classToServe));
+      fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.js", 
+        this.compileUpdatePatientJS(this.classToServe));
       fsa.generateFile("/static/app/Templates/templateInvestigator.js", 
         this.compileTemplateInvestigatorViewJS(this.diagnostics));
       fsa.generateFile("/static/app/Templates/templateInvestigator.html", 
@@ -219,16 +380,3962 @@ public class Dsl2Generator extends AbstractGenerator {
         this.compileTemplateDoctorViewJS(this.comments));
       fsa.generateFile("/static/app/Templates/templateDoctor.html", 
         this.compileTemplateDoctorViewHtml(this.comments));
+      fsa.generateFile("/static/app/Templates/templatePatient.js", 
+        this.compileTemplatePatientJS(this.diagnostics));
+      fsa.generateFile("/static/app/Templates/templatePatient.html", 
+        this.compileTemplatePatientHtml(this.diagnostics));
       fsa.generateFile(
         "/static/app/app.js", 
         this.compileAppJS(this.appJSModules));
       fsa.generateFile(
         "/static/app/index.html", 
         this.compileIndexHtml(this.appJSModules));
+      fsa.generateFile("/static/app/LoginView/LoginView.js", 
+        this.compileLoginViewJS(this.classToServe));
+      fsa.generateFile("/static/app/LoginView/LoginView.html", 
+        this.compileLoginViewHtml(this.classToServe));
     }
     this.comments.clear();
     this.appJSModules.clear();
     this.diagnostics.clear();
+  }
+  
+  public CharSequence compileUpdatePatientJS(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.UpdatePatient\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/UpdatePatient\', {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'UpdatePatient/UpdatePatient.html\',");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("controller: \'UpdatePatientCtrl\'");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'UpdatePatientCtrl\', [\'$rootScope\', \'$scope\',\'");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', \'");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("s\',\'$http\',\'$resource\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_2);
+    _builder.append(", ");
+    String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_3);
+    _builder.append("s, $http, $resource, $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.newLine();
+    {
+      EList<Feature> _features = principal.getFeatures();
+      for(final Feature f : _features) {
+        {
+          if ((f.isTransient() && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) == 0))) {
+            _builder.append("\t\t");
+            _builder.append("$scope.");
+            String _name = f.getName();
+            _builder.append(_name, "\t\t");
+            _builder.append("=null;");
+            _builder.newLineIfNotEmpty();
+          } else {
+            if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+              {
+                Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                for(final EObject dat : _iterable) {
+                  Feature feature = ((Feature) dat);
+                  _builder.newLineIfNotEmpty();
+                  {
+                    boolean _isTransient = feature.isTransient();
+                    if (_isTransient) {
+                      _builder.append("$scope.");
+                      String _name_1 = f.getName();
+                      _builder.append(_name_1);
+                      String _firstUpper = StringExtensions.toFirstUpper(feature.getName());
+                      _builder.append(_firstUpper);
+                      _builder.append("=null;");
+                      _builder.newLineIfNotEmpty();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("        ");
+    _builder.append("$rootScope.nameP=null;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.update= function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_4, "            ");
+    _builder.append(".get({");
+    String _firstLower_5 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_5, "            ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name_2 = principal.getName();
+    _builder.append(_name_2, "            ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                    ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("$scope.");
+    String _firstLower_6 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_6, "                                ");
+    _builder.append("T=value;");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Feature> _features_1 = principal.getFeatures();
+      for(final Feature f_1 : _features_1) {
+        {
+          if ((f_1.isTransient() && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents())) == 0))) {
+            _builder.append("if($scope.");
+            String _name_3 = f_1.getName();
+            _builder.append(_name_3);
+            _builder.append("!=null){");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("$scope.");
+            String _firstLower_7 = StringExtensions.toFirstLower(principal.getName());
+            _builder.append(_firstLower_7, "\t");
+            _builder.append("T.");
+            String _name_4 = f_1.getName();
+            _builder.append(_name_4, "\t");
+            _builder.append("=$scope.");
+            String _name_5 = f_1.getName();
+            _builder.append(_name_5, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            if (((!f_1.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents())) > 0))) {
+              {
+                Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents());
+                for(final EObject dat_1 : _iterable_1) {
+                  Feature feature_1 = ((Feature) dat_1);
+                  _builder.newLineIfNotEmpty();
+                  {
+                    boolean _isTransient_1 = feature_1.isTransient();
+                    if (_isTransient_1) {
+                      _builder.append("if($scope.");
+                      String _name_6 = f_1.getName();
+                      _builder.append(_name_6);
+                      String _firstUpper_1 = StringExtensions.toFirstUpper(feature_1.getName());
+                      _builder.append(_firstUpper_1);
+                      _builder.append("!=null){");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("    ");
+                      _builder.append("$scope.");
+                      String _firstLower_8 = StringExtensions.toFirstLower(principal.getName());
+                      _builder.append(_firstLower_8, "    ");
+                      _builder.append("T.");
+                      String _name_7 = f_1.getName();
+                      _builder.append(_name_7, "    ");
+                      _builder.append(".");
+                      String _name_8 = feature_1.getName();
+                      _builder.append(_name_8, "    ");
+                      _builder.append("=$scope.");
+                      String _name_9 = f_1.getName();
+                      _builder.append(_name_9, "    ");
+                      String _firstUpper_2 = StringExtensions.toFirstUpper(feature_1.getName());
+                      _builder.append(_firstUpper_2, "    ");
+                      _builder.append(";");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("}");
+                      _builder.newLine();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("                                ");
+    String _firstLower_9 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_9, "                                ");
+    _builder.append("s.update($scope.");
+    String _firstLower_10 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_10, "                                ");
+    _builder.append("T)");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                                ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("function(value){");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("console.log(\"Registro Exitoso\");");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("alert(\"Registro Exitoso\");");
+    _builder.newLine();
+    _builder.append("            \t\t\t\t\t\t\t");
+    _builder.append("$location.path(\"HomePatient\");");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("console.log(\"El paciente no se pudo actualizar\");");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("alert(\"No se puedo registrar\");");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("alert(\"El Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileUpdatePatientHtml(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<h1 class=\"page-header\">Registra tus datos</h1>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<div class=\"col-lg-6\">");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<form role=\"form\">");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    {
+      EList<Feature> _features = principal.getFeatures();
+      for(final Feature f : _features) {
+        {
+          if ((f.isTransient() && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) == 0))) {
+            {
+              boolean _equals = f.getType().getName().equals("String");
+              if (_equals) {
+                _builder.append("<label> ");
+                String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+                _builder.append(_firstUpper);
+                _builder.append(" </label>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("<input type=\"text\" ng-model=\"");
+                String _name = f.getName();
+                _builder.append(_name);
+                _builder.append("\">");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+              } else {
+                boolean _equals_1 = f.getType().getName().equals("Integer");
+                if (_equals_1) {
+                  _builder.append("<label> ");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
+                  _builder.append(_firstUpper_1);
+                  _builder.append(" </label>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                  _builder.append("<input type=\"number\" ng-model=\"");
+                  String _name_1 = f.getName();
+                  _builder.append(_name_1);
+                  _builder.append("\">");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                } else {
+                  boolean _equals_2 = f.getType().getName().equals("Date");
+                  if (_equals_2) {
+                    _builder.append("<label> ");
+                    String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
+                    _builder.append(_firstUpper_2);
+                    _builder.append(" </label>");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("<br><br>");
+                    _builder.newLine();
+                    _builder.append("<input type=\"date\" ng-model=\"");
+                    String _name_2 = f.getName();
+                    _builder.append(_name_2);
+                    _builder.append("\">");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("<br><br>");
+                    _builder.newLine();
+                  }
+                }
+              }
+            }
+          } else {
+            if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+              _builder.append("<label><h2> Datos de ");
+              String _firstUpper_3 = StringExtensions.toFirstUpper(f.getName());
+              _builder.append(_firstUpper_3);
+              _builder.append(" </h2></label>");
+              _builder.newLineIfNotEmpty();
+              _builder.append("<br><br>");
+              _builder.newLine();
+              {
+                Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                for(final EObject dat : _iterable) {
+                  Feature feature = ((Feature) dat);
+                  _builder.newLineIfNotEmpty();
+                  {
+                    boolean _isTransient = feature.isTransient();
+                    if (_isTransient) {
+                      {
+                        boolean _equals_3 = feature.getType().getName().equals("String");
+                        if (_equals_3) {
+                          _builder.append("<label> ");
+                          String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
+                          _builder.append(_firstUpper_4);
+                          _builder.append(" </label>");
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("<br><br>");
+                          _builder.newLine();
+                          _builder.append("<input type=\"text\" ng-model=\"");
+                          String _name_3 = f.getName();
+                          _builder.append(_name_3);
+                          String _firstUpper_5 = StringExtensions.toFirstUpper(feature.getName());
+                          _builder.append(_firstUpper_5);
+                          _builder.append("\">");
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("<br><br>");
+                          _builder.newLine();
+                        } else {
+                          boolean _equals_4 = feature.getType().getName().equals("Integer");
+                          if (_equals_4) {
+                            _builder.append("<label> ");
+                            String _firstUpper_6 = StringExtensions.toFirstUpper(feature.getName());
+                            _builder.append(_firstUpper_6);
+                            _builder.append(" </label>");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("<br><br>");
+                            _builder.newLine();
+                            _builder.append("<input type=\"number\" ng-model=\"");
+                            String _name_4 = f.getName();
+                            _builder.append(_name_4);
+                            String _firstUpper_7 = StringExtensions.toFirstUpper(feature.getName());
+                            _builder.append(_firstUpper_7);
+                            _builder.append("\">");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("<br><br>");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_5 = feature.getType().getName().equals("Date");
+                            if (_equals_5) {
+                              _builder.append("<label> ");
+                              String _firstUpper_8 = StringExtensions.toFirstUpper(feature.getName());
+                              _builder.append(_firstUpper_8);
+                              _builder.append(" </label>");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                              _builder.append("<input type=\"date\" ng-model=\"");
+                              String _name_5 = f.getName();
+                              _builder.append(_name_5);
+                              String _firstUpper_9 = StringExtensions.toFirstUpper(feature.getName());
+                              _builder.append(_firstUpper_9);
+                              _builder.append("\">");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("                                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"submit\" class=\"btn btn-default\" ng-click=\"update()\">Actualizar</button>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"reset\" class=\"btn btn-default\">Reiniciar</button>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("</form>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.row (nested) -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compilePatientProfileJS(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.PatientProfile\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/PatientProfile\', {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'PatientProfile/PatientProfile.html\',");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("controller: \'PatientProfileCtrl\'");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'PatientProfileCtrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1);
+    _builder.append(",$location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("    ");
+    String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_2, "    ");
+    _builder.append(".get({");
+    String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_3, "    ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name = principal.getName();
+    _builder.append(_name, "    ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("$scope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_4, "                            ");
+    _builder.append("=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("alert(\"El paciente no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("$scope.continueUP=function(){");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$location.path(\"UpdatePatient\");");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compilePatientProfileHtml(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h1 class=\"page-header\">Tus Datos</h1>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-4\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("Datos personales");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<h2> Numero de Identificacion");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<small> {{");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower, "                        ");
+    _builder.append(".id}} </small>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                    ");
+    _builder.append("</h2>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<h2> Nombre");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<small> {{");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1, "                        ");
+    _builder.append(".name}} </small>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                    ");
+    _builder.append("</h2>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<Feature> _features = principal.getFeatures();
+      for(final Feature f : _features) {
+        {
+          if (((!f.getName().equals("id")) && (!f.getName().equals("name")))) {
+            {
+              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+                _builder.append("<h2> ");
+                String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+                _builder.append(_firstUpper);
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t                        ");
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("\t                        ");
+                _builder.append("<small> {{");
+                String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+                _builder.append(_firstLower_2, "\t                        ");
+                _builder.append(".");
+                String _name = f.getName();
+                _builder.append(_name, "\t                        ");
+                _builder.append("}} </small>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t                    ");
+                _builder.append("</h2>");
+                _builder.newLine();
+                _builder.append("\t                    ");
+                _builder.append("<br><br>");
+                _builder.newLine();
+              } else {
+                boolean _equals = f.getType().getName().equals("Date");
+                if (_equals) {
+                  _builder.append("<h2> ");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
+                  _builder.append(_firstUpper_1);
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t                        ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                  _builder.append("\t                        ");
+                  _builder.append("<small> {{");
+                  String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+                  _builder.append(_firstLower_3, "\t                        ");
+                  _builder.append(".");
+                  String _name_1 = f.getName();
+                  _builder.append(_name_1, "\t                        ");
+                  _builder.append(" | date:\'yyyy-MM-dd\'}} </small>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t                    ");
+                  _builder.append("</h2>");
+                  _builder.newLine();
+                  _builder.append("\t                    ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                } else {
+                  if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+                    _builder.append("<label><h1> Datos de ");
+                    String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
+                    _builder.append(_firstUpper_2);
+                    _builder.append(" </h1></label>");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("<br><br>");
+                    _builder.newLine();
+                    {
+                      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                      for(final EObject dat : _iterable) {
+                        _builder.append("        ");
+                        Feature feature = ((Feature) dat);
+                        _builder.newLineIfNotEmpty();
+                        {
+                          if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                            _builder.append("<h2> ");
+                            String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
+                            _builder.append(_firstUpper_3);
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t\t\t\t                        ");
+                            _builder.append("<br><br>");
+                            _builder.newLine();
+                            _builder.append("\t\t\t\t                        ");
+                            _builder.append("<small> {{");
+                            String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+                            _builder.append(_firstLower_4, "\t\t\t\t                        ");
+                            _builder.append(".");
+                            String _name_2 = f.getName();
+                            _builder.append(_name_2, "\t\t\t\t                        ");
+                            _builder.append(".");
+                            String _name_3 = feature.getName();
+                            _builder.append(_name_3, "\t\t\t\t                        ");
+                            _builder.append("}} </small>");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t\t\t\t                    ");
+                            _builder.append("</h2>");
+                            _builder.newLine();
+                            _builder.append("\t\t\t\t                    ");
+                            _builder.append("<br><br>");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_1 = feature.getType().getName().equals("Date");
+                            if (_equals_1) {
+                              _builder.append("<h2> ");
+                              String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
+                              _builder.append(_firstUpper_4);
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t\t\t\t                        ");
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                              _builder.append("\t\t\t\t                        ");
+                              _builder.append("<small> {{");
+                              String _firstLower_5 = StringExtensions.toFirstLower(principal.getName());
+                              _builder.append(_firstLower_5, "\t\t\t\t                        ");
+                              _builder.append(".");
+                              String _name_4 = f.getName();
+                              _builder.append(_name_4, "\t\t\t\t                        ");
+                              _builder.append(".");
+                              String _name_5 = feature.getName();
+                              _builder.append(_name_5, "\t\t\t\t                        ");
+                              _builder.append(" | date:\'yyyy-MM-dd\'}} </small>");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t\t\t\t                    ");
+                              _builder.append("</h2>");
+                              _builder.newLine();
+                              _builder.append("\t\t\t\t                    ");
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<button type=\"button\" class=\"btn btn-primary btn-lg btn-block\" ng-click=\"continueUP()\">Actualizar Datos</button>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-4 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileControlViewJS(final Feature diagnostic) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.ControlView");
+    String _firstUpper = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper);
+    _builder.append("\', [\'ngRoute\'])");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/ControlView");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_1, "  ");
+    _builder.append("\', {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'ControlView");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_2, "    ");
+    _builder.append("/ControlView");
+    String _firstUpper_3 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_3, "    ");
+    _builder.append(".html\',");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("controller: \'ControlView");
+    String _firstUpper_4 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_4, "    ");
+    _builder.append("Ctrl\'");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'ControlView");
+    String _firstUpper_5 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_5);
+    _builder.append("Ctrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    String _firstLower_2 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_2, "    ");
+    _builder.append(".get({");
+    String _firstLower_3 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_3, "    ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name = this.classToServe.getName();
+    _builder.append(_name, "    ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("$scope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_4, "                ");
+    _builder.append("=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                ");
+    _builder.append("$scope.diagnostics=$scope.");
+    String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_5, "                ");
+    _builder.append(".");
+    String _name_1 = diagnostic.getName();
+    _builder.append(_name_1, "                ");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getName().equals("date");
+          boolean _not = (!_equals);
+          if (_not) {
+            _builder.append("$scope.");
+            String _name_2 = feature.getName();
+            _builder.append(_name_2);
+            _builder.append("=[];");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                ");
+    _builder.append("$scope.labels=[];");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("$scope.series = [\'Datos de Control\'];");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("for(var n=0; n<$scope.diagnostics.length; n++){");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("var dd=$scope.diagnostics[n];");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat_1 : _iterable_1) {
+        Feature feature_1 = ((Feature) dat_1);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_1 = feature_1.getType().getName().equals("Integer");
+          if (_equals_1) {
+            _builder.append("$scope.");
+            String _name_3 = feature_1.getName();
+            _builder.append(_name_3);
+            _builder.append(".push(dd.");
+            String _name_4 = feature_1.getName();
+            _builder.append(_name_4);
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("var datee=new Date(dd.date);");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("var dia = datee.getDate();");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("var mes = parseInt(datee.getMonth()) + 1;");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("var year = datee.getFullYear();");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("var dated=dia+\"/\"+mes+\"/\"+year;");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("$scope.labels.push(dated);");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("alert(\"Error\");");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileControlViewHtml(final Feature diagnostic) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h1 class=\"page-header\">Tus datos de control de ");
+    String _firstUpper = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper, "            ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-heading -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<table width=\"100%\" class=\"table table-striped table-bordered table-hover\" id=\"dataTables-example\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<thead>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<tr>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<th>Fecha de control</th>");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        _builder.append("                            ");
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getName().equals("date");
+          boolean _not = (!_equals);
+          if (_not) {
+            _builder.append("                            ");
+            _builder.append("<th>");
+            String _firstUpper_1 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_1, "                            ");
+            _builder.append("</th>");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                        ");
+    _builder.append("</tr>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</thead>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<tbody>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<tr ng-repeat=\"d in diagnostics\" >");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<td>{{d.date | date:\"dd/MMMM/yyyy\"}}</td>");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat_1 : _iterable_1) {
+        _builder.append("                            ");
+        Feature feature_1 = ((Feature) dat_1);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_1 = feature_1.getName().equals("date");
+          boolean _not_1 = (!_equals_1);
+          if (_not_1) {
+            _builder.append("                            ");
+            _builder.append("<td>{{d.");
+            String _name = feature_1.getName();
+            _builder.append(_name, "                            ");
+            _builder.append("}}</td>");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("                        ");
+    _builder.append("</tr>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</tbody>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</table>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<!-- /.table-responsive -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_2 = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat_2 : _iterable_2) {
+        _builder.append("\t    ");
+        Feature feature_2 = ((Feature) dat_2);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_2 = feature_2.getType().getName().equals("Integer");
+          if (_equals_2) {
+            _builder.append("\t    ");
+            _builder.append("<div class=\"col-lg-4\">");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<div class=\"panel panel-default\">");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<div class=\"panel-heading\">");
+            _builder.newLine();
+            _builder.append("\t    ");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(feature_2.getName());
+            _builder.append(_firstUpper_2, "\t    ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<div class=\"panel-body\">");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<canvas  id=\"");
+            String _name_1 = feature_2.getName();
+            _builder.append(_name_1, "\t    ");
+            _builder.append("\" class=\"chart chart-bar\"");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t    ");
+            _builder.append("chart-data=\"");
+            String _name_2 = feature_2.getName();
+            _builder.append(_name_2, "\t    ");
+            _builder.append("\" chart-labels=\"labels\" chart-series=\"series\">");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t    ");
+            _builder.append("</canvas>");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<!-- /.panel-body -->");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<!-- /.panel -->");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t    ");
+            _builder.append("<!-- /.col-lg-4 -->");
+            _builder.newLine();
+          }
+        }
+      }
+    }
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileControlRegisterJS(final Feature diagnostic) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.ControlRegister");
+    String _firstUpper = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper);
+    _builder.append("\', [\'ngRoute\'])");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/ControlRegister");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_1, "  ");
+    _builder.append("\', {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'ControlRegister");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_2, "    ");
+    _builder.append("/ControlRegister");
+    String _firstUpper_3 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_3, "    ");
+    _builder.append(".html\',");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("controller: \'ControlRegister");
+    String _firstUpper_4 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_4, "    ");
+    _builder.append("Ctrl\'");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'ControlRegister");
+    String _firstUpper_5 = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper_5);
+    _builder.append("Ctrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("s\',\'");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("\',\'$http\',\'$resource\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_2 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_2);
+    _builder.append("s,");
+    String _firstLower_3 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_3);
+    _builder.append(", $http, $resource, $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("$scope.date=null;");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        _builder.append("\t\t");
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getName().equals("date");
+          boolean _not = (!_equals);
+          if (_not) {
+            _builder.append("\t\t");
+            _builder.append("$scope.");
+            String _name = feature.getName();
+            _builder.append(_name, "\t\t");
+            _builder.append("=null;");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.saveRegister= function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$scope.diagnostic={\"date\":$scope.date");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat_1 : _iterable_1) {
+        Feature feature_1 = ((Feature) dat_1);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals_1 = feature_1.getName().equals("date");
+          boolean _not_1 = (!_equals_1);
+          if (_not_1) {
+            _builder.append(", \"");
+            String _name_1 = feature_1.getName();
+            _builder.append(_name_1);
+            _builder.append("\":$scope.");
+            String _name_2 = feature_1.getName();
+            _builder.append(_name_2);
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("            ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("            ");
+    String _firstLower_4 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_4, "            ");
+    _builder.append(".get({");
+    String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_5, "            ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name_3 = this.classToServe.getName();
+    _builder.append(_name_3, "            ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("$scope.");
+    String _firstLower_6 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_6, "                        ");
+    _builder.append("T=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append("$scope.");
+    String _firstLower_7 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_7, "                        ");
+    _builder.append("T.");
+    String _name_4 = diagnostic.getName();
+    _builder.append(_name_4, "                        ");
+    _builder.append(".push($scope.diagnostic);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    String _firstLower_8 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_8, "                        ");
+    _builder.append("s.update($scope.");
+    String _firstLower_9 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_9, "                        ");
+    _builder.append("T)");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function(value){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("console.log(\"Patient update\"+ $scope.");
+    String _firstLower_10 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_10, "                                ");
+    _builder.append("T.");
+    String _name_5 = diagnostic.getName();
+    _builder.append(_name_5, "                                ");
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                                ");
+    _builder.append("$location.path(\"HomePatient\");");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("console.log(\"El ");
+    String _firstLower_11 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_11, "                                ");
+    _builder.append(" no se pudo actualizar\");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("alert(\"El Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileControlRegisterHtml(final Feature diagnostic) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<h1 class=\"page-header\">Registra los datos de tu control de ");
+    String _firstUpper = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper, "                ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<div class=\"col-lg-6\">");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<form role=\"form\">");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<label>Fecha del control</label>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<input type=\"date\" ng-model=\"date\">");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          if ((feature.getType().getName().equals("Date") && (!feature.getName().equals("date")))) {
+            _builder.append("<label>");
+            String _firstUpper_1 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_1);
+            _builder.append("</label>");
+            _builder.newLineIfNotEmpty();
+            _builder.append("<br><br>");
+            _builder.newLine();
+            _builder.append("<input type=\"date\" ng-model=\"");
+            String _name = feature.getName();
+            _builder.append(_name);
+            _builder.append("\">");
+            _builder.newLineIfNotEmpty();
+            _builder.append("<br><br>");
+            _builder.newLine();
+          } else {
+            if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
+              _builder.append("<label> ");
+              String _firstUpper_2 = StringExtensions.toFirstUpper(feature.getName());
+              _builder.append(_firstUpper_2);
+              _builder.append(" </label>");
+              _builder.newLineIfNotEmpty();
+              _builder.append("<br><br>");
+              _builder.newLine();
+              _builder.append("<input type=\"number\" ng-model=\"");
+              String _name_1 = feature.getName();
+              _builder.append(_name_1);
+              _builder.append("\">");
+              _builder.newLineIfNotEmpty();
+              _builder.append("<br><br>");
+              _builder.newLine();
+            } else {
+              boolean _equals = feature.getType().getName().equals("String");
+              if (_equals) {
+                _builder.append("<label> ");
+                String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
+                _builder.append(_firstUpper_3);
+                _builder.append(" </label>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("<input type=\"String\" ng-model=\"");
+                String _name_2 = feature.getName();
+                _builder.append(_name_2);
+                _builder.append("\">");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("                                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"submit\" class=\"btn btn-default\" ng-click=\"saveRegister()\">Aceptar</button>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"reset\" class=\"btn btn-default\">Reiniciar</button>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("</form>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.row (nested) -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileCommentsViewJS(final Feature comment) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.CommentsView");
+    String _firstUpper = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper);
+    _builder.append("\', [\'ngRoute\'])");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/CommentsView");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_1, "  ");
+    _builder.append("\', {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'CommentsView");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_2, "    ");
+    _builder.append("/CommentsView");
+    String _firstUpper_3 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_3, "    ");
+    _builder.append(".html\',");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("controller: \'CommentsView");
+    String _firstUpper_4 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_4, "    ");
+    _builder.append("Ctrl\'");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'CommentsView");
+    String _firstUpper_5 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_5);
+    _builder.append("Ctrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("     ");
+    String _firstLower_2 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_2, "     ");
+    _builder.append(".get({");
+    String _firstLower_3 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_3, "     ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name = this.classToServe.getName();
+    _builder.append(_name, "     ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("$scope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_4, "                            ");
+    _builder.append("C=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("$scope.comments=$scope.");
+    String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_5, "                            ");
+    _builder.append("C.");
+    String _name_1 = comment.getName();
+    _builder.append(_name_1, "                            ");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("if (typeof $scope.comments == \"undefined\"){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("$scope.commentsY=false;");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("$scope.commentsTitle=\"No tienes ningun comentario\";");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("if(typeof $scope.comments != \"undefined\"){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("$scope.commentsY=true;");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("alert(\"Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileCommentsViewHtml(final Feature comment) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h1 class=\"page-header\">Comentarios de ");
+    String _firstUpper = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper, "            ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-heading -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div ng-hide=\"commentsY\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("{{commentsTitle}}");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div ng-show=\"commentsY\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<table width=\"100%\" class=\"table table-striped table-bordered table-hover\" id=\"dataTables-example\">");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<thead>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<tr>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<th>Comentarios ");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_1, "                                ");
+    _builder.append("</th>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("</tr>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</thead>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<tbody>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<tr ng-repeat=\"c in comments\" >");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<td>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<div class=\"panel panel-green\">");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(comment.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getType().getName().equals("Date");
+          if (_equals) {
+            _builder.append("<div class=\"panel-footer\">");
+            _builder.newLine();
+            _builder.append("\t");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_2, "\t");
+            _builder.append(": {{c.");
+            String _name = feature.getName();
+            _builder.append(_name, "\t");
+            _builder.append(" | date:\"dd/MMMM/yyyy\"}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("</div>");
+            _builder.newLine();
+          } else {
+            _builder.append("<div class=\"panel-heading\">");
+            _builder.newLine();
+            _builder.append("\t");
+            String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_3, "\t");
+            _builder.append(": {{c.");
+            String _name_1 = feature.getName();
+            _builder.append(_name_1, "\t");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("</div>");
+            _builder.newLine();
+          }
+        }
+      }
+    }
+    _builder.append("                                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("</td>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</tr>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</tbody>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</table>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.table-responsive -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileHomePatientJS(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.HomePatient\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/HomePatient\', {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'HomePatient/HomePatient.html\',");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("controller: \'HomePatientCtrl\'");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'HomePatientCtrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1);
+    _builder.append(",$location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("      ");
+    String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_2, "      ");
+    _builder.append(".get({");
+    String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_3, "      ");
+    _builder.append("Id:\"\"+$rootScope.id");
+    String _name = principal.getName();
+    _builder.append(_name, "      ");
+    _builder.append("})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("$scope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_4, "                        ");
+    _builder.append("H=value;");
+    _builder.newLineIfNotEmpty();
+    {
+      for(final Feature comm : this.comments) {
+        _builder.append("                        ");
+        _builder.append("$scope.commentsH");
+        String _firstUpper = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper, "                        ");
+        _builder.append("=$scope.");
+        String _firstLower_5 = StringExtensions.toFirstLower(principal.getName());
+        _builder.append(_firstLower_5, "                        ");
+        _builder.append("H.");
+        String _name_1 = comm.getName();
+        _builder.append(_name_1, "                        ");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("if (typeof $scope.commentsH");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_1, "                        ");
+        _builder.append(" == \"undefined\"){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("    ");
+        _builder.append("$scope.recomendacionesH");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_2, "                            ");
+        _builder.append("=\"No tienes ninguna recomendacion sobre ");
+        String _firstUpper_3 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_3, "                            ");
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("    ");
+        _builder.append("$scope.cantH");
+        String _firstUpper_4 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_4, "                            ");
+        _builder.append("=undefined;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("                        ");
+        _builder.append("if(typeof $scope.commentsH");
+        String _firstUpper_5 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_5, "                        ");
+        _builder.append(" != \"undefined\"){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("    ");
+        _builder.append("$scope.recomendacionesH");
+        String _firstUpper_6 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_6, "                            ");
+        _builder.append("=\"Comentarios sobre ");
+        String _firstUpper_7 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_7, "                            ");
+        _builder.append(" de tu medico!!\";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("    ");
+        _builder.append("$scope.cantH");
+        String _firstUpper_8 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_8, "                            ");
+        _builder.append("=$scope.commentsH");
+        String _firstUpper_9 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_9, "                            ");
+        _builder.append(".length;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        ");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    {
+      for(final Feature diag : this.diagnostics) {
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("$scope.diagnosticsH");
+        String _firstUpper_10 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_10, "\t\t\t\t\t\t");
+        _builder.append("=$scope.");
+        String _firstLower_6 = StringExtensions.toFirstLower(principal.getName());
+        _builder.append(_firstLower_6, "\t\t\t\t\t\t");
+        _builder.append("H.");
+        String _name_2 = diag.getName();
+        _builder.append(_name_2, "\t\t\t\t\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+        {
+          Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diag.getType().eAllContents());
+          for(final EObject dat : _iterable) {
+            _builder.append("                            ");
+            Feature feature = ((Feature) dat);
+            _builder.newLineIfNotEmpty();
+            {
+              boolean _equals = feature.getType().getName().equals("Integer");
+              if (_equals) {
+                _builder.append("                            ");
+                _builder.append("$scope.");
+                String _name_3 = feature.getName();
+                _builder.append(_name_3, "                            ");
+                String _firstUpper_11 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_11, "                            ");
+                _builder.append("=[];");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("$scope.labels");
+        String _firstUpper_12 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_12, "\t\t\t\t\t\t");
+        _builder.append("=[];");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("$scope.series");
+        String _firstUpper_13 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_13, "\t\t\t\t\t\t");
+        _builder.append(" = [\'Datos de Control ");
+        String _firstUpper_14 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_14, "\t\t\t\t\t\t");
+        _builder.append("\'];");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("for(var n=0; n<$scope.diagnosticsH");
+        String _firstUpper_15 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_15, "\t\t\t\t\t\t");
+        _builder.append(".length; n++){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var dd=$scope.diagnosticsH");
+        String _firstUpper_16 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_16, "\t\t\t\t\t\t\t");
+        _builder.append("[n];");
+        _builder.newLineIfNotEmpty();
+        {
+          Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(diag.getType().eAllContents());
+          for(final EObject dat_1 : _iterable_1) {
+            _builder.append("\t                            ");
+            Feature feature_1 = ((Feature) dat_1);
+            _builder.newLineIfNotEmpty();
+            {
+              boolean _equals_1 = feature_1.getType().getName().equals("Integer");
+              if (_equals_1) {
+                _builder.append("\t                            ");
+                _builder.append("$scope.");
+                String _name_4 = feature_1.getName();
+                _builder.append(_name_4, "\t                            ");
+                String _firstUpper_17 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_17, "\t                            ");
+                _builder.append(".push(dd.");
+                String _name_5 = feature_1.getName();
+                _builder.append(_name_5, "\t                            ");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var datee=new Date(dd.date);");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var dia = datee.getDate();");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var mes = parseInt(datee.getMonth()) + 1;");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var year = datee.getFullYear();");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("var dated=dia+\"/\"+mes+\"/\"+year;");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("\t");
+        _builder.append("$scope.labels");
+        String _firstUpper_18 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_18, "\t\t\t\t\t\t\t");
+        _builder.append(".push(dated);");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("alert(\"El Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append(");");
+    _builder.newLine();
+    {
+      for(final Feature comm_1 : this.comments) {
+        _builder.append("$scope.continueCS");
+        String _firstUpper_19 = StringExtensions.toFirstUpper(comm_1.getName());
+        _builder.append(_firstUpper_19);
+        _builder.append("=function(){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t          \t");
+        _builder.append("$location.path(\"CommentsView");
+        String _firstUpper_20 = StringExtensions.toFirstUpper(comm_1.getName());
+        _builder.append(_firstUpper_20, "\t          \t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t          \t");
+        _builder.append("};");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileHomePatientHtml(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templatePatient.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h1 class=\"page-header\">Bienvenido</h1>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    {
+      for(final Feature comm : this.comments) {
+        _builder.append("    ");
+        _builder.append("<!-- /.row -->");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("<div class=\"row\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("    ");
+        _builder.append("<div class=\"col-lg-3 col-md-6\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("        ");
+        _builder.append("<div class=\"panel panel-primary\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("            ");
+        _builder.append("<div class=\"panel-heading\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                ");
+        _builder.append("<div class=\"row\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("<div class=\"col-xs-3\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                        ");
+        _builder.append("<i class=\"fa fa-comments fa-5x\"></i>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("<div class=\"col-xs-9 text-right\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                        ");
+        _builder.append("<div class=\"huge\">{{cantH");
+        String _firstUpper = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper, "                            ");
+        _builder.append("}}</div>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("                        ");
+        _builder.append("<div>{{recomendacionesH");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_1, "                            ");
+        _builder.append("}}</div>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("            ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("            ");
+        _builder.append("<a  ng-click=\"continueCS");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_2, "                ");
+        _builder.append("()\">");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("                ");
+        _builder.append("<div class=\"panel-footer\">");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("<span class=\"pull-left\">Detalles</span>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("<span class=\"pull-right\"><i class=\"fa fa-arrow-circle-right\"></i></span>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                    ");
+        _builder.append("<div class=\"clearfix\"></div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("                ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("            ");
+        _builder.append("</a>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("        ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("    ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("</div>");
+        _builder.newLine();
+      }
+    }
+    {
+      for(final Feature diag : this.diagnostics) {
+        _builder.append("\t");
+        _builder.append("<div class=\"row\">");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("<br>");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("<h2>Registros de ");
+        String _firstUpper_3 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_3, "\t\t");
+        _builder.append("</h2>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("<br>");
+        _builder.newLine();
+        {
+          Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diag.getType().eAllContents());
+          for(final EObject data : _iterable) {
+            _builder.append("\t    \t");
+            Feature feature = ((Feature) data);
+            _builder.newLineIfNotEmpty();
+            {
+              boolean _equals = feature.getType().getName().equals("Integer");
+              if (_equals) {
+                _builder.append("\t    \t");
+                _builder.append("<div class=\"col-lg-4\">");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<div class=\"panel panel-default\">");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<div class=\"panel-heading\">");
+                _builder.newLine();
+                _builder.append("\t                    ");
+                String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
+                _builder.append(_firstUpper_4, "\t                    ");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t    \t");
+                _builder.append("</div>");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<div class=\"panel-body\">");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<canvas  id=\"");
+                String _name = feature.getName();
+                _builder.append(_name, "\t    \t");
+                String _firstUpper_5 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_5, "\t    \t");
+                _builder.append("\" class=\"chart chart-bar\"");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t    \t");
+                _builder.append("chart-data=\"");
+                String _name_1 = feature.getName();
+                _builder.append(_name_1, "\t    \t");
+                String _firstUpper_6 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_6, "\t    \t");
+                _builder.append("\" chart-labels=\"labels");
+                String _firstUpper_7 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_7, "\t    \t");
+                _builder.append("\" chart-series=\"series");
+                String _firstUpper_8 = StringExtensions.toFirstUpper(diag.getName());
+                _builder.append(_firstUpper_8, "\t    \t");
+                _builder.append("\">");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t    \t");
+                _builder.append("</canvas>");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("</div>");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<!-- /.panel-body -->");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("</div>");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<!-- /.panel -->");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("</div>");
+                _builder.newLine();
+                _builder.append("\t    \t");
+                _builder.append("<!-- /.col-lg-4 -->");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        _builder.append("\t");
+        _builder.append("</div>");
+        _builder.newLine();
+      }
+    }
+    _builder.append("    ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compilePatientRegisterJS(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.PatientRegister\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/PatientRegister\', {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'PatientRegister/PatientRegister.html\',");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("controller: \'PatientRegisterCtrl\'");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'PatientRegisterCtrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower);
+    _builder.append("s\',\'$http\',\'$resource\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("s, $http, $resource, $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("$scope.id=null;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.name=null;");
+    _builder.newLine();
+    {
+      EList<Feature> _features = principal.getFeatures();
+      for(final Feature f : _features) {
+        {
+          if ((((!f.isMany()) && (!f.getName().equals("id"))) && (!f.getName().equals("name")))) {
+            {
+              int _size = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()));
+              boolean _equals = (_size == 0);
+              if (_equals) {
+                _builder.append("$scope.");
+                String _name = f.getName();
+                _builder.append(_name);
+                _builder.append("=null;");
+                _builder.newLineIfNotEmpty();
+              } else {
+                int _size_1 = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()));
+                boolean _greaterThan = (_size_1 > 0);
+                if (_greaterThan) {
+                  {
+                    Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                    for(final EObject dat : _iterable) {
+                      Feature feature = ((Feature) dat);
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("$scope.");
+                      String _name_1 = feature.getName();
+                      _builder.append(_name_1);
+                      _builder.append("=null;");
+                      _builder.newLineIfNotEmpty();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("        ");
+    _builder.append("$rootScope.nameP=null;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.save= function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$rootScope.id");
+    String _firstUpper = StringExtensions.toFirstUpper(principal.getName());
+    _builder.append(_firstUpper, "            ");
+    _builder.append("=$scope.id;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append("$rootScope.");
+    String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_2, "            ");
+    _builder.append("={\"id\":$scope.id,\"name\":$scope.name");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Feature> _features_1 = principal.getFeatures();
+      for(final Feature f_1 : _features_1) {
+        {
+          if ((((!f_1.isMany()) && (!f_1.getName().equals("id"))) && (!f_1.getName().equals("name")))) {
+            {
+              int _size_2 = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents()));
+              boolean _equals_1 = (_size_2 == 0);
+              if (_equals_1) {
+                _builder.append("\t\t\t");
+                _builder.append(", \"");
+                String _name_2 = f_1.getName();
+                _builder.append(_name_2, "\t\t\t");
+                _builder.append("\":$scope.");
+                String _name_3 = f_1.getName();
+                _builder.append(_name_3, "\t\t\t");
+                _builder.newLineIfNotEmpty();
+              } else {
+                int _size_3 = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents()));
+                boolean _greaterThan_1 = (_size_3 > 0);
+                if (_greaterThan_1) {
+                  _builder.append("\t\t\t");
+                  _builder.append(", \"");
+                  String _name_4 = f_1.getName();
+                  _builder.append(_name_4, "\t\t\t");
+                  _builder.append("\":{");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t\t\t");
+                  _builder.append("//");
+                  int count = IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents()));
+                  _builder.newLineIfNotEmpty();
+                  {
+                    Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(f_1.getType().eAllContents());
+                    for(final EObject dat_1 : _iterable_1) {
+                      _builder.append("\t\t\t");
+                      Feature feature_1 = ((Feature) dat_1);
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t\t\t");
+                      _builder.append("\"");
+                      String _name_5 = feature_1.getName();
+                      _builder.append(_name_5, "\t\t\t");
+                      _builder.append("\":$scope.");
+                      String _name_6 = feature_1.getName();
+                      _builder.append(_name_6, "\t\t\t");
+                      {
+                        if ((count > 1)) {
+                          _builder.append(", ");
+                        }
+                      }
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t\t\t");
+                      _builder.append("//");
+                      int _minusMinus = count--;
+                      _builder.append(_minusMinus, "\t\t\t");
+                      _builder.newLineIfNotEmpty();
+                    }
+                  }
+                  _builder.append("\t\t\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
+            }
+          } else {
+            boolean _isMany = f_1.isMany();
+            if (_isMany) {
+              _builder.append("\t\t\t");
+              _builder.append(", \"");
+              String _name_7 = f_1.getName();
+              _builder.append(_name_7, "\t\t\t");
+              _builder.append("\":[]");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    _builder.append("\t\t\t");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("            ");
+    String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_3, "            ");
+    _builder.append("s.save($rootScope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_4, "            ");
+    _builder.append(",function(){");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                ");
+    _builder.append("console.info(\"Person saved   \"+ $rootScope.");
+    String _firstLower_5 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_5, "                ");
+    _builder.append(".name);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t\t");
+    _builder.append("$location.path(\"HomePatient\");");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compilePatientRegisterHtml(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div id=\"wrapper\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<h1 class=\"page-header\">Nuevo Registro ");
+    String _name = principal.getName();
+    _builder.append(_name, "                ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<div class=\"col-lg-6\">");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<form role=\"form\">");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<label> Numero de identificacion </label>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<input type=\"number\" ng-model=\"id\">");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<label> Nombre </label>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<input type=\"text\" ng-model=\"name\">");
+    _builder.newLine();
+    _builder.append("                                        ");
+    _builder.append("<br><br>");
+    _builder.newLine();
+    {
+      EList<Feature> _features = principal.getFeatures();
+      for(final Feature f : _features) {
+        {
+          if (((!f.getName().equals("id")) && (!f.getName().equals("name")))) {
+            {
+              boolean _equals = f.getType().getName().equals("String");
+              if (_equals) {
+                _builder.append("<label> ");
+                String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+                _builder.append(_firstUpper);
+                _builder.append(" </label>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t                                        \t");
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("\t\t\t                                        ");
+                _builder.append("<input type=\"text\" ng-model=\"");
+                String _name_1 = f.getName();
+                _builder.append(_name_1, "\t\t\t                                        ");
+                _builder.append("\">");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t                                        ");
+                _builder.append("<br><br>");
+                _builder.newLine();
+              } else {
+                boolean _equals_1 = f.getType().getName().equals("Integer");
+                if (_equals_1) {
+                  _builder.append("<label> ");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
+                  _builder.append(_firstUpper_1);
+                  _builder.append(" </label>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t\t\t                                        ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                  _builder.append("\t\t\t                                        ");
+                  _builder.append("<input type=\"number\" ng-model=\"");
+                  String _name_2 = f.getName();
+                  _builder.append(_name_2, "\t\t\t                                        ");
+                  _builder.append("\">");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t\t\t                                        ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                } else {
+                  boolean _equals_2 = f.getType().getName().equals("Date");
+                  if (_equals_2) {
+                    _builder.append("<label> ");
+                    String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
+                    _builder.append(_firstUpper_2);
+                    _builder.append(" </label>");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t\t\t                                        ");
+                    _builder.append("<br><br>");
+                    _builder.newLine();
+                    _builder.append("\t\t\t                                        ");
+                    _builder.append("<input type=\"date\" ng-model=\"");
+                    String _name_3 = f.getName();
+                    _builder.append(_name_3, "\t\t\t                                        ");
+                    _builder.append("\">");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t\t\t                                        ");
+                    _builder.append("<br><br>");
+                    _builder.newLine();
+                  } else {
+                    if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+                      _builder.append("<label><h2> Datos de ");
+                      String _firstUpper_3 = StringExtensions.toFirstUpper(f.getName());
+                      _builder.append(_firstUpper_3);
+                      _builder.append(" </h2></label>");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("<br><br>");
+                      _builder.newLine();
+                      {
+                        Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                        for(final EObject dat : _iterable) {
+                          Feature feature = ((Feature) dat);
+                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_3 = feature.getType().getName().equals("String");
+                            if (_equals_3) {
+                              _builder.append("<label> ");
+                              String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
+                              _builder.append(_firstUpper_4);
+                              _builder.append(" </label>");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                              _builder.append("<input type=\"text\" ng-model=\"");
+                              String _name_4 = feature.getName();
+                              _builder.append(_name_4);
+                              _builder.append("\">");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("<br><br>");
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_4 = feature.getType().getName().equals("Integer");
+                              if (_equals_4) {
+                                _builder.append("<label> ");
+                                String _firstUpper_5 = StringExtensions.toFirstUpper(feature.getName());
+                                _builder.append(_firstUpper_5);
+                                _builder.append(" </label>");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("<br><br>");
+                                _builder.newLine();
+                                _builder.append("<input type=\"number\" ng-model=\"");
+                                String _name_5 = feature.getName();
+                                _builder.append(_name_5);
+                                _builder.append("\">");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("<br><br>");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_5 = feature.getType().getName().equals("Date");
+                                if (_equals_5) {
+                                  _builder.append("<label> ");
+                                  String _firstUpper_6 = StringExtensions.toFirstUpper(feature.getName());
+                                  _builder.append(_firstUpper_6);
+                                  _builder.append(" </label>");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("<br><br>");
+                                  _builder.newLine();
+                                  _builder.append("<input type=\"date\" ng-model=\"");
+                                  String _name_6 = feature.getName();
+                                  _builder.append(_name_6);
+                                  _builder.append("\">");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("<br><br>");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("                                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"submit\" class=\"btn btn-default\" ng-click=\"save()\">Aceptar</button>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"reset\" class=\"btn btn-default\">Reiniciar</button>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("</form>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.row (nested) -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileLoginViewJS(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.LoginView\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/LoginView\', {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'LoginView/LoginView.html\',");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("controller: \'LoginViewCtrl\'");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'LoginViewCtrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower);
+    _builder.append("\',\'");
+    String _firstLower_1 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("s\',\'$http\',\'$resource\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_2 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_2);
+    _builder.append(", ");
+    String _firstLower_3 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_3);
+    _builder.append("s, $http, $resource, $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("$scope.");
+    String _firstLower_4 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_4, "        ");
+    _builder.append("Id=null;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.");
+    String _firstLower_5 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_5, "        ");
+    _builder.append("=$rootScope.");
+    String _firstLower_6 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_6, "        ");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("$scope.accept=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    String _firstLower_7 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_7, "            ");
+    _builder.append(".get({");
+    String _firstLower_8 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_8, "            ");
+    _builder.append("Id:\"\"+$scope.");
+    String _firstLower_9 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_9, "            ");
+    _builder.append("Id})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("$rootScope.");
+    String _firstLower_10 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_10, "                            ");
+    _builder.append("=value;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("$rootScope.id");
+    String _firstUpper = StringExtensions.toFirstUpper(principal.getName());
+    _builder.append(_firstUpper, "                            ");
+    _builder.append("=$scope.");
+    String _firstLower_11 = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower_11, "                            ");
+    _builder.append("Id;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("$location.path(\"HomePatient\");");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("alert(\"El Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileLoginViewHtml(final Entity principal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div class=\"container\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-md-4 col-md-offset-4\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"login-panel panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<h3 class=\"panel-title\">Inicia sesion</h3>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<form role=\"form\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<fieldset>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<label>Numero de Identificacion</label>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<input class=\"form-control\" type=\"number\" ng-model=\"");
+    String _firstLower = StringExtensions.toFirstLower(principal.getName());
+    _builder.append(_firstLower, "                                ");
+    _builder.append("Id\" autofocus>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<!-- Change this to a button or input when using this as a form -->");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<a href=\"index.html\" class=\"btn btn-lg btn-success btn-block\" ng-click=\"accept()\">Aceptar</a>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</fieldset>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</form>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileTemplatePatientJS(final ArrayList<Feature> diagnostics) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.templatePatient\', [\'ngRoute\'])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'templatePatientCtrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append(", $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("$scope.continuePerfil=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$location.path(\"PatientProfile\");");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("$scope.continueLogout=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$location.path(\"view1\");");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("$scope.continueHome=function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$location.path(\"HomePatient\");");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("      ");
+    _builder.newLine();
+    {
+      for(final Feature comm : this.comments) {
+        _builder.append("      ");
+        _builder.append("$scope.continueComments");
+        String _firstUpper = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper, "      ");
+        _builder.append("=function(){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("\t");
+        _builder.append("$location.path(\"CommentsView");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_1, "      \t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("};");
+        _builder.newLine();
+      }
+    }
+    {
+      for(final Feature diag : diagnostics) {
+        _builder.append("      ");
+        _builder.append("$scope.continueCRegister");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_2, "      ");
+        _builder.append("=function(){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("      ");
+        _builder.append("$location.path(\"ControlRegister");
+        String _firstUpper_3 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_3, "            ");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("};");
+        _builder.newLine();
+        _builder.append("      ");
+        _builder.append("$scope.continueCView");
+        String _firstUpper_4 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_4, "      ");
+        _builder.append("=function(){");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("      ");
+        _builder.append("$location.path(\"ControlView");
+        String _firstUpper_5 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_5, "            ");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("      ");
+        _builder.append("};");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileTemplatePatientHtml(final ArrayList<Feature> diagnostics) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-controller=\"templatePatientCtrl\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- Navigation -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"navbar-header\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"sr-only\">Toggle navigation</span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<span class=\"icon-bar\"></span>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</button>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">Multiple Client</a>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-header -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<ul class=\"nav navbar-top-links navbar-right\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<li><a ng-click=\"continuePerfil()\"><i class=\"fa fa-user fa-fw\"></i> Perfil </a>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</li>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<li><a ng-click=\"continueLogout()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesion</a>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</li>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</ul>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-top-links -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"navbar-default sidebar\" role=\"navigation\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"sidebar-nav navbar-collapse\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<ul class=\"nav\" id=\"side-menu\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<li>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<a ng-click=\"continueHome()\"><i class=\"fa fa-dashboard fa-fw\"></i>Inicio</a>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</li>");
+    _builder.newLine();
+    {
+      for(final Feature comm : this.comments) {
+        _builder.append("        \t\t\t");
+        _builder.append("<li>");
+        _builder.newLine();
+        _builder.append("        \t\t\t");
+        _builder.append("<a ng-click=\"continueComments");
+        String _firstUpper = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper, "        \t\t\t");
+        _builder.append("()\"><i class=\"fa fa-edit fa-fw\"></i> Comentarios para ");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(comm.getName());
+        _builder.append(_firstUpper_1, "        \t\t\t");
+        _builder.append("</a>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("        \t\t\t");
+        _builder.append("</li>");
+        _builder.newLine();
+      }
+    }
+    _builder.append("                    ");
+    _builder.append("<li>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<a><i class=\"fa fa-bar-chart-o fa-fw\"></i> Registros de Diagnostico</a>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<ul class=\"nav nav-second-level\">");
+    _builder.newLine();
+    {
+      for(final Feature diag : diagnostics) {
+        _builder.append("                        \t");
+        _builder.append("<li>");
+        _builder.newLine();
+        _builder.append("                        \t");
+        _builder.append("<a ng-click=\"continueCRegister");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_2, "                        \t");
+        _builder.append("()\">Nuevo Registro ");
+        String _firstUpper_3 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_3, "                        \t");
+        _builder.append("</a>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        \t");
+        _builder.append("</li>");
+        _builder.newLine();
+        _builder.append("                        \t");
+        _builder.append("<li>");
+        _builder.newLine();
+        _builder.append("                        \t");
+        _builder.append("<a ng-click=\"continueCView");
+        String _firstUpper_4 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_4, "                        \t");
+        _builder.append("()\">Consultar Registros ");
+        String _firstUpper_5 = StringExtensions.toFirstUpper(diag.getName());
+        _builder.append(_firstUpper_5, "                        \t");
+        _builder.append("</a>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("                        \t");
+        _builder.append("</li>");
+        _builder.newLine();
+      }
+    }
+    _builder.append("                        ");
+    _builder.append("</ul>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.nav-second-level -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</li>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</ul>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.sidebar-collapse -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.navbar-static-side -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</nav>");
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileCommentRegisterJS(final Feature comment) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\'use strict\';");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("angular.module(\'myApp.CommentRegister");
+    String _firstUpper = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper);
+    _builder.append("\', [\'ngRoute\'])");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append(".config([\'$routeProvider\', function($routeProvider) {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("$routeProvider.when(\'/CommentRegister");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_1, "  ");
+    _builder.append("\', {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("templateUrl: \'CommentRegister");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_2, "    ");
+    _builder.append("/CommentRegister");
+    String _firstUpper_3 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_3, "    ");
+    _builder.append(".html\',");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("controller: \'CommentRegister");
+    String _firstUpper_4 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_4, "    ");
+    _builder.append("Ctrl\'");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}])");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append(".controller(\'CommentRegister");
+    String _firstUpper_5 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_5);
+    _builder.append("Ctrl\', [\'$rootScope\', \'$scope\', \'");
+    String _firstLower = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower);
+    _builder.append("\',\'");
+    String _firstLower_1 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_1);
+    _builder.append("s\',\'$http\',\'$resource\', \'$location\', function ($rootScope, $scope, ");
+    String _firstLower_2 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_2);
+    _builder.append(", ");
+    String _firstLower_3 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_3);
+    _builder.append("s, $http, $resource, $location) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("$scope.title=null;");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(comment.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          if (((!feature.getName().equals("title")) && (!feature.getName().equals("date")))) {
+            _builder.append("$scope.");
+            String _name = feature.getName();
+            _builder.append(_name);
+            _builder.append("=null;");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("        ");
+    _builder.append("$scope.date=new Date();");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.pId=$rootScope.patientId;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.foundC=$rootScope.FindID;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("$scope.saveComment= function(){");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("$scope.comment={\"date\":$scope.date");
+    {
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(comment.getType().eAllContents());
+      for(final EObject dat_1 : _iterable_1) {
+        _builder.newLineIfNotEmpty();
+        _builder.append("            ");
+        Feature feature_1 = ((Feature) dat_1);
+        _builder.newLineIfNotEmpty();
+        {
+          if (((!feature_1.getName().equals("title")) && (!feature_1.getName().equals("date")))) {
+            _builder.append("            ");
+            _builder.append(",\"");
+            String _name_1 = feature_1.getName();
+            _builder.append(_name_1, "            ");
+            _builder.append("\":$scope.");
+            String _name_2 = feature_1.getName();
+            _builder.append(_name_2, "            ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("            ");
+      }
+    }
+    _builder.append(" ,\"title\":$scope.title};");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    String _firstLower_4 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_4, "            ");
+    _builder.append(".get({");
+    String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_5, "            ");
+    _builder.append("Id:\"\"+$scope.pId})");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( value ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("$scope.principal=value;");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("$scope.principal.");
+    String _name_3 = comment.getName();
+    _builder.append(_name_3, "                        ");
+    _builder.append(".push($scope.comment);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    String _firstLower_6 = StringExtensions.toFirstLower(this.classToServe.getName());
+    _builder.append(_firstLower_6, "                        ");
+    _builder.append("s.update($scope.principal)");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                        ");
+    _builder.append(".$promise.then(");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//success");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function(value){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("$location.path(\"CommentsDoctorView");
+    String _firstUpper_6 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_6, "                                ");
+    _builder.append("\");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("                            ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("console.log(\"No se pudo actualizar\");");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("//error");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("function( error ){");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("alert(\"Identificador no se encuentra registrado\");");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("};");
+    _builder.newLine();
+    _builder.append("}]);");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compileCommentRegisterHtml(final Feature comment) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<div ng-include=\"\'/app/Templates/templateDoctor.html\'\"></div>");
+    _builder.newLine();
+    _builder.append("<div id=\"wrapper\" ng-show=\"foundC\">");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div id=\"page-wrapper\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<h1 class=\"page-header\">Registra Comentario ");
+    String _firstUpper = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper, "                ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<div class=\"col-lg-12\">");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<div class=\"panel panel-default\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-heading\">");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<div class=\"panel-body\">");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<div class=\"row\">");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("<div class=\"col-lg-6\">");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("<form role=\"form\">");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    {
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(comment.getType().eAllContents());
+      for(final EObject dat : _iterable) {
+        Feature feature = ((Feature) dat);
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _equals = feature.getName().equals("title");
+          if (_equals) {
+            _builder.append("<label> ");
+            String _firstUpper_1 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_1);
+            _builder.append(" </label>");
+            _builder.newLineIfNotEmpty();
+            _builder.append("<br><br>");
+            _builder.newLine();
+            _builder.append("<input type=\"String\" ng-model=\"");
+            String _name = feature.getName();
+            _builder.append(_name);
+            _builder.append("\">");
+            _builder.newLineIfNotEmpty();
+            _builder.append("<br><br>");
+            _builder.newLine();
+          } else {
+            if (((!feature.getName().equals("date")) && feature.getType().getName().equals("Date"))) {
+              _builder.append("<label> ");
+              String _firstUpper_2 = StringExtensions.toFirstUpper(feature.getName());
+              _builder.append(_firstUpper_2);
+              _builder.append(" </label>");
+              _builder.newLineIfNotEmpty();
+              _builder.append("<br><br>");
+              _builder.newLine();
+              _builder.append("<input type=\"date\" ng-model=\"");
+              String _name_1 = feature.getName();
+              _builder.append(_name_1);
+              _builder.append("\">");
+              _builder.newLineIfNotEmpty();
+              _builder.append("<br><br>");
+              _builder.newLine();
+            } else {
+              boolean _equals_1 = feature.getType().getName().equals("Integer");
+              if (_equals_1) {
+                _builder.append("<label> ");
+                String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
+                _builder.append(_firstUpper_3);
+                _builder.append(" </label>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("<input type=\"number\" ng-model=\"");
+                String _name_2 = feature.getName();
+                _builder.append(_name_2);
+                _builder.append("\">");
+                _builder.newLineIfNotEmpty();
+                _builder.append("<br><br>");
+                _builder.newLine();
+              } else {
+                boolean _equals_2 = feature.getType().getName().equals("String");
+                if (_equals_2) {
+                  _builder.append("<label> ");
+                  String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
+                  _builder.append(_firstUpper_4);
+                  _builder.append(" </label>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                  _builder.append("<textarea class=\"form-control\" rows=\"3\" ng-model=\"");
+                  String _name_3 = feature.getName();
+                  _builder.append(_name_3);
+                  _builder.append("\"></textarea>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"submit\" class=\"btn btn-default\" ng-click=\"saveComment()\">Aceptar</button>");
+    _builder.newLine();
+    _builder.append("                                    ");
+    _builder.append("<button type=\"reset\" class=\"btn btn-default\">Reiniciar</button>");
+    _builder.newLine();
+    _builder.append("                                ");
+    _builder.append("</form>");
+    _builder.newLine();
+    _builder.append("                            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                        ");
+    _builder.append("<!-- /.row (nested) -->");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                    ");
+    _builder.append("<!-- /.panel-body -->");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("<!-- /.panel -->");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<!-- /.col-lg-12 -->");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<!-- /.row -->");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<!-- /#page-wrapper -->");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("<!-- /#wrapper -->");
+    _builder.newLine();
+    return _builder;
   }
   
   public CharSequence compileCommentsDoctorViewJS(final Feature comment) {
@@ -312,7 +4419,10 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("$scope.comments=$scope.");
     String _firstLower_5 = StringExtensions.toFirstLower(this.classToServe.getName());
     _builder.append(_firstLower_5, "                            ");
-    _builder.append("C.comments;");
+    _builder.append("C.");
+    String _name = comment.getName();
+    _builder.append(_name, "                            ");
+    _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.append("                            ");
     _builder.append("if (typeof $scope.comments == \"undefined\"){");
@@ -321,7 +4431,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("$scope.commentsY=false;");
     _builder.newLine();
     _builder.append("                                ");
-    _builder.append("$scope.commentsTitle=\"No tiene ningún comentario\";");
+    _builder.append("$scope.commentsTitle=\"No tiene ningun comentario\";");
     _builder.newLine();
     _builder.append("                            ");
     _builder.append("}");
@@ -430,8 +4540,11 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<tr>");
     _builder.newLine();
     _builder.append("                                ");
-    _builder.append("<th>Comentarios</th>");
-    _builder.newLine();
+    _builder.append("<th>Comentarios ");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(comment.getName());
+    _builder.append(_firstUpper_1, "                                ");
+    _builder.append("</th>");
+    _builder.newLineIfNotEmpty();
     _builder.append("                            ");
     _builder.append("</tr>");
     _builder.newLine();
@@ -461,7 +4574,9 @@ public class Dsl2Generator extends AbstractGenerator {
             _builder.append("<div class=\"panel-footer\">");
             _builder.newLine();
             _builder.append("\t");
-            _builder.append("{{c.");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_2, "\t");
+            _builder.append(": {{c.");
             String _name = feature.getName();
             _builder.append(_name, "\t");
             _builder.append(" | date:\"dd/MMMM/yyyy\"}}");
@@ -472,7 +4587,9 @@ public class Dsl2Generator extends AbstractGenerator {
             _builder.append("<div class=\"panel-heading\">");
             _builder.newLine();
             _builder.append("\t");
-            _builder.append("{{c.");
+            String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
+            _builder.append(_firstUpper_3, "\t");
+            _builder.append(": {{c.");
             String _name_1 = feature.getName();
             _builder.append(_name_1, "\t");
             _builder.append("}}");
@@ -617,8 +4734,11 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("$scope.principal=value;");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("$scope.diagnostics=$scope.principal.diagnostics;");
-    _builder.newLine();
+    _builder.append("$scope.diagnostics=$scope.principal.");
+    String _name = diagnostic.getName();
+    _builder.append(_name, "                ");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
     {
       Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(diagnostic.getType().eAllContents());
       for(final EObject dat : _iterable) {
@@ -628,8 +4748,8 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((((feature.getType().getName().equals("Byte") || feature.getType().getName().equals("Double")) || feature.getType().getName().equals("Float")) || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Long")) || feature.getType().getName().equals("Short"))) {
             _builder.append("$scope.");
-            String _name = feature.getName();
-            _builder.append(_name);
+            String _name_1 = feature.getName();
+            _builder.append(_name_1);
             _builder.append("=[];");
             _builder.newLineIfNotEmpty();
           }
@@ -660,11 +4780,11 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((((feature_1.getType().getName().equals("Byte") || feature_1.getType().getName().equals("Double")) || feature_1.getType().getName().equals("Float")) || feature_1.getType().getName().equals("Integer")) || feature_1.getType().getName().equals("Long")) || feature_1.getType().getName().equals("Short"))) {
             _builder.append("$scope.");
-            String _name_1 = feature_1.getName();
-            _builder.append(_name_1);
-            _builder.append(".push(dd.");
             String _name_2 = feature_1.getName();
             _builder.append(_name_2);
+            _builder.append(".push(dd.");
+            String _name_3 = feature_1.getName();
+            _builder.append(_name_3);
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -729,8 +4849,11 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<div class=\"col-lg-12\">");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<h1 class=\"page-header\">Datos de control de {{principal.name}}</h1>");
-    _builder.newLine();
+    _builder.append("<h1 class=\"page-header\">Datos de control de {{principal.name}} para ");
+    String _firstUpper = StringExtensions.toFirstUpper(diagnostic.getName());
+    _builder.append(_firstUpper, "            ");
+    _builder.append("</h1>");
+    _builder.newLineIfNotEmpty();
     _builder.append("        ");
     _builder.append("</div>");
     _builder.newLine();
@@ -780,8 +4903,8 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((((((feature.getType().getName().equals("Date") || feature.getType().getName().equals("String")) || feature.getType().getName().equals("Byte")) || feature.getType().getName().equals("Double")) || feature.getType().getName().equals("Float")) || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Long")) || feature.getType().getName().equals("Short"))) {
             _builder.append("<th>");
-            String _firstUpper = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment());
-            _builder.append(_firstUpper);
+            String _firstUpper_1 = StringExtensions.toFirstUpper(this._iQualifiedNameProvider.getFullyQualifiedName(dat).getLastSegment());
+            _builder.append(_firstUpper_1);
             _builder.append("</th>");
             _builder.newLineIfNotEmpty();
           }
@@ -878,8 +5001,8 @@ public class Dsl2Generator extends AbstractGenerator {
             _builder.append("<div class=\"panel-heading\">");
             _builder.newLine();
             _builder.append("\t\t\t");
-            String _firstUpper_1 = StringExtensions.toFirstUpper(feature_2.getName());
-            _builder.append(_firstUpper_1, "\t\t\t");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(feature_2.getName());
+            _builder.append(_firstUpper_2, "\t\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("</div>");
@@ -1133,7 +5256,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<div class=\"panel-body\">");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("<h2> Número de Identificación");
+    _builder.append("<h2> Numero de Identificacion");
     _builder.newLine();
     _builder.append("                        ");
     _builder.append("<br><br>");
@@ -1149,33 +5272,135 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLine();
     {
       EList<Feature> _features = e.getFeatures();
-      for(final Feature feature : _features) {
+      for(final Feature f : _features) {
         {
-          boolean _isMany = feature.isMany();
-          boolean _not = (!_isMany);
-          if (_not) {
-            _builder.append("                    ");
-            _builder.append("<h2> ");
-            String _firstUpper = StringExtensions.toFirstUpper(feature.getName());
-            _builder.append(_firstUpper, "                    ");
-            _builder.newLineIfNotEmpty();
-            _builder.append("                    ");
-            _builder.append("    ");
-            _builder.append("<br><br>");
-            _builder.newLine();
-            _builder.append("                    ");
-            _builder.append("    ");
-            _builder.append("<small> {{principal.");
-            String _name = feature.getName();
-            _builder.append(_name, "                        ");
-            _builder.append("}} </small>");
-            _builder.newLineIfNotEmpty();
-            _builder.append("                    ");
-            _builder.append("</h2>");
-            _builder.newLine();
-            _builder.append("                    ");
-            _builder.append("<br><br>");
-            _builder.newLine();
+          if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) == 0))) {
+            {
+              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+                _builder.append("                    ");
+                _builder.append("<h2> ");
+                String _firstUpper = StringExtensions.toFirstUpper(f.getName());
+                _builder.append(_firstUpper, "                    ");
+                _builder.newLineIfNotEmpty();
+                _builder.append("                    ");
+                _builder.append("    ");
+                _builder.append("<br><br>");
+                _builder.newLine();
+                _builder.append("                    ");
+                _builder.append("    ");
+                _builder.append("<small> {{principal.");
+                String _name = f.getName();
+                _builder.append(_name, "                        ");
+                _builder.append("}} </small>");
+                _builder.newLineIfNotEmpty();
+                _builder.append("                    ");
+                _builder.append("</h2>");
+                _builder.newLine();
+                _builder.append("                    ");
+                _builder.append("<br><br>");
+                _builder.newLine();
+              } else {
+                boolean _equals = f.getType().getName().equals("Date");
+                if (_equals) {
+                  _builder.append("                    ");
+                  _builder.append("<h2> ");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
+                  _builder.append(_firstUpper_1, "                    ");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("                    ");
+                  _builder.append("    ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                  _builder.append("                    ");
+                  _builder.append("    ");
+                  _builder.append("<small> {{principal.");
+                  String _name_1 = f.getName();
+                  _builder.append(_name_1, "                        ");
+                  _builder.append(" | date:\'yyyy-MM-dd\'}} </small>");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("                    ");
+                  _builder.append("</h2>");
+                  _builder.newLine();
+                  _builder.append("                    ");
+                  _builder.append("<br><br>");
+                  _builder.newLine();
+                }
+              }
+            }
+          } else {
+            if (((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) > 0))) {
+              _builder.append("                    ");
+              _builder.append("<label><h1> Datos de ");
+              String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
+              _builder.append(_firstUpper_2, "                    ");
+              _builder.append(" </h1></label>");
+              _builder.newLineIfNotEmpty();
+              _builder.append("                    ");
+              _builder.append("<br><br>");
+              _builder.newLine();
+              {
+                Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
+                for(final EObject dat : _iterable) {
+                  _builder.append("                                ");
+                  Feature feature = ((Feature) dat);
+                  _builder.newLineIfNotEmpty();
+                  {
+                    if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                      _builder.append("                                ");
+                      _builder.append("<h2> ");
+                      String _name_2 = feature.getName();
+                      _builder.append(_name_2, "                                ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("                                ");
+                      _builder.append("<br><br>");
+                      _builder.newLine();
+                      _builder.append("                                ");
+                      _builder.append("<small> {{principal.");
+                      String _name_3 = f.getName();
+                      _builder.append(_name_3, "                                ");
+                      _builder.append(".");
+                      String _name_4 = feature.getName();
+                      _builder.append(_name_4, "                                ");
+                      _builder.append("}} </small>");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("                                ");
+                      _builder.append("</h2>");
+                      _builder.newLine();
+                      _builder.append("                                ");
+                      _builder.append("<br><br>");
+                      _builder.newLine();
+                    } else {
+                      boolean _equals_1 = feature.getType().getName().equals("Date");
+                      if (_equals_1) {
+                        _builder.append("                                ");
+                        _builder.append("<h2> ");
+                        String _name_5 = feature.getName();
+                        _builder.append(_name_5, "                                ");
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("                                ");
+                        _builder.append("<br><br>");
+                        _builder.newLine();
+                        _builder.append("                                ");
+                        _builder.append("<small> {{principal.");
+                        String _name_6 = f.getName();
+                        _builder.append(_name_6, "                                ");
+                        _builder.append(".");
+                        String _name_7 = feature.getName();
+                        _builder.append(_name_7, "                                ");
+                        _builder.append(" | date:\'yyyy-MM-dd\'}} </small>");
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("                                ");
+                        _builder.append("</h2>");
+                        _builder.newLine();
+                        _builder.append("                                ");
+                        _builder.append("<br><br>");
+                        _builder.newLine();
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1336,7 +5561,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("</button>");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">SB Admin v2.0</a>");
+    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">Multiple Client</a>");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("</div>");
@@ -1349,7 +5574,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<ul class=\"nav navbar-top-links navbar-right\">");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<li><a ng-click=\"continueLogoutD()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesión</a>");
+    _builder.append("<li><a ng-click=\"continueLogoutD()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesion</a>");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("</li>");
@@ -1566,7 +5791,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("</button>");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">SB Admin v2.0</a>");
+    _builder.append("<a class=\"navbar-brand\" href=\"index.html\">Multiple Client</a>");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("</div>");
@@ -1579,7 +5804,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<ul class=\"nav navbar-top-links navbar-right\">");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("<li><a ng-click=\"continueLogoutI()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesión</a>");
+    _builder.append("<li><a ng-click=\"continueLogoutI()\"><i class=\"fa fa-sign-out fa-fw\"></i> Cerrar Sesion</a>");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("</li>");
@@ -1792,6 +6017,9 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<script src=\"view1/view1.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
+    _builder.append("<script src=\"LoginView/LoginView.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
     _builder.append("<script src=\"PatientAutorization/PatientAutorization.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
@@ -1801,10 +6029,25 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("<script src=\"Templates/templateDoctor.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
+    _builder.append("<script src=\"Templates/templatePatient.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
     _builder.append("<script src=\"HomeInvestigator/HomeInvestigator.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("<script src=\"HomeDoctor/HomeDoctor.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"HomePatient/HomePatient.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"UpdatePatient/UpdatePatient.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"PatientProfile/PatientProfile.js\"></script>");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("<script src=\"PatientRegister/PatientRegister.js\"></script>");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("<script src=\"PatientChoiceView/PatientChoiceView.js\"></script>");
@@ -1885,10 +6128,28 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("\'myApp.templateDoctor\',");
     _builder.newLine();
     _builder.append("  ");
+    _builder.append("\'myApp.HomePatient\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.UpdatePatient\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.PatientProfile\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.PatientRegister\',");
+    _builder.newLine();
+    _builder.append("  ");
     _builder.append("\'myApp.templateInvestigator\',");
     _builder.newLine();
     _builder.append("  ");
+    _builder.append("\'myApp.templatePatient\',");
+    _builder.newLine();
+    _builder.append("  ");
     _builder.append("\'myApp.view1\',");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("\'myApp.LoginView\',");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("\'myApp.HomeInvestigator\',");
@@ -2062,7 +6323,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("$scope.");
     String _firstLower_8 = StringExtensions.toFirstLower(this.classToServe.getName());
     _builder.append(_firstLower_8, "                            ");
-    _builder.append("=$scope.");
+    _builder.append("Act=$scope.");
     String _firstLower_9 = StringExtensions.toFirstLower(this.classToServe.getName());
     _builder.append(_firstLower_9, "                            ");
     _builder.append("sList[i];");
@@ -2186,10 +6447,15 @@ public class Dsl2Generator extends AbstractGenerator {
       }
     }
     _builder.append("                            ");
+    _builder.newLine();
+    _builder.append("                            ");
     _builder.append("$scope.diagnostics.push($scope.");
     String _firstLower_16 = StringExtensions.toFirstLower(this.classToServe.getName());
     _builder.append(_firstLower_16, "                            ");
-    _builder.append("sList[i].diagnostics[0]);");
+    _builder.append("sList[i].");
+    String _name_4 = f.getName();
+    _builder.append(_name_4, "                            ");
+    _builder.append("[0]);");
     _builder.newLineIfNotEmpty();
     _builder.append("                        ");
     _builder.append("}");
@@ -2217,7 +6483,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("for(var j = 0; j < $scope.");
     String _lastSegment_9 = this._iQualifiedNameProvider.getFullyQualifiedName(((EObject[])Conversions.unwrapArray(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()), EObject.class))[0]).getLastSegment();
     _builder.append(_lastSegment_9, "                    ");
-    _builder.append("; j++) {");
+    _builder.append(".length; j++) {");
     _builder.newLineIfNotEmpty();
     {
       Iterable<EObject> _iterable_6 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
@@ -2693,6 +6959,8 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("import org.springframework.web.bind.annotation.*;");
     _builder.newLine();
+    _builder.append("import java.util.List;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("@RestController");
     _builder.newLine();
@@ -2726,12 +6994,30 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append(_name_5, "    ");
     _builder.append("s(){");
     _builder.newLineIfNotEmpty();
-    _builder.append("        ");
-    _builder.append("return new ResponseEntity<>(ps.get");
+    _builder.append("    \t");
+    _builder.append("List<");
     String _name_6 = e.getName();
-    _builder.append(_name_6, "        ");
-    _builder.append("s(), HttpStatus.ACCEPTED);");
+    _builder.append(_name_6, "    \t");
+    _builder.append("> ans=ps.get");
+    String _name_7 = e.getName();
+    _builder.append(_name_7, "    \t");
+    _builder.append("s();");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("if(ans!=null){");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new ResponseEntity<>(ans , HttpStatus.ACCEPTED);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}else{");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new ResponseEntity<>(HttpStatus.NOT_FOUND);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
@@ -2744,22 +7030,39 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("public ResponseEntity<?> get");
-    String _name_7 = e.getName();
-    _builder.append(_name_7, "    ");
+    String _name_8 = e.getName();
+    _builder.append(_name_8, "    ");
     _builder.append("(@PathVariable Integer ");
     String _firstLower_2 = StringExtensions.toFirstLower(e.getName());
     _builder.append(_firstLower_2, "    ");
     _builder.append("Id) {");
     _builder.newLineIfNotEmpty();
-    _builder.append("        ");
-    _builder.append("return new ResponseEntity<>(ps.get");
-    String _name_8 = e.getName();
-    _builder.append(_name_8, "        ");
+    _builder.append("\t\t");
+    String _name_9 = e.getName();
+    _builder.append(_name_9, "\t\t");
+    _builder.append(" ans=ps.get");
+    String _name_10 = e.getName();
+    _builder.append(_name_10, "\t\t");
     _builder.append("(");
     String _firstLower_3 = StringExtensions.toFirstLower(e.getName());
-    _builder.append(_firstLower_3, "        ");
-    _builder.append("Id), HttpStatus.ACCEPTED);");
+    _builder.append(_firstLower_3, "\t\t");
+    _builder.append("Id);");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("if(ans!=null){");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new ResponseEntity<>(ans , HttpStatus.ACCEPTED);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}else{");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new ResponseEntity<>(HttpStatus.NOT_FOUND);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
@@ -2769,17 +7072,17 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("public ResponseEntity<?> post");
-    String _name_9 = e.getName();
-    _builder.append(_name_9, "    ");
+    String _name_11 = e.getName();
+    _builder.append(_name_11, "    ");
     _builder.append("(@RequestBody ");
-    String _name_10 = e.getName();
-    _builder.append(_name_10, "    ");
+    String _name_12 = e.getName();
+    _builder.append(_name_12, "    ");
     _builder.append(" p) {");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
     _builder.append("ps.save");
-    String _name_11 = e.getName();
-    _builder.append(_name_11, "        ");
+    String _name_13 = e.getName();
+    _builder.append(_name_13, "        ");
     _builder.append("(p);");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
@@ -2794,17 +7097,17 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("public ResponseEntity<?> update");
-    String _name_12 = e.getName();
-    _builder.append(_name_12, "    ");
+    String _name_14 = e.getName();
+    _builder.append(_name_14, "    ");
     _builder.append("(@RequestBody ");
-    String _name_13 = e.getName();
-    _builder.append(_name_13, "    ");
+    String _name_15 = e.getName();
+    _builder.append(_name_15, "    ");
     _builder.append(" p) {");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
     _builder.append("ps.update");
-    String _name_14 = e.getName();
-    _builder.append(_name_14, "        ");
+    String _name_16 = e.getName();
+    _builder.append(_name_16, "        ");
     _builder.append("(p);");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
@@ -2917,32 +7220,27 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append(_name_9, "    ");
     _builder.append(" p) {");
     _builder.newLineIfNotEmpty();
-    _builder.append("        ");
-    _builder.append("for (");
-    String _name_10 = e.getName();
-    _builder.append(_name_10, "        ");
-    _builder.append(" pe :");
-    _builder.newLineIfNotEmpty();
-    _builder.append("                ");
+    _builder.append("    \t");
+    _builder.append("for (int i = 0; i < ");
     String _firstLower_3 = StringExtensions.toFirstLower(e.getName());
-    _builder.append(_firstLower_3, "                ");
-    _builder.append("List) {");
+    _builder.append(_firstLower_3, "    \t");
+    _builder.append("List.size(); i++) {");
     _builder.newLineIfNotEmpty();
-    _builder.append("            ");
-    _builder.append("if (p.getId()==pe.getId()) {");
-    _builder.newLine();
-    _builder.append("                ");
+    _builder.append("\t\t\t");
+    _builder.append("if(p.getId().equals(");
     String _firstLower_4 = StringExtensions.toFirstLower(e.getName());
-    _builder.append(_firstLower_4, "                ");
-    _builder.append("List.add(");
-    String _firstLower_5 = StringExtensions.toFirstLower(e.getName());
-    _builder.append(_firstLower_5, "                ");
-    _builder.append("List.indexOf(pe), p);");
+    _builder.append(_firstLower_4, "\t\t\t");
+    _builder.append("List.get(i).getId())){");
     _builder.newLineIfNotEmpty();
-    _builder.append("            ");
+    _builder.append("    \t                ");
+    String _firstLower_5 = StringExtensions.toFirstLower(e.getName());
+    _builder.append(_firstLower_5, "    \t                ");
+    _builder.append("List.set(i, p);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("        ");
+    _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("    ");
@@ -2955,22 +7253,22 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("public ");
+    String _name_10 = e.getName();
+    _builder.append(_name_10, "    ");
+    _builder.append(" get");
     String _name_11 = e.getName();
     _builder.append(_name_11, "    ");
-    _builder.append(" get");
-    String _name_12 = e.getName();
-    _builder.append(_name_12, "    ");
     _builder.append("(Integer pId) {");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
-    String _name_13 = e.getName();
-    _builder.append(_name_13, "        ");
+    String _name_12 = e.getName();
+    _builder.append(_name_12, "        ");
     _builder.append(" ans=null;");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
     _builder.append("for (");
-    String _name_14 = e.getName();
-    _builder.append(_name_14, "        ");
+    String _name_13 = e.getName();
+    _builder.append(_name_13, "        ");
     _builder.append(" pe :");
     _builder.newLineIfNotEmpty();
     _builder.append("                ");
@@ -2979,7 +7277,7 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("List) {");
     _builder.newLineIfNotEmpty();
     _builder.append("            ");
-    _builder.append("if(pe.getId()==pId){");
+    _builder.append("if(pe.getId().equals(pId)){");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("ans=pe;");

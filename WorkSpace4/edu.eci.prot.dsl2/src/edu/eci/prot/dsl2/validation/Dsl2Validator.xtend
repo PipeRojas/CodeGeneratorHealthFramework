@@ -80,7 +80,7 @@ class Dsl2Validator extends AbstractDsl2Validator {
 				}
 			}
 			if(!flagId||!flagName){
-				error("If entity is principal, must have id of type Integer and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
+				error("If "+e.name+" entity is principal, must have id of type Integer and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
 			}
 		}
 	}
@@ -106,6 +106,30 @@ class Dsl2Validator extends AbstractDsl2Validator {
 			error("Diagnostic feature must reference an entity and not an datatype", Dsl2Package.Literals.FEATURE__TYPE);
 		}else if(d.diagnostic){
 			d.checkDiagnosticMustHaveDate
+		}
+		
+	}
+	
+	@Check
+	def void checkPrincipalIdCannotBeTransient(Entity e){
+		if(e.principal){
+			for (Feature f : e.features) {
+				if(f.name.equals("id")&&f.transient){
+					error("Principal entity id cannot be transient", Dsl2Package.Literals.ENTITY__FEATURES);
+				}
+			}
+		}
+	}
+	
+	@Check
+	def void checkComposedFeaturesCannotHaveComposedFeatures(Feature f){
+		if((!f.many)&&(f.type.eAllContents.toIterable.size>0)){
+			for(dat: f.type.eAllContents.toIterable){
+				var feature =dat as Feature
+				if((feature.many)||(feature.type.eAllContents.toIterable.size>0)){
+					error("Features with attributes cannot have features with attributes in their attributes", Dsl2Package.Literals.FEATURE__TYPE);
+				}
+			}
 		}
 	}
 	
@@ -144,11 +168,68 @@ class Dsl2Validator extends AbstractDsl2Validator {
 	}
 	
 	@Check
+	def void checkDiagnosticFeaturePrimitiveFeatures(Feature f){
+		var ans=true;
+		var hasDate=false;
+		if(f.many&&f.diagnostic){
+			for(dat: f.type.eAllContents.toIterable){
+				var feature =dat as Feature
+				if((!feature.type.name.equals("String"))&&(!feature.type.name.equals("Integer"))&&(!feature.type.name.equals("Date"))){
+					ans=false;
+				}else if(feature.type.name.equals("Date")&&(feature.name.equals("date"))){
+					hasDate=true;
+				}
+			}
+			if(!hasDate){
+				error("At least one feature of diagnostic feature must be called 'date' and have 'Date' type", Dsl2Package.Literals.FEATURE__TYPE);
+			}
+		}
+		if(!ans){
+			error(f.name+" feature is a diagnostic feature and must have features of types String, Integer or Date only", Dsl2Package.Literals.FEATURE__TYPE);
+		}
+	}
+	
+	@Check
 	def void checkManyFeatureCannotBePrimitive(Feature d){
 		if(d.many){
 			if((d.type.name.equals("Byte")||d.type.name.equals("Short")||d.type.name.equals("Integer")||d.type.name.equals("Long")||d.type.name.equals("Float")||d.type.name.equals("Double")||d.type.name.equals("Char")||d.type.name.equals("String")||d.type.name.equals("Boolean")||d.type.name.equals("Date"))){
 				error("Features with 'many' token cannot be primitive types", Dsl2Package.Literals.FEATURE__TYPE);
 			}
 		}
+	}
+	
+	@Check
+	def void checkOnlyAtomicFeaturesCanBeTransient(Feature f){
+		if(f.transient){
+			if(f.type.eAllContents.toIterable.size>0){
+				error("Only atomic features (of primitive types) can be transient", Dsl2Package.Literals.FEATURE__TRANSIENT);
+			}
+		}
+	}
+	
+	@Check
+	def void checkEntityFeatureCanHaveTransientFeaturesIfIsNotMany(Feature f){
+		if(f.many){
+			for (dat : f.type.eAllContents.toIterable) {
+				var feature=dat as Feature;
+				if(feature.transient){
+					error("An entity feature can have transient features only if is not many", Dsl2Package.Literals.FEATURE__MANY);
+				}
+			}
+		}
+	}
+	
+	@Check
+	def void checkEntityNameStartsWithCapital(Entity entity) {
+	    if (!Character.isUpperCase(entity.name.charAt(0))) {
+	        error("Name should start with a capital", Dsl2Package.Literals.ABSTRACT_ELEMENT__NAME);
+	    }
+	}
+	
+	@Check
+	def void checkFeatureNameStartsWithLower(Feature feature){
+		if (Character.isUpperCase(feature.name.charAt(0))) {
+	        error("Name should start with a lower case", Dsl2Package.Literals.FEATURE__NAME);
+	    }
 	}
 }
