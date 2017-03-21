@@ -1,0 +1,74 @@
+datatype String
+datatype Integer
+datatype Date
+
+package com.example.model{
+ 
+    entity Patient {
+    	principal
+    	id: Integer
+        name: transient String
+        lastName: transient String
+        feedbacks: many Feedback
+        address : Address
+        heartHealth : many diagnostic HeartHealth
+        armAngles: many diagnostic ArmAngles
+        legAngles: many diagnostic LegAngles
+        academicInfo: Academic
+        birthDate: Date
+        otherInfo: AdditionalInfo
+        advices: many Advice
+    }
+    
+    entity AdditionalInfo{
+    	hobbies: transient String
+    	favouriteFood: transient String
+    	heigth: transient Integer
+    }
+    
+    
+    entity Advice{
+    	title: String
+    	instructions: String
+    	priority: Integer
+    	date: Date
+    }
+    
+    entity Academic{
+    	lastGrade: transient String
+    	gradeDate: transient Date
+    	gpa: transient Integer
+    }
+    
+    entity Address {
+        street: String
+        zip: Integer
+        city: String
+    }
+    
+    entity HeartHealth{
+    	systolicPressure: Integer
+    	diastolicPressure: Integer
+    	bloodCholesterol: Integer
+    	heartRate: Integer
+    	date: Date
+    }
+    
+    entity ArmAngles{
+    	upperAngle: Integer
+    	lowerAngle: Integer
+    	date: Date
+    }
+    
+    entity LegAngles{
+    	upperAngle: Integer
+    	lowerAngle: Integer
+    	date: Date
+    }
+    
+    entity Feedback{
+    	title: String
+    	description: String
+    	date: Date
+    }
+}
