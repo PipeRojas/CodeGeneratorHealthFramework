@@ -2203,13 +2203,15 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		                            $scope.diagnostics.push($scope.«classToServe.name.toFirstLower»sList[i].«f.name»[0]);
 		                        }
 		                    }
+		                    «var validName=""»
 		                    «FOR dat: f.type.eAllContents.toIterable»
 		                    «var feature =dat as Feature»
             				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+            				«validName=dat.fullyQualifiedName.lastSegment»
             				«dat.fullyQualifiedName.lastSegment»Initial=0;
 		                    «ENDIF»
 		                    «ENDFOR»
-		                    for(var j = 0; j < $scope.«(f.type.eAllContents.toIterable).get(0).fullyQualifiedName.lastSegment».length; j++) {
+		                    for(var j = 0; j < $scope.«validName».length; j++) {
 		                    	«FOR dat: f.type.eAllContents.toIterable»
 			                    «var feature =dat as Feature»
 	            				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»

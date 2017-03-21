@@ -1,29 +1,58 @@
 datatype String
 datatype Integer
 datatype Date
-datatype Float
 
 package com.example.model{
  
-    entity Person {
+    entity Patient {
     	principal
     	id: Integer
-        name: String
-        firstName: String
+        name: transient String
+        lastName: transient String
         feedbacks: many Feedback
         address : Address
-        diagnostics : many diagnostic Diagnostic
+        heartHealth : many diagnostic HeartHealth
         armAngles: many diagnostic ArmAngles
         legAngles: many diagnostic LegAngles
+        physicalActivities: many diagnostic PhysicalActivity
+        academicInfo: Academic
+        birthDate: Date
+        otherInfo: AdditionalInfo
+        advices: many Advice
+    }
+    
+    entity AdditionalInfo{
+    	hobbies: transient String
+    	favouriteFood: transient String
+    	heigth: transient Integer
+    }
+    
+    entity PhysicalActivity{
+    	exerciseName: String
+    	series: Integer
+    	date: Date
+    }
+    
+    entity Advice{
+    	title: String
+    	instructions: String
+    	priority: Integer
+    	date: Date
+    }
+    
+    entity Academic{
+    	lastGrade: transient String
+    	gradeDate: transient Date
+    	gpa: transient Integer
     }
     
     entity Address {
         street: String
-        zip: String
+        zip: Integer
         city: String
     }
     
-    entity Diagnostic{
+    entity HeartHealth{
     	systolicPressure: Integer
     	diastolicPressure: Integer
     	bloodCholesterol: Integer
@@ -32,14 +61,14 @@ package com.example.model{
     }
     
     entity ArmAngles{
-    	upperAngle: Float
-    	lowerAngle: Float
+    	upperAngle: Integer
+    	lowerAngle: Integer
     	date: Date
     }
     
     entity LegAngles{
-    	upperAngle: Float
-    	lowerAngle: Float
+    	upperAngle: Integer
+    	lowerAngle: Integer
     	date: Date
     }
     

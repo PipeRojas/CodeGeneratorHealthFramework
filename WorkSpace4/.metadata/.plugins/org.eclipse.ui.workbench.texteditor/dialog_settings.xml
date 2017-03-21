@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="PatientRegister" key="selection"/>
+		<item value="RegistersInv" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="RegistersInv"/>
 			<item value="PatientRegister"/>
 			<item value="HomeDoctor"/>
 			<item value="f.type.name.equals(&quot;Date&quot;)"/>
@@ -15,7 +16,6 @@
 			<item value="HomePatient"/>
 			<item value="[0]"/>
 			<item value="[i]"/>
-			<item value=".diagnostics"/>
 		</list>
 		<list key="replacehistory">
 			<item value="u"/>

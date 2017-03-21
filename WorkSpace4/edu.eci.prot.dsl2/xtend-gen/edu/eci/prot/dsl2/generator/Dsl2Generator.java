@@ -19,7 +19,6 @@ import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
@@ -6463,6 +6462,9 @@ public class Dsl2Generator extends AbstractGenerator {
     _builder.append("                    ");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("                    ");
+    String validName = "";
+    _builder.newLineIfNotEmpty();
     {
       Iterable<EObject> _iterable_5 = IteratorExtensions.<EObject>toIterable(f.getType().eAllContents());
       for(final EObject dat_5 : _iterable_5) {
@@ -6471,6 +6473,8 @@ public class Dsl2Generator extends AbstractGenerator {
         _builder.newLineIfNotEmpty();
         {
           if ((((((feature_5.getType().getName().equals("Byte") || feature_5.getType().getName().equals("Double")) || feature_5.getType().getName().equals("Float")) || feature_5.getType().getName().equals("Integer")) || feature_5.getType().getName().equals("Long")) || feature_5.getType().getName().equals("Short"))) {
+            _builder.append(validName = this._iQualifiedNameProvider.getFullyQualifiedName(dat_5).getLastSegment());
+            _builder.newLineIfNotEmpty();
             String _lastSegment_8 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_5).getLastSegment();
             _builder.append(_lastSegment_8);
             _builder.append("Initial=0;");
@@ -6481,8 +6485,7 @@ public class Dsl2Generator extends AbstractGenerator {
     }
     _builder.append("                    ");
     _builder.append("for(var j = 0; j < $scope.");
-    String _lastSegment_9 = this._iQualifiedNameProvider.getFullyQualifiedName(((EObject[])Conversions.unwrapArray(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents()), EObject.class))[0]).getLastSegment();
-    _builder.append(_lastSegment_9, "                    ");
+    _builder.append(validName, "                    ");
     _builder.append(".length; j++) {");
     _builder.newLineIfNotEmpty();
     {
@@ -6493,14 +6496,14 @@ public class Dsl2Generator extends AbstractGenerator {
         _builder.newLineIfNotEmpty();
         {
           if ((((((feature_6.getType().getName().equals("Byte") || feature_6.getType().getName().equals("Double")) || feature_6.getType().getName().equals("Float")) || feature_6.getType().getName().equals("Integer")) || feature_6.getType().getName().equals("Long")) || feature_6.getType().getName().equals("Short"))) {
+            String _lastSegment_9 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
+            _builder.append(_lastSegment_9);
+            _builder.append("Initial=");
             String _lastSegment_10 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
             _builder.append(_lastSegment_10);
-            _builder.append("Initial=");
+            _builder.append("Initial+$scope.");
             String _lastSegment_11 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
             _builder.append(_lastSegment_11);
-            _builder.append("Initial+$scope.");
-            String _lastSegment_12 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_6).getLastSegment();
-            _builder.append(_lastSegment_12);
             _builder.append("[j];");
             _builder.newLineIfNotEmpty();
           }
@@ -6522,11 +6525,11 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((((feature_7.getType().getName().equals("Byte") || feature_7.getType().getName().equals("Double")) || feature_7.getType().getName().equals("Float")) || feature_7.getType().getName().equals("Integer")) || feature_7.getType().getName().equals("Long")) || feature_7.getType().getName().equals("Short"))) {
             _builder.append("$scope.todoData.push(");
+            String _lastSegment_12 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment();
+            _builder.append(_lastSegment_12);
+            _builder.append("Initial/$scope.");
             String _lastSegment_13 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment();
             _builder.append(_lastSegment_13);
-            _builder.append("Initial/$scope.");
-            String _lastSegment_14 = this._iQualifiedNameProvider.getFullyQualifiedName(dat_7).getLastSegment();
-            _builder.append(_lastSegment_14);
             _builder.append(".length);");
             _builder.newLineIfNotEmpty();
           }
