@@ -29,7 +29,7 @@ package com.example.model{
     
     entity PhysicalActivity{
     	exerciseName: String
-    	series: Integer
+    	seriesNumber: Integer
     	date: Date
     }
     

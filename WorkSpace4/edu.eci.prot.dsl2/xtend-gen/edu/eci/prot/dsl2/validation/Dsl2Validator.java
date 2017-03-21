@@ -159,6 +159,13 @@ public class Dsl2Validator extends AbstractDsl2Validator {
   }
   
   @Check
+  public void checkFeatureNameCannotBeSeriesOrLabels(final Feature f) {
+    if ((f.getName().equals("series") || f.getName().equals("labels"))) {
+      this.error("Feature name cannot be \'series\' or \'labels\'", Dsl2Package.Literals.FEATURE__NAME);
+    }
+  }
+  
+  @Check
   public void checkCommentFeaturePrimitiveFeatures(final Feature f) {
     boolean ans = true;
     boolean hasDate = false;

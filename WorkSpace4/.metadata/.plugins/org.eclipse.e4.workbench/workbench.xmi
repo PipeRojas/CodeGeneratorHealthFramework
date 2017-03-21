@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_TlIPgQzuEeecCJhNONt6IA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_TlI2kAzuEeecCJhNONt6IA" bindingContexts="_TlI2kgzuEeecCJhNONt6IA">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Generator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;>&#xD;&#xA;&lt;persistable path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Validator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;>&#xD;&#xA;&lt;persistable path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Validator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;>&#xD;&#xA;&lt;persistable path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Generator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;>&#xD;&#xA;&lt;persistable path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_TlI2kAzuEeecCJhNONt6IA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_WtWksgzuEeecCJhNONt6IA" label="%trimmedwindow.label.eclipseSDK" x="0" y="0" width="694" height="745">
@@ -130,11 +130,17 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_Xb_zYAzuEeecCJhNONt6IA" elementId="org.eclipse.ui.editorss" selectedElement="_Xb_zYQzuEeecCJhNONt6IA">
-      <children xsi:type="basic:PartStack" xmi:id="_Xb_zYQzuEeecCJhNONt6IA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_2e8uEAzuEeecCJhNONt6IA">
+      <children xsi:type="basic:PartStack" xmi:id="_Xb_zYQzuEeecCJhNONt6IA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_swqToA6KEeet1vqUobuZ2Q">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <children xsi:type="basic:Part" xmi:id="_2e8uEAzuEeecCJhNONt6IA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="Dsl2Generator.xtend" iconURI="platform:/plugin/org.eclipse.xtend.ide/icons/xtend_file.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Generator.xtend&quot; partName=&quot;Dsl2Generator.xtend&quot; title=&quot;Dsl2Generator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;99351&quot; selectionTopPixel=&quot;31575&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Generator.xtend&quot; partName=&quot;Dsl2Generator.xtend&quot; title=&quot;Dsl2Generator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/generator/Dsl2Generator.xtend&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;11909&quot; selectionTopPixel=&quot;4769&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.eclipse.xtend.core.Xtend</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_swqToA6KEeet1vqUobuZ2Q" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="Dsl2Validator.xtend" iconURI="platform:/plugin/org.eclipse.xtend.ide/icons/xtend_file.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.xtend.core.Xtend&quot; name=&quot;Dsl2Validator.xtend&quot; partName=&quot;Dsl2Validator.xtend&quot; title=&quot;Dsl2Validator.xtend&quot; tooltip=&quot;edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/edu.eci.prot.dsl2/src/edu/eci/prot/dsl2/validation/Dsl2Validator.xtend&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;5208&quot; selectionTopPixel=&quot;1890&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.xtend.core.Xtend</tags>
           <tags>removeOnHide</tags>
@@ -276,7 +282,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Wvy0sAzuEeecCJhNONt6IA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_zp4pwA3QEee8_79qsCP7xw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_TpfLKAzuEeecCJhNONt6IA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_as9acA6GEeet1vqUobuZ2Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_TpfLKAzuEeecCJhNONt6IA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Wvy0sQzuEeecCJhNONt6IA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -303,7 +309,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WvzbwwzuEeecCJhNONt6IA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_zp8UIA3QEee8_79qsCP7xw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_Tpd9MgzuEeecCJhNONt6IA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_atAdwA6GEeet1vqUobuZ2Q" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_Tpd9MgzuEeecCJhNONt6IA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_WvzbxAzuEeecCJhNONt6IA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2984,7 +2990,7 @@
   <addons xmi:id="_TlI2oQzuEeecCJhNONt6IA" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_TlI2ogzuEeecCJhNONt6IA" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_Tl32YAzuEeecCJhNONt6IA" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_zQhukA3QEee8_79qsCP7xw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_aVD30A6GEeet1vqUobuZ2Q" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_TpM3MAzuEeecCJhNONt6IA" elementId="org.eclipse.ui.category.edit" name="Edit"/>
   <categories xmi:id="_TpM3MQzuEeecCJhNONt6IA" elementId="org.eclipse.mylyn.wikitext.ui.editor.category" name="WikiText Markup Editing Commands" description="commands for editing lightweight markup"/>
