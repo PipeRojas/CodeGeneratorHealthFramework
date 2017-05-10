@@ -68,19 +68,25 @@ class Dsl2Validator extends AbstractDsl2Validator {
 	}
 	
 	@Check
-	def void checkNameAndIdForPrincipalEntity(Entity e){
+	def void checkNameRolePasswordAndIdForPrincipalEntity(Entity e){
 		var flagName=false;
 		var flagId=false;
+		var flagPass=false;
+		var flagRole=false;
 		if(e.principal){
-			for (var i=0;i<e.features.size&& !(flagName&&flagId); i++) {
+			for (var i=0;i<e.features.size&& !(flagName&&flagId&&flagPass&&flagRole); i++) {
 				if(e.features.get(i).name.equals("id")&&(e.features.get(i).type.name.equals("Integer"))){
 					flagId=true
 				}else if(e.features.get(i).name.equals("name")&&(e.features.get(i).type.name.equals("String"))){
 					flagName=true
+				}else if(e.features.get(i).name.equals("password")&&(e.features.get(i).type.name.equals("String"))){
+					flagPass=true
+				}else if(e.features.get(i).name.equals("role")&&(e.features.get(i).type.name.equals("String"))){
+					flagRole=true
 				}
 			}
-			if(!flagId||!flagName){
-				error("If "+e.name+" entity is principal, must have id of type Integer and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
+			if(!flagId||!flagName||!flagPass||!flagRole){
+				error("If "+e.name+" entity is principal, must have id of type Integer, password of type String, role of type String and name of type String features", Dsl2Package.Literals.ENTITY__FEATURES);
 			}
 		}
 	}
@@ -238,5 +244,11 @@ class Dsl2Validator extends AbstractDsl2Validator {
 		if (Character.isUpperCase(feature.name.charAt(0))) {
 	        error("Name should start with a lower case", Dsl2Package.Literals.FEATURE__NAME);
 	    }
+	}
+	@Check
+	def void checkRoleFeatureCannotBeTransient(Feature feature){
+		if(feature.name.equals("role")&&feature.transient){
+			error("Role feature cannot be transient", Dsl2Package.Literals.FEATURE__TRANSIENT);
+		}
 	}
 }

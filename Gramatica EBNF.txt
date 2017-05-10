@@ -1,0 +1,22 @@
+Domainmodel := {AbstractElement}*;
+
+AbstractElement := PackageDeclaration | Type;
+
+PackageDeclaration := "package" , QualifiedName , "{" , {AbstractElement}* , "}";
+
+QualifiedName := ID, {".", ID}*;
+
+Import := "import", QualifiedNameWithWildcard;
+
+QualifiedNameWithWildcard := QualifiedName, [".*"];
+
+Type := DataType | Entity;
+
+DataType := "datatype" , ID;
+
+Entity := "entity", ID, ["extends" (Entity | QualifiedName)], "{", 
+			["principal"], {Import}*, {Feature}*, "}";
+			
+Feature := ID, ":" ["many"], ["diagnostic"], ["transient"], (Type | QualifiedName);
+
+ID := ANY SET OF CHAR

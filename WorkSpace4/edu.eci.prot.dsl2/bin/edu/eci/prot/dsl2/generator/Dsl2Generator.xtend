@@ -13,6 +13,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import evaluators.GeneralEvaluator
 
 /**
  * Generates code from your model files on save.
@@ -22,6 +23,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 class Dsl2Generator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
 	Entity classToServe;
+	ArrayList<Feature> principalEmbeddableFeatures=new ArrayList<Feature>();
 	ArrayList<JSModuleData> appJSModules=new ArrayList<JSModuleData>();
 	ArrayList<Feature> diagnostics=new ArrayList<Feature>();
 	ArrayList<Feature> comments=new ArrayList<Feature>();
@@ -30,6 +32,11 @@ class Dsl2Generator extends AbstractGenerator {
 		for (e : resource.allContents.toIterable.filter(Entity)) {
 			if(e.principal){
 				classToServe=e;
+				for (Feature f : e.features) {
+					if(!f.many){
+						principalEmbeddableFeatures.add(f);	
+					}
+				}
 			}
 		}
 		if(classToServe!==null){
@@ -156,18 +163,27 @@ class Dsl2Generator extends AbstractGenerator {
 	        fsa.generateFile(
 	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/services/"+ classToServe.name + "ServicesImpl1.java"),
 	            classToServe.compileServiceImplementation);
+            fsa.generateFile(
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/services/"+ classToServe.name + "ServicesImpl2.java"),
+	            classToServe.compileServiceImplementation2);
 	        fsa.generateFile(
 	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/controller/"+ classToServe.name + "Controller.java"),
 	            classToServe.compileRESTControllers);
+            fsa.generateFile(
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/jpa/"+ classToServe.name + "Repository.java"),
+	            classToServe.compileRepository);
+            fsa.generateFile(
+	            ((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/jpa/"+ classToServe.name + "Service.java"),
+	            classToServe.compileJpaService);
 	        //Create JS Services
 	        fsa.generateFile("/static/app/services/services.js", classToServe.compileJSServices);
 	        
-	        //Create PatientRegister
+	        //Create Register
 	        
-	        fsa.generateFile("/static/app/PatientRegister/PatientRegister.html",
-	    	classToServe.compilePatientRegisterHtml);
-	    	fsa.generateFile("/static/app/PatientRegister/PatientRegister.js",
-	    	classToServe.compilePatientRegisterJS);
+	        fsa.generateFile("/static/app/Register/Register.html",
+	    	classToServe.compileRegisterHtml);
+	    	fsa.generateFile("/static/app/Register/Register.js",
+	    	classToServe.compileRegisterJS);
 	        
 	        //Create HomeDoctor View
 		
@@ -183,6 +199,13 @@ class Dsl2Generator extends AbstractGenerator {
 	        fsa.generateFile("/static/app/HomePatient/HomePatient.js",
 	    	classToServe.compileHomePatientJS);
 	    	
+	    	//Create HomeInvestigator
+	    	
+	        fsa.generateFile("/static/app/HomeInvestigator/HomeInvestigator.html",
+	    	classToServe.compileHomeInvestigatorHtml);
+	        fsa.generateFile("/static/app/HomeInvestigator/HomeInvestigator.js",
+	    	classToServe.compileHomeInvestigatorJS);
+	    	
 	    	//Create PatientProfile View
 	    	
 	    	fsa.generateFile("/static/app/PatientProfile/PatientProfile.html",
@@ -190,12 +213,32 @@ class Dsl2Generator extends AbstractGenerator {
 	    	fsa.generateFile("/static/app/PatientProfile/PatientProfile.js",
 	    	classToServe.compilePatientProfileJS);
 	    	
-	    	//Create UpdatePatient View
+	    	//Create DoctorProfile View
 	    	
-	    	fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.html",
-	    	classToServe.compileUpdatePatientHtml);
-	    	fsa.generateFile("/static/app/UpdatePatient/UpdatePatient.js",
-	    	classToServe.compileUpdatePatientJS);
+	    	fsa.generateFile("/static/app/DoctorProfile/DoctorProfile.html",
+	    	classToServe.compileDoctorProfileHtml);
+	    	fsa.generateFile("/static/app/DoctorProfile/DoctorProfile.js",
+	    	classToServe.compileDoctorProfileJS);
+	    	
+	    	//Create InvestigatorProfile View
+	    	
+	    	fsa.generateFile("/static/app/InvestigatorProfile/InvestigatorProfile.html",
+	    	classToServe.compileInvestigatorProfileHtml);
+	    	fsa.generateFile("/static/app/InvestigatorProfile/InvestigatorProfile.js",
+	    	classToServe.compileInvestigatorProfileJS);
+	    	
+	    	//Create UpdatePerson View
+	    	
+	    	fsa.generateFile("/static/app/Update"+classToServe.name+"/Update"+classToServe.name+".html",
+	    	classToServe.compileUpdatePersonHtml);
+	    	fsa.generateFile("/static/app/Update"+classToServe.name+"/Update"+classToServe.name+".js",
+	    	classToServe.compileUpdatePersonJS);
+	    	
+	    	
+	    	//Create Main Class
+	    	
+	    	fsa.generateFile((classToServe.fullyQualifiedName.toString("/").replace("/model/"+classToServe.name, "")) + "/demoApplication.java",
+	    	classToServe.compileMainClass);
 	    	
 	    	//Create Investigator Template
 	        fsa.generateFile("/static/app/Templates/templateInvestigator.js",
@@ -216,6 +259,13 @@ class Dsl2Generator extends AbstractGenerator {
 	    	fsa.generateFile("/static/app/Templates/templatePatient.html",
 	    	diagnostics.compileTemplatePatientHtml);
 	    	
+	    	//Create PatientAutorization
+	    	
+	    	fsa.generateFile("/static/app/PatientAutorization/PatientAutorization.html",
+	    	classToServe.compilePatientAutorizationHtml);
+	    	fsa.generateFile("/static/app/PatientAutorization/PatientAutorization.js",
+	    	classToServe.compilePatientAutorizationJS);
+	    	
 	    	//create app.js & index.html
 		   	fsa.generateFile(
 		            "/static/app/app.js",
@@ -225,9 +275,9 @@ class Dsl2Generator extends AbstractGenerator {
 		            appJSModules.compileIndexHtml);
 		            
             //Create LoginView
-            fsa.generateFile("/static/app/LoginView/LoginView.js",
+            fsa.generateFile("/static/app/Login/Login.js",
 	    	classToServe.compileLoginViewJS);
-	    	fsa.generateFile("/static/app/LoginView/LoginView.html",
+	    	fsa.generateFile("/static/app/Login/Login.html",
 	    	classToServe.compileLoginViewHtml);
         }
 	   	
@@ -237,23 +287,169 @@ class Dsl2Generator extends AbstractGenerator {
 	   	diagnostics.clear;
 	}
 	
-	//Create UpdatePatient View
+	//Create HomeInvestigator
 	
-	def compileUpdatePatientJS(Entity principal)
+	def compileHomeInvestigatorJS(Entity principal)
 	'''
 	'use strict';
 	
-	angular.module('myApp.UpdatePatient', ['ngRoute'])
+	angular.module('myApp.HomeInvestigator', ['ngRoute'])
 	
 	.config(['$routeProvider', function($routeProvider) {
-	  $routeProvider.when('/UpdatePatient', {
-	    templateUrl: 'UpdatePatient/UpdatePatient.html',
-	    controller: 'UpdatePatientCtrl'
+	  $routeProvider.when('/HomeInvestigator', {
+	    templateUrl: 'HomeInvestigator/HomeInvestigator.html',
+	    controller: 'HomeInvestigatorCtrl'
 	  });
 	}])
 	
-	.controller('UpdatePatientCtrl', ['$rootScope', '$scope','«principal.name.toFirstLower»', '«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
-			
+	.controller('HomeInvestigatorCtrl', ['«principal.name.toFirstLower»', '$rootScope', '$scope', function («principal.name.toFirstLower», $rootScope, $scope) {
+	    «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	    .$promise.then(
+	            //success
+	            function( value ){
+	                $scope.«principal.name.toFirstLower»H=value;
+	            },
+	            //error
+	            function( error ){
+	                alert("El Identificador no se encuentra registrado");
+	            }
+	    );
+	}]);
+	'''
+	
+	def compileHomeInvestigatorHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templateInvestigator.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Bienvenido {{«principal.name.toFirstLower»H.name}}</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Descripcion del Estudio
+	                </div>
+	                <!-- /.panel-heading -->
+	                <div class="panel-body">
+	                    <p>En esta aplicacion encontrara datos promedios de los registros realizados por los participantes del estudio.</p>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	//Create PatientAutorization
+	
+	def compilePatientAutorizationJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.PatientAutorization', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/PatientAutorization', {
+	    templateUrl: 'PatientAutorization/PatientAutorization.html',
+	    controller: 'PatientAutorizationCtrl'
+	  });
+	}])
+	
+	.controller('PatientAutorizationCtrl', ['«principal.name.toFirstLower»', '$rootScope', 'new«principal.name»', '$scope', '$http', '$location', function(«principal.name.toFirstLower», $rootScope, new«principal.name», $scope, $http, $location) {
+	    $scope.continueRegister=function(){
+	        new«principal.name».save($rootScope.«principal.name.toFirstLower», function(){
+	        $rootScope.id«principal.name»=$rootScope.«principal.name.toFirstLower».id;
+	        $rootScope.authenticated = true;
+	        «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	        .$promise.then(
+	                //success
+	                function( value ){
+	                    alert("Registro Completado de "+ $rootScope.«principal.name.toFirstLower».name);
+	                    $location.path("Login");
+	                },
+	                //error
+	                function( error ){
+	                    alert("El Identificador no se encuentra registrado");
+	                }
+	        );
+	    });
+	    }
+	
+	}]);
+	'''
+	
+	def compilePatientAutorizationHtml(Entity principal)
+	'''
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-4 col-md-offset-4">
+	            <div class="login-panel panel panel-default">
+	                <div class="panel-heading">
+	                    <h3 class="panel-title">Bienvenido a esta aplicacion de salud</h3>
+	                    <label>Sus datos seran vistos unicamente por su medico y por los investigadores. Desea Continuar?</label>
+	                </div>
+	                <div class="panel-body">
+	                    <form role="form">
+	                        <fieldset>
+	                            <!-- Change this to a button or input when using this as a form -->
+	                            <a ng-click="continueRegister()" class="btn btn-lg btn-success btn-block">Autorizar y Continuar</a>
+	                        </fieldset>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	'''
+	
+	//Create UpdatePerson View
+	
+	def compileUpdatePersonJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.Update«principal.name»', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/Update«principal.name»', {
+	    templateUrl: 'Update«principal.name»/Update«principal.name».html',
+	    controller: 'Update«principal.name»Ctrl'
+	  });
+	}])
+	
+	.controller('Update«principal.name»Ctrl', ['$rootScope', '$scope','«principal.name.toFirstLower»', '«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
+			$scope.back=function(){
+			    «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	            .$promise.then(
+	                    //success
+	                    function( value ){
+	                        $scope.«principal.name.toFirstLower»A=value;
+	                        if($scope.«principal.name.toFirstLower»A.role==("Paciente")){
+	                            $location.path("HomePatient");
+	                        }else if($scope.«principal.name.toFirstLower»A.role==("Doctor")){
+	                            $location.path("HomeDoctor");
+	                        }else if($scope.«principal.name.toFirstLower»A.role==("Investigador")){
+	                            $location.path("HomeInvestigator");
+	                        }
+	                    },
+	                    //error
+	                    function( error ){
+	                        alert("El Identificador no se encuentra registrado");
+	                    }
+	            );
+			};
 			«FOR Feature f: principal.features»
 			«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
 			$scope.«f.name»=null;
@@ -276,7 +472,7 @@ class Dsl2Generator extends AbstractGenerator {
 	                                $scope.«principal.name.toFirstLower»T=value;
 	                                «FOR Feature f: principal.features»
 	                    			«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
-if($scope.«f.name»!=null){
+if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	$scope.«principal.name.toFirstLower»T.«f.name»=$scope.«f.name»;
 }
 	                    			«ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
@@ -296,7 +492,13 @@ if($scope.«f.name»!=null){
 	                                    function(value){
 	                                        console.log("Registro Exitoso");
 	                                        alert("Registro Exitoso");
-	            							$location.path("HomePatient");
+	            							if($scope.«principal.name.toFirstLower»T.role==("Paciente")){
+	                                            $location.path("HomePatient");
+	                                        }else if($scope.«principal.name.toFirstLower»T.role==("Doctor")){
+	                                            $location.path("HomeDoctor");
+	                                        }else if($scope.«principal.name.toFirstLower»T.role==("Investigador")){
+	                                            $location.path("HomeInvestigator");
+	                                        }
 	                                    },
 	                                    //error
 	                                    function( error ){
@@ -318,9 +520,8 @@ if($scope.«f.name»!=null){
 	}]);
 	'''
 	
-	def compileUpdatePatientHtml(Entity principal)
+	def compileUpdatePersonHtml(Entity principal)
 	'''
-	<div ng-include="'/app/Templates/templatePatient.html'"></div>
 	<div id="wrapper">
 	    <div id="page-wrapper">
 	        <div class="row">
@@ -340,7 +541,7 @@ if($scope.«f.name»!=null){
 	                                <form role="form">
 	                                    <div class="form-group">
 											«FOR Feature f: principal.features»
-	                                        	«IF((f.transient)&&(f.type.eAllContents.toIterable.size==0))»
+	                                        	«IF((f.transient)&&(!f.name.equals("role"))&&(f.type.eAllContents.toIterable.size==0))»
 		                                        «IF(f.type.name.equals("String"))»
 <label> «f.name.toFirstUpper» </label>
 <br><br>
@@ -385,6 +586,7 @@ if($scope.«f.name»!=null){
 	                                        «ENDFOR»
 	                                    </div>
 	                                    <button type="submit" class="btn btn-default" ng-click="update()">Actualizar</button>
+	                                    <button class="btn btn-default" ng-click="back()">Atras</button>
 	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
 	                                </form>
 	                            </div>
@@ -400,6 +602,242 @@ if($scope.«f.name»!=null){
 	        <!-- /.row -->
 	    </div>
 	    <!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	//Create InvestigatorProfile View
+	
+	def compileInvestigatorProfileJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.InvestigatorProfile', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/InvestigatorProfile', {
+	    templateUrl: 'InvestigatorProfile/InvestigatorProfile.html',
+	    controller: 'InvestigatorProfileCtrl'
+	  });
+	}])
+	
+	.controller('InvestigatorProfileCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»,$location) {
+	
+	    «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $scope.«principal.name.toFirstLower»=value;
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("El paciente no se encuentra registrado");
+	                        }
+	                );
+	    $scope.continueUP=function(){
+	        $location.path("Update«principal.name»");
+	    };
+	
+	}]);
+	'''
+	
+	def compileInvestigatorProfileHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templateInvestigator.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Tus Datos</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	    <div class="row">
+	        <div class="col-lg-4">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Datos personales
+	                </div>
+	                <div class="panel-body">
+	                    <h2> Numero de Identificacion
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».id}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    <h2> Nombre
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».name}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    «FOR Feature f: principal.features»
+	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF(f.type.name.equals("Date"))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name» | date:'yyyy-MM-dd'}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+                        <label><h1> Datos de «f.name.toFirstUpper» </h1></label>
+                        <br><br>
+                                «FOR dat: f.type.eAllContents.toIterable»
+                                    «var feature =dat as Feature»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ELSEIF(feature.type.name.equals("Date"))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name» | date:'yyyy-MM-dd'}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ENDIF»
+                                «ENDFOR»
+                        «ENDIF»
+                        «ENDIF»
+	                    «ENDFOR»
+	
+	                    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="continueUP()">Actualizar Datos</button>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-4 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	'''
+	
+	//Create DoctorProfile View
+	
+	def compileDoctorProfileJS(Entity principal)
+	'''
+	'use strict';
+	
+	angular.module('myApp.DoctorProfile', ['ngRoute'])
+	
+	.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider.when('/DoctorProfile', {
+	    templateUrl: 'DoctorProfile/DoctorProfile.html',
+	    controller: 'DoctorProfileCtrl'
+	  });
+	}])
+	
+	.controller('DoctorProfileCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»,$location) {
+	
+	    «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                            $scope.«principal.name.toFirstLower»=value;
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("El paciente no se encuentra registrado");
+	                        }
+	                );
+	    $scope.continueUP=function(){
+	        $location.path("Update«principal.name»");
+	    };
+	
+	}]);
+	'''
+	
+	def compileDoctorProfileHtml(Entity principal)
+	'''
+	<div ng-include="'/app/Templates/templateDoctor.html'"></div>
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Tus Datos</h1>
+	        </div>
+	        <!-- /.col-lg-12 -->
+	    </div>
+	    <!-- /.row -->
+	    <div class="row">
+	        <div class="col-lg-4">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Datos personales
+	                </div>
+	                <div class="panel-body">
+	                    <h2> Numero de Identificacion
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».id}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    <h2> Nombre
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».name}} </small>
+	                    </h2>
+	                    <br><br>
+	
+	                    «FOR Feature f: principal.features»
+	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF(f.type.name.equals("Date"))»
+<h2> «f.name.toFirstUpper»
+	                        <br><br>
+	                        <small> {{«principal.name.toFirstLower».«f.name» | date:'yyyy-MM-dd'}} </small>
+	                    </h2>
+	                    <br><br>
+                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
+                        <label><h1> Datos de «f.name.toFirstUpper» </h1></label>
+                        <br><br>
+                                «FOR dat: f.type.eAllContents.toIterable»
+                                    «var feature =dat as Feature»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ELSEIF(feature.type.name.equals("Date"))»
+<h2> «feature.name.toFirstUpper»
+				                        <br><br>
+				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name» | date:'yyyy-MM-dd'}} </small>
+				                    </h2>
+				                    <br><br>
+                                    «ENDIF»
+                                «ENDFOR»
+                        «ENDIF»
+                        «ENDIF»
+	                    «ENDFOR»
+	
+	                    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="continueUP()">Actualizar Datos</button>
+	                </div>
+	                <!-- /.panel-body -->
+	            </div>
+	            <!-- /.panel -->
+	        </div>
+	        <!-- /.col-lg-4 -->
+	    </div>
+	    <!-- /.row -->
+	</div>
+	<!-- /#page-wrapper -->
 	
 	</div>
 	<!-- /#wrapper -->
@@ -434,7 +872,7 @@ if($scope.«f.name»!=null){
 	                        }
 	                );
 	    $scope.continueUP=function(){
-	        $location.path("UpdatePatient");
+	        $location.path("Update«principal.name»");
 	    };
 	
 	}]);
@@ -471,7 +909,7 @@ if($scope.«f.name»!=null){
 	                    <br><br>
 	
 	                    «FOR Feature f: principal.features»
-	                    «IF((!f.name.equals('id'))&&(!f.name.equals('name')))»
+	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
                         «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
 <h2> «f.name.toFirstUpper»
 	                        <br><br>
@@ -552,22 +990,31 @@ if($scope.«f.name»!=null){
                     $scope.«feature.name»=[];
                     «ENDIF»
                     «ENDFOR»
+					$scope.diagnosticsNew=[];
 	                $scope.labels=[];
 	                $scope.series = ['Datos de Control'];
+	                $scope.diagnostics.orderByDate("date", -1);
+					$scope.currentDate=new Date();
 	                for(var n=0; n<$scope.diagnostics.length; n++){
 	                    var dd=$scope.diagnostics[n];
-	                    «FOR dat : diagnostic.type.eAllContents.toIterable»
-                        «var feature=dat as Feature»
-                        «IF(feature.type.name.equals("Integer"))»
-                        $scope.«feature.name».push(dd.«feature.name»);
-                        «ENDIF»
-                        «ENDFOR»
 	                    var datee=new Date(dd.date);
-	                    var dia = datee.getDate();
-	                    var mes = parseInt(datee.getMonth()) + 1;
-	                    var year = datee.getFullYear();
-	                    var dated=dia+"/"+mes+"/"+year;
-	                    $scope.labels.push(dated);
+	                    if(datee >= ($scope.currentDate.setDate($scope.currentDate.getDate()-14))){
+	                    	$scope.diagnosticsNew.push(dd);
+	                    	«FOR dat : diagnostic.type.eAllContents.toIterable»
+	                        «var feature=dat as Feature»
+	                        «IF(feature.type.name.equals("Integer"))»
+	                        $scope.«feature.name».push(dd.«feature.name»);
+	                        «ENDIF»
+	                        «ENDFOR»
+		                    var datee=new Date(dd.date);
+		                    var dia = datee.getDate();
+		                    var mes = parseInt(datee.getMonth()) + 1;
+		                    var year = datee.getFullYear();
+		                    var dated=dia+"/"+mes+"/"+year;
+		                    $scope.labels.push(dated);
+	                    }else{
+							break;
+						}
 	                }
 	            },
 	            //error
@@ -575,6 +1022,13 @@ if($scope.«f.name»!=null){
 	                alert("Error");
 	            }
 	    );
+		Array.prototype.orderByDate=function(p,so){
+		  if(so!=-1&&so!=1)so=1;
+		  this.sort(function(a,b){
+		    var da=new Date(a[p]),db=new Date(b[p]);
+		    return(da-db)*so;
+		  })
+		};
 	}]);
 	'''
 	
@@ -596,6 +1050,9 @@ if($scope.«f.name»!=null){
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
+						<label>Filtrar por: </label>
+						<input type="text" ng-model="busqueda">
+						<br><br>
 	                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                        <thead>
 	                        <tr>
@@ -609,7 +1066,7 @@ if($scope.«f.name»!=null){
 	                        </tr>
 	                        </thead>
 	                        <tbody>
-	                        <tr ng-repeat="d in diagnostics" >
+	                        <tr ng-repeat="d in diagnosticsNew | filter: busqueda" >
 	                            <td>{{d.date | date:"dd/MMMM/yyyy"}}</td>
 	                            «FOR dat : diagnostic.type.eAllContents.toIterable»
 	                            «var feature=dat as Feature»
@@ -970,7 +1427,7 @@ $scope.continueCS«comm.name.toFirstUpper»=function(){
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header">Bienvenido</h1>
+	            <h1 class="page-header">Bienvenido {{«principal.name.toFirstLower»H.name}}</h1>
 	        </div>
 	        <!-- /.col-lg-12 -->
 	    </div>
@@ -1040,20 +1497,20 @@ $scope.continueCS«comm.name.toFirstUpper»=function(){
 	
 	//Create PatientRegister
 	
-	def compilePatientRegisterJS(Entity principal)
+	def compileRegisterJS(Entity principal)
 	'''
 	'use strict';
 	
-	angular.module('myApp.PatientRegister', ['ngRoute'])
+	angular.module('myApp.Register', ['ngRoute'])
 	
 	.config(['$routeProvider', function($routeProvider) {
-	  $routeProvider.when('/PatientRegister', {
-	    templateUrl: 'PatientRegister/PatientRegister.html',
-	    controller: 'PatientRegisterCtrl'
+	  $routeProvider.when('/Register', {
+	    templateUrl: 'Register/Register.html',
+	    controller: 'RegisterCtrl'
 	  });
 	}])
 	
-	.controller('PatientRegisterCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower»s, $http, $resource, $location) {
+	.controller('RegisterCtrl', ['«principal.name.toFirstLower»', 'new«principal.name»', '$rootScope', '$scope', '«principal.name.toFirstLower»s','$http','$resource', '$location', function («principal.name.toFirstLower», new«principal.name», $rootScope, $scope, «principal.name.toFirstLower»s, $http, $resource, $location) {
 	        $scope.id=null;
 	        $scope.name=null;
 	        «FOR Feature f: principal.features»
@@ -1091,17 +1548,38 @@ $scope.«f.name»=null;
 				«ENDIF»
 				«ENDFOR»
 				};
-	            «principal.name.toFirstLower»s.save($rootScope.«principal.name.toFirstLower»,function(){
-	                console.info("Person saved   "+ $rootScope.«principal.name.toFirstLower».name);
-					$location.path("HomePatient");
+				
+				if($rootScope.«principal.name.toFirstLower».role=="Paciente"){
+	                $location.path("PatientAutorization");
+	            }else if($rootScope.«principal.name.toFirstLower».role=="Doctor"||$rootScope.«principal.name.toFirstLower».role=="Investigador"){
+	            new«principal.name».save($rootScope.«principal.name.toFirstLower»,function(){
+	                console.info("«principal.name» saved   "+ $rootScope.«principal.name.toFirstLower».name);
+	                $rootScope.id«principal.name»=$rootScope.«principal.name.toFirstLower».id;
+	                $rootScope.authenticated = true;
+	                «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+	                .$promise.then(
+	                        //success
+	                        function( value ){
+	                        	alert("Registro Completado de "+ $rootScope.«principal.name.toFirstLower».name);
+	                            $location.path("Login");
+	                        },
+	                        //error
+	                        function( error ){
+	                            alert("El Identificador no se encuentra registrado");
+	                        }
+	                );
 	            });
+	            };
 	
 	        };
-	
+			$scope.selectmenu=document.getElementById("roleS");
+	        $scope.selectmenu.onchange=function(){
+	            $scope.role = this.options[this.selectedIndex].text;
+	        }
 	}]);
 	'''
 	
-	def compilePatientRegisterHtml(Entity principal)
+	def compileRegisterHtml(Entity principal)
 	'''
 	<div id="wrapper">
 	    <div id="page-wrapper">
@@ -1130,12 +1608,17 @@ $scope.«f.name»=null;
 	                                        <input type="text" ng-model="name">
 	                                        <br><br>
 	                                        «FOR Feature f: principal.features»
-	                                        	«IF((!f.name.equals('id'))&&(!f.name.equals('name')))»
-		                                        «IF(f.type.name.equals("String"))»
+	                                        	«IF((!f.name.equals("role"))&&(!f.many)&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
+	                                        	«IF(f.name.equals("password"))»
 <label> «f.name.toFirstUpper» </label>
 	                                        	<br><br>
-			                                        <input type="text" ng-model="«f.name»">
-			                                        <br><br>
+												<input type="password" ng-model="«f.name»">
+												<br><br>
+		                                        «ELSEIF(f.type.name.equals("String"))»
+<label> «f.name.toFirstUpper» </label>
+	                                        	<br><br>
+		                                        <input type="text" ng-model="«f.name»">
+		                                        <br><br>
 		                                        «ELSEIF(f.type.name.equals("Integer"))»
 <label> «f.name.toFirstUpper» </label>
 			                                        <br><br>
@@ -1147,7 +1630,7 @@ $scope.«f.name»=null;
 			                                        <input type="date" ng-model="«f.name»">
 			                                        <br><br>
 		                                        «ELSEIF((!f.many)&&(f.type.eAllContents.toIterable.size>0))»
-		                                        <label><h2> Datos de «f.name.toFirstUpper» </h2></label>
+<label><h2> Datos de «f.name.toFirstUpper» </h2></label>
 		                                        <br><br>
 				                                        «FOR dat: f.type.eAllContents.toIterable»
 					                                        «var feature =dat as Feature»
@@ -1171,6 +1654,13 @@ $scope.«f.name»=null;
 		                                        «ENDIF»
 		                                        «ENDIF»
 	                                        «ENDFOR»
+	                                        <h2> Rol </h2>
+	                                        <select name="rol" id="roleS">
+	                                            <option value="1">Seleccione</option>
+	                                            <option value="2">Paciente</option>
+	                                            <option value="3">Doctor</option>
+	                                            <option value="4">Investigador</option>
+	                                        </select>
 	                                    </div>
 	                                    <button type="submit" class="btn btn-default" ng-click="save()">Aceptar</button>
 	                                    <button type="reset" class="btn btn-default">Reiniciar</button>
@@ -1199,34 +1689,93 @@ $scope.«f.name»=null;
 	'''
 	'use strict';
 	
-	angular.module('myApp.LoginView', ['ngRoute'])
+	angular.module('myApp.Login', ['ngRoute'])
 	
 	.config(['$routeProvider', function($routeProvider) {
-	  $routeProvider.when('/LoginView', {
-	    templateUrl: 'LoginView/LoginView.html',
-	    controller: 'LoginViewCtrl'
+	  $routeProvider.when('/Login', {
+	    templateUrl: 'Login/Login.html',
+	    controller: 'LoginCtrl'
 	  });
 	}])
 	
-	.controller('LoginViewCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»','«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
-	        $scope.«principal.name.toFirstLower»Id=null;
-	
-	        $scope.«principal.name.toFirstLower»=$rootScope.«principal.name.toFirstLower»;
-	        $scope.accept=function(){
-	            «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$scope.«principal.name.toFirstLower»Id})
-	                .$promise.then(
-	                        //success
-	                        function( value ){
-	                            $rootScope.«principal.name.toFirstLower»=value;
-	                            $rootScope.id«principal.name.toFirstUpper»=$scope.«principal.name.toFirstLower»Id;
-	                            $location.path("HomePatient");
-	                        },
-	                        //error
-	                        function( error ){
-	                            alert("El Identificador no se encuentra registrado");
-	                        }
-	                );
+	.controller('LoginCtrl', ['$rootScope', '$scope', '«principal.name.toFirstLower»','«principal.name.toFirstLower»s','$http','$resource', '$location', function ($rootScope, $scope, «principal.name.toFirstLower», «principal.name.toFirstLower»s, $http, $resource, $location) {
+	        $scope.continueRegister=function(){
+	                $location.path("Register");
+	        }
+	        $rootScope.logout = function () {
+	          $http.post('/logout', {}).success(function () {
+	              $rootScope.authenticated = false;
+	              $location.path("/");
+	          }).error(function (data) {
+	              $rootScope.authenticated = false;
+	          });
 	        };
+			var authenticate = function (credentials, callback) {
+		        if(credentials){
+		            $rootScope.id«principal.name»=credentials.username;
+		            $rootScope.pas«principal.name»=credentials.password;
+		        }
+		         var headers = credentials ? {authorization: "Basic "
+		                     + btoa("12dea96fec20593566ab75692c9949596833adc9" + ":" + "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8")
+		         } : {};
+		         $http.get('user', {headers: headers}).then(function (data) {
+		             if (data.data.name) {
+		                 $rootScope.authenticated = true;
+		             } else {
+		                 $rootScope.authenticated = false;
+		             }
+		             callback && callback();
+		         }, function () {
+		             $rootScope.authenticated = false;
+		             callback && callback();
+		         });
+		
+		     };
+		     
+		     authenticate();
+		              $scope.credentials = {};
+		              $scope.login = function () {
+		                  authenticate($scope.credentials, function () {
+		                      if ($rootScope.authenticated) {
+		                         $scope.error = false;
+		                         «principal.name.toFirstLower».get({«principal.name.toFirstLower»Id:""+$rootScope.id«principal.name»})
+		                         .$promise.then(
+		                                 //success
+		                                 function( value ){
+		                                     $scope.«principal.name.toFirstLower»H=value;
+		                                     if(($scope.«principal.name.toFirstLower»H.password==$rootScope.pas«principal.name»)){
+		                                         if($scope.«principal.name.toFirstLower»H.role=="Paciente"){
+		                                             $location.path("HomePatient");
+		                                         }
+		                                         if($scope.«principal.name.toFirstLower»H.role=="Doctor"){
+		                                             $location.path("HomeDoctor");
+		                                         }
+		                                         if($scope.«principal.name.toFirstLower»H.role=="Investigador"){
+		                                             $location.path("HomeInvestigator");
+		                                         }
+		                                     }else{
+		                                         $rootScope.authenticated=false;
+		                                         alert("El Identificador no se encuentra registrado");
+		                                         $scope.error = true;
+		                                         $rootScope.logout();
+		                                     }
+		                                 },
+		                                 //error
+		                                 function( error ){
+		                                     $rootScope.authenticated=false;
+		                                     alert("Autenticacion Fallida");
+		                                     $scope.error = true;
+		                                     $rootScope.logout();
+		                                 }
+		                         );
+		                      } else {
+		                          $scope.error = true;
+		                          alert("Autenticación Fallida");
+		                          $rootScope.logout();
+		                      }
+		                  });
+		         };
+	        
 	}]);
 	'''
 	
@@ -1244,10 +1793,15 @@ $scope.«f.name»=null;
 	                        <fieldset>
 	                            <div class="form-group">
 	                                <label>Numero de Identificacion</label>
-	                                <input class="form-control" type="number" ng-model="«principal.name.toFirstLower»Id" autofocus>
+	                                <input class="form-control" type="number" ng-model="credentials.username" autofocus>
 	                            </div>
+	                            <div class="form-group">
+								<label for="password">Clave:</label> <input type="password"
+									class="form-control" id="password" name="password" ng-model="credentials.password"/>
+								</div>
 	                            <!-- Change this to a button or input when using this as a form -->
-	                            <a href="index.html" class="btn btn-lg btn-success btn-block" ng-click="accept()">Aceptar</a>
+	                            <button ng-click="login()" class="btn btn-lg btn-success btn-block">Iniciar Sesion</button>
+								<button ng-click="continueRegister()" class="btn btn-lg btn-link btn-block">Eres nuevo? Registrate!</button>
 	                        </fieldset>
 	                    </form>
 	                </div>
@@ -1271,7 +1825,7 @@ $scope.«f.name»=null;
 	            $location.path("PatientProfile");
 	      };
 	      $scope.continueLogout=function(){
-	            $location.path("view1");
+	            $rootScope.logout();
 	      };
 	      $scope.continueHome=function(){
 	            $location.path("HomePatient");
@@ -1615,22 +2169,31 @@ $scope.«f.name»=null;
     				$scope.«feature.name»=[];
                     «ENDIF»
                     «ENDFOR»
+					$scope.diagnosticsNew=[];
 	                $scope.labels=[];
 	                $scope.series = ['Datos de Control «diagnostic.name.toFirstUpper»'];
+	                $scope.diagnostics.orderByDate("date", -1);
+					$scope.currentDate=new Date();
 	                for(var n=0; n<$scope.diagnostics.length; n++){
 	                    var dd=$scope.diagnostics[n];
-	                    «FOR dat: diagnostic.type.eAllContents.toIterable»
-                        «var feature =dat as Feature»
-        				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
-        				$scope.«feature.name».push(dd.«feature.name»);
-                        «ENDIF»
-                        «ENDFOR»
 	                    var datee=new Date(dd.date);
-	                    var dia = datee.getDate();
-	                    var mes = parseInt(datee.getMonth()) + 1;
-	                    var year = datee.getFullYear();
-	                    var dated=dia+"/"+mes+"/"+year;
-	                    $scope.labels.push(dated);
+	                    if(datee >= ($scope.currentDate.setDate($scope.currentDate.getDate()-14))){
+	                    	$scope.diagnosticsNew.push(dd);
+	                    	«FOR dat: diagnostic.type.eAllContents.toIterable»
+	                        «var feature =dat as Feature»
+	        				«IF((feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
+	        				$scope.«feature.name».push(dd.«feature.name»);
+	                        «ENDIF»
+	                        «ENDFOR»
+		                    var datee=new Date(dd.date);
+		                    var dia = datee.getDate();
+		                    var mes = parseInt(datee.getMonth()) + 1;
+		                    var year = datee.getFullYear();
+		                    var dated=dia+"/"+mes+"/"+year;
+		                    $scope.labels.push(dated);
+						}else{
+	                        break;
+	                    }
 	                }
 	            },
 	            //error
@@ -1638,6 +2201,14 @@ $scope.«f.name»=null;
 	                console.log("Error");
 	            }
 	    );
+	    
+	    Array.prototype.orderByDate=function(p,so){
+	      if(so!=-1&&so!=1)so=1;
+	      this.sort(function(a,b){
+	        var da=new Date(a[p]),db=new Date(b[p]);
+	        return(da-db)*so;
+	      })
+	    };
 	
 	}]);
 	'''
@@ -1660,6 +2231,9 @@ $scope.«f.name»=null;
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
+	                	<label>Filtrar por:  </label>
+						<input type="text" ng-model="busqueda">
+						<br><br>
 	                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                        <thead>
 	                        <tr>
@@ -1672,7 +2246,7 @@ $scope.«f.name»=null;
 	                        </tr>
 	                        </thead>
 	                        <tbody>
-	                        <tr ng-repeat="d in diagnostics" >
+	                        <tr ng-repeat="d in diagnosticsNew | filter:busqueda" >
 	                        	«FOR dat: diagnostic.type.eAllContents.toIterable»
                 				«var feature =dat as Feature»
                 				«IF((feature.type.name.equals("String"))||(feature.type.name.equals("Byte"))||(feature.type.name.equals("Double"))||(feature.type.name.equals("Float"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Long"))||(feature.type.name.equals("Short")))»
@@ -1737,7 +2311,17 @@ $scope.«f.name»=null;
 	}])
 	
 	.controller('HomeDoctorCtrl', ['$rootScope', '$scope', '«e.name.toFirstLower»','$location', function ($rootScope, $scope, «e.name.toFirstLower»,$location) {
-	
+		«e.name.toFirstLower».get({«e.name.toFirstLower»Id:""+$rootScope.id«e.name»})
+	    .$promise.then(
+	            //success
+	            function( value ){
+	                $scope.«e.name.toFirstLower»H=value;
+	            },
+	            //error
+	            function( error ){
+	                alert("El Identificador no se encuentra registrado");
+	            }
+	    );
 	    $rootScope.FindID=false;
 	    $rootScope.patientId=null;
 	    $scope.found=false;
@@ -1772,6 +2356,9 @@ $scope.«f.name»=null;
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
+	        	<h1 class="page-header">Bienvenido {{«classToServe.name.toFirstLower»H.name}}</h1>
+	            <br>
+	            <br>
 	            <h1 class="page-header">Consulta los datos de control</h1>
 	        </div>
 	        <!-- /.col-lg-12 -->
@@ -1803,7 +2390,7 @@ $scope.«f.name»=null;
 	                    </h2>
 	                    <br><br>
 	                    «FOR f : e.features»
-	                    «IF((!f.many)&&(f.type.eAllContents.toIterable.size==0))»
+	                    «IF((!f.many)&&(f.type.eAllContents.toIterable.size==0)&&(!f.name.equals("password")&&!f.name.equals("id")))»
 	                    «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
 	                    <h2> «f.name.toFirstUpper»
 	                        <br><br>
@@ -1859,9 +2446,13 @@ $scope.«f.name»=null;
 	angular.module('myApp.templateDoctor', ['ngRoute'])
 	
 	.controller('templateDoctorCtrl', ['$rootScope', '$scope', '«classToServe.name.toFirstLower»', '$location', function ($rootScope, $scope, «classToServe.name.toFirstLower», $location) {
-	
+			
+			$scope.continuePerfil=function(){
+	              $location.path("DoctorProfile");
+	         };
+			
 	      $scope.continueLogoutD=function(){
-	            $location.path("view1");
+	            $rootScope.logout();
 	      };
 	      $scope.continueHomeD=function(){
 	            $location.path("HomeDoctor");
@@ -1900,6 +2491,8 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	        <!-- /.navbar-header -->
 	
 	        <ul class="nav navbar-top-links navbar-right">
+	        	<li><a ng-click="continuePerfil()"><i class="fa fa-user fa-fw"></i> Perfil </a>
+	            </li>
 	            <li><a ng-click="continueLogoutD()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
 	            </li>
 	        </ul>
@@ -1912,11 +2505,11 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	                        <a ng-click="continueHomeD()"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
 	                    </li>
 	                    «FOR diag: diagnostics»
-	                    <li>
+	                    <li ng-show="FindID">
 	                        <a  ng-click="continueRegistersP«diag.name.toFirstUpper»()"><i class="fa fa-bar-chart-o fa-fw"></i> Registros de «diag.name.toFirstUpper»</a>
 	                    </li>
                 		«ENDFOR»
-	                    <li>
+	                    <li ng-show="FindID">
 	                        <a><i class="fa fa-edit fa-fw"></i> Recomendaciones</a>
 	                        <ul class="nav nav-second-level">
 	                        	«FOR comm: comments»
@@ -1949,9 +2542,12 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	
 	
 	.controller('templateInvestigatorCtrl', ['$rootScope', '$scope', '$location', function ($rootScope, $scope, $location) {
-	
+		
+		  $scope.continuePerfil=function(){
+	            $location.path("InvestigatorProfile");
+	      };
 	      $scope.continueLogoutI=function(){
-	            $location.path("view1");
+	            $rootScope.logout();
 	      };
 	      $scope.continueHomeI=function(){
 	            $location.path("HomeInvestigator");
@@ -1983,6 +2579,8 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 	        <!-- /.navbar-header -->
 	
 	        <ul class="nav navbar-top-links navbar-right">
+	        	<li><a ng-click="continuePerfil()"><i class="fa fa-user fa-fw"></i> Perfil </a>
+	            </li>
 	            <li><a ng-click="continueLogoutI()"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
 	            </li>
 	        </ul>
@@ -2064,8 +2662,8 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		  <script src="bower_components/chart.js/dist/Chart.min.js"></script>
 		  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 		  <script src="app.js"></script>
-		  <script src="view1/view1.js"></script>
-		  <script src="LoginView/LoginView.js"></script>
+		  <script src="Login/Login.js"></script>
+		  <script src="Register/Register.js"></script>
 		  <script src="PatientAutorization/PatientAutorization.js"></script>
 		  <script src="Templates/templateInvestigator.js"></script>
 		  <script src="Templates/templateDoctor.js"></script>
@@ -2073,10 +2671,10 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		  <script src="HomeInvestigator/HomeInvestigator.js"></script>
 		  <script src="HomeDoctor/HomeDoctor.js"></script>
 		  <script src="HomePatient/HomePatient.js"></script>
-		  <script src="UpdatePatient/UpdatePatient.js"></script>
+		  <script src="Update«classToServe.name»/Update«classToServe.name».js"></script>
 		  <script src="PatientProfile/PatientProfile.js"></script>
-		  <script src="PatientRegister/PatientRegister.js"></script>
-		  <script src="PatientChoiceView/PatientChoiceView.js"></script>
+		  <script src="DoctorProfile/DoctorProfile.js"></script>
+		  <script src="InvestigatorProfile/InvestigatorProfile.js"></script>
 		  «FOR m: modules»
 		  <script src="«m.htmlSRCString»"></script>
 		  «ENDFOR»
@@ -2111,16 +2709,16 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		  «ENDFOR»
 		  'myApp.templateDoctor',
 		  'myApp.HomePatient',
-		  'myApp.UpdatePatient',
+		  'myApp.Update«classToServe.name»',
 		  'myApp.PatientProfile',
-		  'myApp.PatientRegister',
+		  'myApp.DoctorProfile',
+		  'myApp.InvestigatorProfile',
 		  'myApp.templateInvestigator',
 		  'myApp.templatePatient',
-		  'myApp.view1',
-		  'myApp.LoginView',
+		  'myApp.Login',
+		  'myApp.Register',
 		  'myApp.HomeInvestigator',
 		  'myApp.PatientAutorization',
-		  'myApp.PatientChoiceView',
 		  'myApp.HomeDoctor',
 		  'myApp.version',
 		  'services.factory',
@@ -2129,7 +2727,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
 		  $locationProvider.hashPrefix('!');
 		
-		  $routeProvider.otherwise({redirectTo: '/view1'});
+		  $routeProvider.otherwise({redirectTo: '/Login'});
 		}]);
 		
 		'''
@@ -2303,6 +2901,8 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		                    </div>
 		                    <!-- /.panel-heading -->
 		                    <div class="panel-body">
+		                    	<label>Filtrar por: </label>
+								<input type="text" ng-model="busqueda">
 		                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 		                            <thead>
 		                            <tr>
@@ -2317,7 +2917,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		                            </tr>
 		                            </thead>
 		                            <tbody>
-		                            <tr ng-repeat="d in principalAndDiagnostic" >
+		                            <tr ng-repeat="d in principalAndDiagnostic | filter: busqueda" >
 		                            	<td>{{d[0]}}</td>
 										<td>{{d[1]}}</td>
 		                                «var nf=2»
@@ -2356,7 +2956,159 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		.factory('«e.name.toFirstLower»s', function($resource) {
 			return $resource('/«e.name.toFirstLower»',{},{ 'get': { method: 'GET', isArray: true}, 'update': { method: 'PUT', isArray: false}});
 		})
+		.factory('new«e.name»', function($resource) {
+			return $resource('/«e.name.toFirstLower»/new');
+		})
 		;
+		'''
+		
+	def compileJpaService(Entity e)
+		'''
+		package «((e.fullyQualifiedName.toString(".").replace(".model."+e.name, "")) + ".jpa;")»
+		
+		import «e.fullyQualifiedName.toString(".")»;
+		import org.springframework.data.repository.CrudRepository;
+		import org.springframework.stereotype.Service;
+		
+		@Service
+		public class «e.name»Service implements GenericService<«e.name», Long> {
+		
+		    private final «e.name»Repository «e.name.toFirstLower»Repository;
+		
+		    public «e.name»Service(final «e.name»Repository «e.name.toFirstLower»Repository) {
+		
+		        this.«e.name.toFirstLower»Repository=«e.name.toFirstLower»Repository;
+		    }
+		
+		    @Override
+		    public Long getId(«e.name» entity) {
+		        return entity.getId();
+		    }
+		
+		    @Override
+		    public CrudRepository<«e.name», Long> getRepository() {
+		        return this.«e.name.toFirstLower»Repository;
+		    }
+		
+		    @Override
+		    public «e.name» save(«e.name» entity) {
+		        return GenericService.super.save(entity);
+		    }
+		}
+		'''
+	
+	def compileRepository(Entity e)
+		'''
+		package «((e.fullyQualifiedName.toString(".").replace(".model."+e.name, "")) + ".jpa;")»
+		
+		import «e.fullyQualifiedName.toString(".")»;
+		import org.springframework.data.jpa.repository.JpaRepository;
+		
+		import javax.transaction.Transactional;
+		
+		
+		@Transactional
+		public interface «e.name»Repository extends JpaRepository<«e.name», Long>  {
+		}
+		
+		'''
+	
+	def compileMainClass(Entity e)
+		'''
+		package «((e.fullyQualifiedName.toString(".").replace(".model."+e.name, "")))»;
+		
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.boot.autoconfigure.security.SecurityProperties;
+		import org.springframework.context.annotation.Configuration;
+		import org.springframework.core.annotation.Order;
+		import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+		import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+		import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+		import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+		import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+		import org.springframework.security.web.csrf.CsrfFilter;
+		import org.springframework.security.web.csrf.CsrfToken;
+		import org.springframework.security.web.csrf.CsrfTokenRepository;
+		import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+		import org.springframework.web.filter.OncePerRequestFilter;
+		import org.springframework.web.util.WebUtils;
+		
+		import javax.servlet.FilterChain;
+		import javax.servlet.ServletException;
+		import javax.servlet.http.Cookie;
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		import java.io.IOException;
+		
+		@SpringBootApplication
+		@EnableJpaRepositories
+		public class demoApplication {
+		
+		
+			public static void main(String[] args) {
+				SpringApplication.run(demoApplication.class, args);
+			}
+		
+		
+		
+			@Configuration
+			@EnableGlobalMethodSecurity(prePostEnabled = true)
+			@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+			protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+		
+				@Override
+				protected void configure(AuthenticationManagerBuilder builder) throws Exception {
+					builder.inMemoryAuthentication().withUser("12dea96fec20593566ab75692c9949596833adc9").password("5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8").roles("USER");
+				}
+		
+				@Override
+				protected void configure(HttpSecurity http) throws Exception {
+					http
+							.httpBasic()
+							.and()
+							.authorizeRequests()
+							.antMatchers("/app/**","/logout","/app/user**", "/«e.name.toFirstLower»/new").permitAll()
+							.anyRequest().authenticated().and()
+							.logout().logoutSuccessUrl("/")
+							.and().csrf()
+							.csrfTokenRepository(csrfTokenRepository()).and()
+							.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
+							.formLogin()
+							.loginPage("/app/index.html");
+				}
+		
+				private OncePerRequestFilter csrfHeaderFilter() {
+					return new OncePerRequestFilter() {
+						@Override
+						protected void doFilterInternal(HttpServletRequest request,
+														HttpServletResponse response, FilterChain filterChain)
+								throws ServletException, IOException {
+							CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
+									.getName());
+							if (csrf != null) {
+								Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
+								String token = csrf.getToken();
+								if (cookie == null || token != null
+										&& !token.equals(cookie.getValue())) {
+									cookie = new Cookie("XSRF-TOKEN", token);
+									cookie.setPath("/");
+									response.addCookie(cookie);
+								}
+							}
+							filterChain.doFilter(request, response);
+						}
+					};
+				}
+		
+				private CsrfTokenRepository csrfTokenRepository() {
+					HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+					repository.setHeaderName("X-XSRF-TOKEN");
+					return repository;
+				}
+		
+			}
+		}
 		'''
 	
 	def compileRESTControllers(Entity e)
@@ -2389,7 +3141,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		    }
 		
 		    @RequestMapping(method = RequestMethod.GET, path = "/{«e.name.toFirstLower»Id}")
-		    public ResponseEntity<?> get«e.name»(@PathVariable Integer «e.name.toFirstLower»Id) {
+		    public ResponseEntity<?> get«e.name»(@PathVariable Long «e.name.toFirstLower»Id) {
 				«e.name» ans=ps.get«e.name»(«e.name.toFirstLower»Id);
 				if(ans!=null){
 					return new ResponseEntity<>(ans , HttpStatus.ACCEPTED);
@@ -2398,7 +3150,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 				}
 		    }
 		
-		    @RequestMapping(method = RequestMethod.POST)
+		    @RequestMapping(method = RequestMethod.POST, path = "/new")
 		    public ResponseEntity<?> post«e.name»(@RequestBody «e.name» p) {
 		        ps.save«e.name»(p);
 		        return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -2408,6 +3160,54 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		    public ResponseEntity<?> update«e.name»(@RequestBody «e.name» p) {
 		        ps.update«e.name»(p);
 		        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		    }
+		}
+		'''
+		
+	def compileServiceImplementation2(Entity e)
+		'''
+		package  «((e.fullyQualifiedName.toString(".").replace(".model."+e.name, "")) + ".services;")»
+		import «e.fullyQualifiedName.toString(".")»;
+		import org.springframework.stereotype.Service;
+		import com.example.jpa.GenericService;
+		import org.springframework.beans.factory.annotation.Autowired;
+		
+		import java.util.ArrayList;
+		import java.util.List;
+
+		@Service
+		public class «e.name»ServicesImpl2 implements «e.name»Services{
+		
+		    @Autowired
+		    private GenericService ps;
+		    
+		    public «e.name»ServicesImpl2(final GenericService gs){
+		        this.ps=gs;
+		    }
+		
+		    @Override
+		    public void save«e.name»(«e.name» p) {
+		        ps.save(p);
+		    }
+		
+		    @Override
+		    public List<«e.name»> get«e.name»s() {
+			ArrayList<«e.name»> ans =new ArrayList<«e.name»>();
+			for (Object o : ps.findAll()) {
+			ans.add((«e.name») o);
+			}
+			return ans;
+		    }
+		
+		    @Override
+		    public void update«e.name»(«e.name» p) {
+		    	ps.update(p);
+		    }
+		
+		
+		    @Override
+		    public «e.name» get«e.name»(Long pId) {
+		        return («e.name») ps.get(pId);
 		    }
 		}
 		'''
@@ -2421,7 +3221,6 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		import java.util.ArrayList;
 		import java.util.List;
 
-		@Service
 		public class «e.name»ServicesImpl1 implements «e.name»Services{
 		
 		    List<«e.name»> «e.name.toFirstLower»List=new ArrayList<>();
@@ -2447,7 +3246,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		
 		
 		    @Override
-		    public «e.name» get«e.name»(Integer pId) {
+		    public «e.name» get«e.name»(Long pId) {
 		        «e.name» ans=null;
 		        for («e.name» pe :
 		                «e.name.toFirstLower»List) {
@@ -2471,7 +3270,7 @@ $scope.continueCommentRegister«comm.name.toFirstUpper»=function(){
 		    public void save«e.name»(«e.name» p);
 		    public List<«e.name»> get«e.name»s();
 		    public void update«e.name»(«e.name» p);
-		    public «e.name» get«e.name»(Integer pId);
+		    public «e.name» get«e.name»(Long pId);
 		}
 		'''
 	
@@ -2485,19 +3284,37 @@ package
         «FOR i : e.imports»
 import «i.importedNamespace»;
 	    «ENDFOR»
-	    import java.util.Date;
-	    
+	    import javax.persistence.*;
+	    import java.util.Calendar;
+	    «IF e.principal»
+	    @SuppressWarnings("all")
+	    «ENDIF»
+	    «IF(GeneralEvaluator.entityIsEmbeddable(e, principalEmbeddableFeatures))»
+	    @Embeddable
+	    «ELSE»
+	    @Entity
+	    @Table(name = "«e.name.toFirstLower»s", schema = "application")
+	    «ENDIF»
 public class «e.name» «IF e.superType !== null»extends «e.superType.fullyQualifiedName» «ENDIF»{
 	public «e.name»(){}
-	private Integer id;
-	
-	public Integer getId() {
+	«IF(!GeneralEvaluator.entityIsEmbeddable(e, principalEmbeddableFeatures))»
+	@Id
+	«IF e.principal»
+	@Column(name = "id")
+	«ELSE»
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "«e.name.toFirstLower»_id")
+	«ENDIF»
+	private Long id;
+		
+	public Long getId() {
 	return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(Long id) {
 	this.id = id;
 	}
+	«ENDIF»
             «FOR f : e.features»
             	«IF !f.name.equals("id")»
                 	«f.compile»
@@ -2506,19 +3323,50 @@ public class «e.name» «IF e.superType !== null»extends «e.superType.fullyQualifi
         }
     '''
  
-    def compile(Feature f) '''
+    def compile(Feature f)
+    '''
     	«IF f.many»
-    		private java.util.ArrayList<«f.type.fullyQualifiedName»> «f.name» =new java.util.ArrayList<«f.type.fullyQualifiedName»>();
+@OneToMany(cascade = CascadeType.ALL)
+			@JoinColumns(
+					{
+							@JoinColumn(name = "«f.type.fullyQualifiedName.lastSegment.toFirstLower»", referencedColumnName = "id", nullable = false),
+					}
+			)
+			«IF f.type.fullyQualifiedName.lastSegment.equals("Date")»
+			private java.util.List<Calendar> «f.name» =new java.util.ArrayList<Calendar>();
+			public java.util.List<Calendar> get«f.name.toFirstUpper»() {
+			return «f.name»;
+			}
+			public void set«f.name.toFirstUpper»(java.util.ArrayList<Calendar> «f.name») {
+			this.«f.name» = «f.name»;
+			}
+    		«ELSE»
+			private java.util.List<«f.type.fullyQualifiedName»> «f.name» =new java.util.ArrayList<«f.type.fullyQualifiedName»>();
+			public java.util.List<«f.type.fullyQualifiedName»> get«f.name.toFirstUpper»() {
+			return «f.name»;
+			}
+			public void set«f.name.toFirstUpper»(java.util.ArrayList<«f.type.fullyQualifiedName»> «f.name») {
+			this.«f.name» = «f.name»;
+			}
+    		«ENDIF»
+    	«ELSE»
+    		«IF f.type.fullyQualifiedName.lastSegment.equals("Date")»
+    		@Column(name = "«f.name»")
+    		private Calendar «f.name»;
     		
-    		public java.util.ArrayList<«f.type.fullyQualifiedName»> get«f.name.toFirstUpper»() {
+    		public Calendar get«f.name.toFirstUpper»() {
     		return «f.name»;
     		}
     		
-    		
-    		public void set«f.name.toFirstUpper»(java.util.ArrayList<«f.type.fullyQualifiedName»> «f.name») {
+    		public void set«f.name.toFirstUpper»(Calendar «f.name») {
     		this.«f.name» = «f.name»;
     		}
-    	«ELSE»
+    		«ELSE»
+    		«IF(GeneralEvaluator.typeIsPrimitive(f.type))»
+    		@Column(name = "«f.name»")
+    		«ELSE»
+    		@Embedded
+    		«ENDIF»
     		private «f.type.fullyQualifiedName» «f.name»;
     		
     		public «f.type.fullyQualifiedName» get«f.name.toFirstUpper»() {
@@ -2528,6 +3376,7 @@ public class «e.name» «IF e.superType !== null»extends «e.superType.fullyQualifi
     		public void set«f.name.toFirstUpper»(«f.type.fullyQualifiedName» «f.name») {
     		this.«f.name» = «f.name»;
     		}
+    		«ENDIF»
     	«ENDIF»
     '''
 }

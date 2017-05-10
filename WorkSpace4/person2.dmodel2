@@ -8,6 +8,8 @@ package com.example.model{
     	principal
     	id: Integer
         name: transient String
+        password: String
+        role: String
         lastName: transient String
         feedbacks: many Feedback
         address : Address

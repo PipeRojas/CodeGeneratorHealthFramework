@@ -67,24 +67,34 @@ public class Dsl2Validator extends AbstractDsl2Validator {
   }
   
   @Check
-  public void checkNameAndIdForPrincipalEntity(final Entity e) {
+  public void checkNameRolePasswordAndIdForPrincipalEntity(final Entity e) {
     boolean flagName = false;
     boolean flagId = false;
+    boolean flagPass = false;
+    boolean flagRole = false;
     boolean _isPrincipal = e.isPrincipal();
     if (_isPrincipal) {
-      for (int i = 0; ((i < e.getFeatures().size()) && (!(flagName && flagId))); i++) {
+      for (int i = 0; ((i < e.getFeatures().size()) && (!(((flagName && flagId) && flagPass) && flagRole))); i++) {
         if ((e.getFeatures().get(i).getName().equals("id") && e.getFeatures().get(i).getType().getName().equals("Integer"))) {
           flagId = true;
         } else {
           if ((e.getFeatures().get(i).getName().equals("name") && e.getFeatures().get(i).getType().getName().equals("String"))) {
             flagName = true;
+          } else {
+            if ((e.getFeatures().get(i).getName().equals("password") && e.getFeatures().get(i).getType().getName().equals("String"))) {
+              flagPass = true;
+            } else {
+              if ((e.getFeatures().get(i).getName().equals("role") && e.getFeatures().get(i).getType().getName().equals("String"))) {
+                flagRole = true;
+              }
+            }
           }
         }
       }
-      if (((!flagId) || (!flagName))) {
+      if (((((!flagId) || (!flagName)) || (!flagPass)) || (!flagRole))) {
         String _name = e.getName();
         String _plus = ("If " + _name);
-        String _plus_1 = (_plus + " entity is principal, must have id of type Integer and name of type String features");
+        String _plus_1 = (_plus + " entity is principal, must have id of type Integer, password of type String, role of type String and name of type String features");
         this.error(_plus_1, Dsl2Package.Literals.ENTITY__FEATURES);
       }
     }
@@ -285,6 +295,13 @@ public class Dsl2Validator extends AbstractDsl2Validator {
     boolean _isUpperCase = Character.isUpperCase(feature.getName().charAt(0));
     if (_isUpperCase) {
       this.error("Name should start with a lower case", Dsl2Package.Literals.FEATURE__NAME);
+    }
+  }
+  
+  @Check
+  public void checkRoleFeatureCannotBeTransient(final Feature feature) {
+    if ((feature.getName().equals("role") && feature.isTransient())) {
+      this.error("Role feature cannot be transient", Dsl2Package.Literals.FEATURE__TRANSIENT);
     }
   }
 }

@@ -1,0 +1,38 @@
+datatype String
+datatype Integer
+datatype Date
+
+package com.example.model{
+ 
+    entity Person {
+    	principal
+    	id: Integer
+        name: transient String
+        password: transient String
+        lastName: transient String
+        role: String
+        comments: many Comment
+        address : Address
+        diagnostics : many diagnostic Diagnostic
+    }
+
+    entity Address {
+        street: transient String
+        zip: transient Integer
+        city: transient String
+    }
+    
+    entity Diagnostic{
+    	systolicPressure: Integer
+    	diastolicPressure: Integer
+    	bloodCholesterol: Integer
+    	heartRate: Integer
+    	date: Date
+    }
+    
+    entity Comment{
+    	title: String
+    	description: String
+    	date: Date
+    }
+}

@@ -1,0 +1,9 @@
+package evaluators;
+
+import edu.eci.prot.dsl2.dsl2.Type;
+
+public class GeneralEvaluator {
+	public Boolean typeIsPrimitive(Type t) {
+		if((t.getName().equals("Byte")||t.getName().equals("Short")||t.getName().equals("Integer")||t.getName().equals("Long")||t.getName().equals("Float")||t.getName().equals("Double")||t.getName().equals("Char")||t.getName().equals("String")||t.getName().equals("Boolean")||t.getName().equals("Date")))
+	}
+}
