@@ -3,12 +3,12 @@
 # **Diseño e implementación de una plataforma genérica para el desarrollo de aplicaciones de e-Health y m-Health**
 
 ## **Autores**
-Estudiante de ingeniería María Alejandra Goenaga Zamora
-Estudiante de ingeniería Andrés Felipe Rojas Ortíz
+* Estudiante de ingeniería María Alejandra Goenaga Zamora
+* Estudiante de ingeniería Andrés Felipe Rojas Ortíz
 
 ### **Directores de proyecto**
-Ing. Luis Daniel Benavides Navarro
-Ing. Olga Patricia Álvarez Piñeiro
+* Ing. Luis Daniel Benavides Navarro
+* Ing. Olga Patricia Álvarez Piñeiro
 
 ## **INTRODUCCIÓN**
 
