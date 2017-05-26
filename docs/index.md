@@ -22,3 +22,7 @@ Esta plataforma permite generar automáticamente aplicaciones para el uso del di
 * El Paciente: quien podrá hacer registro de los diagnósticos que haga por su cuenta y podrá ver su avance en dichos diagnósticos.
 * El Doctor: quien podrá consultar los diagnósticos realizados por los pacientes, así como ver sus avances, y además enviar comentarios al paciente de acuerdo a su evolución para aconsejarlo en pro de mantener una buena salud.
 * El investigador: quien podrá consultar los datos conjunto de todos los pacientes registrados en la aplicación, dichos datos están anonimizados para mantener la seguridad de los datos de cada paciente.
+
+______
+* Para consultar más información sobre el proyecto puede dirigirse al siguiente link:
+     * https://github.com/PipeRojas/CodeGeneratorHealthFramework/wiki
