@@ -6,7 +6,7 @@
 Estudiante de ingeniería María Alejandra Goenaga Zamora
 Estudiante de ingeniería Andrés Felipe Rojas Ortíz
 
-###**Directores de proyecto**
+### **Directores de proyecto**
 Ing. Luis Daniel Benavides Navarro
 Ing. Olga Patricia Álvarez Piñeiro
 
