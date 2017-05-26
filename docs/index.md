@@ -1,5 +1,3 @@
-Welcome to the CodeGeneratorHealthFramework wiki!
-
 ![Logo ECI](http://www.escuelaing.edu.co/uploads/descargables/1193_logo_horizontal.jpg)
 
 # **MANUAL DE USO DE PLATAFORMA GENÉRICA PARA EL DESARROLLO DE APLICACIONES DE E-HEALTH Y M-HEALTH**
