@@ -2,6 +2,14 @@
 
 # **Diseño e implementación de una plataforma genérica para el desarrollo de aplicaciones de e-Health y m-Health**
 
+## **Autores**
+Estudiante de ingeniería María Alejandra Goenaga Zamora
+Estudiante de ingeniería Andrés Felipe Rojas Ortíz
+
+###**Directores de proyecto**
+Ing. Luis Daniel Benavides Navarro
+Ing. Olga Patricia Álvarez Piñeiro
+
 ## **INTRODUCCIÓN**
 
 Muchas de las enfermedades que actualmente afectan a las personas generan en las mismas una dependencia con algún tipo de tratamiento, más aún cuando estas enfermedades son crónicas, por ejemplo, la Ataxia, el riesgo cardiaco o el Alzheimer entre otras. Estas enfermedades generan en el paciente una continua necesidad de evaluación de su salud por parte de un profesional de la salud, lo que hasta el momento genera muchas dificultades al paciente debido a su asistencia continua a centros de salud para la realización de diagnóstico y tratamiento médico.
