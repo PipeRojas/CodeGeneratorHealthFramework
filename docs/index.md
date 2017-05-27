@@ -33,4 +33,12 @@ Esta plataforma permite generar automáticamente aplicaciones para el uso del di
 
 ______
 * Para consultar más información sobre el proyecto puede dirigirse al siguiente link:
-     * https://github.com/PipeRojas/CodeGeneratorHealthFramework/wiki
+     * [CodeGeneratorHealthFramework Wiki](https://github.com/PipeRojas/CodeGeneratorHealthFramework/wiki)
+     
+     
+     
+     
+     
+     
+     
+     
