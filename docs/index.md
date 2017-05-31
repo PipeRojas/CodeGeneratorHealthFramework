@@ -1,4 +1,5 @@
-![Logo](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logo.png)![Logo ECI](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logoEscuela.jpg)
+![Logo](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logo.png)
+![Logo ECI](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logoEscuela.jpg)
 
 # **Diseño e implementación de una plataforma genérica para el desarrollo de aplicaciones de e-Health y m-Health**
 
