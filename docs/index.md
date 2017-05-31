@@ -1,4 +1,4 @@
-![Logo ECI](http://www.escuelaing.edu.co/uploads/descargables/1193_logo_horizontal.jpg)![Logo](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logo.png)
+![Logo ECI](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logoEscuela.jpg)![Logo](https://github.com/AlejandraZamora/HealthImages/blob/master/imagenes/logo.png)
 
 # **Diseño e implementación de una plataforma genérica para el desarrollo de aplicaciones de e-Health y m-Health**
 
