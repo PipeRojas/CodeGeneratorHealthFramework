@@ -161,7 +161,7 @@ class Dsl2Validator extends AbstractDsl2Validator {
 		if(f.many&&!f.diagnostic){
 			for(dat: f.type.eAllContents.toIterable){
 				var feature =dat as Feature
-				if((!feature.type.name.equals("String"))&&(!feature.type.name.equals("Integer"))&&(!feature.type.name.equals("Date"))){
+				if((!feature.type.name.equals("String"))&&(!feature.type.name.equals("Integer"))&&(!feature.type.name.equals("Date"))&&(!feature.type.name.equals("Boolean"))){
 					ans=false;
 				}else if(feature.type.name.equals("Date")&&(feature.name.equals("date"))){
 					hasDate=true;
@@ -187,7 +187,7 @@ class Dsl2Validator extends AbstractDsl2Validator {
 		if(f.many&&f.diagnostic){
 			for(dat: f.type.eAllContents.toIterable){
 				var feature =dat as Feature
-				if((!feature.type.name.equals("String"))&&(!feature.type.name.equals("Integer"))&&(!feature.type.name.equals("Date"))){
+				if((!feature.type.name.equals("String"))&&(!feature.type.name.equals("Integer"))&&(!feature.type.name.equals("Date"))&&(!feature.type.name.equals("Float"))&&(!feature.type.name.equals("Short"))&&(!feature.type.name.equals("Byte"))&&(!feature.type.name.equals("Long"))&&(!feature.type.name.equals("Double"))){
 					ans=false;
 				}else if(feature.type.name.equals("Date")&&(feature.name.equals("date"))){
 					hasDate=true;

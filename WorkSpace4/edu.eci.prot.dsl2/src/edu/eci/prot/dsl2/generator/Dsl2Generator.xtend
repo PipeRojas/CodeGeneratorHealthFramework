@@ -547,7 +547,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 <br><br>
 <input type="text" ng-model="«f.name»">
 <br><br>
-		                                        «ELSEIF(f.type.name.equals("Integer"))»
+		                                        «ELSEIF(f.type.name.equals("Integer")||f.type.name.equals("Float"))»
 <label> «f.name.toFirstUpper» </label>
 <br><br>
 <input type="number" ng-model="«f.name»">
@@ -569,7 +569,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 					                                        <br><br>
 					                                        <input type="text" ng-model="«f.name»«feature.name.toFirstUpper»">
 					                                        <br><br>
-					                                        «ELSEIF(feature.type.name.equals("Integer"))»
+					                                        «ELSEIF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 					                                        <label> «feature.name.toFirstUpper» </label>
 					                                        <br><br>
 					                                        <input type="number" ng-model="«f.name»«feature.name.toFirstUpper»">
@@ -674,7 +674,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	
 	                    «FOR Feature f: principal.features»
 	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
-                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer"))||(f.type.name.equals("Float")))»
 <h2> «f.name.toFirstUpper»
 	                        <br><br>
 	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
@@ -691,7 +691,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
                         <br><br>
                                 «FOR dat: f.type.eAllContents.toIterable»
                                     «var feature =dat as Feature»
-                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Float")))»
 <h2> «feature.name.toFirstUpper»
 				                        <br><br>
 				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
@@ -792,7 +792,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	
 	                    «FOR Feature f: principal.features»
 	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
-                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer"))||(f.type.name.equals("Float")))»
 <h2> «f.name.toFirstUpper»
 	                        <br><br>
 	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
@@ -809,7 +809,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
                         <br><br>
                                 «FOR dat: f.type.eAllContents.toIterable»
                                     «var feature =dat as Feature»
-                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Float")))»
 <h2> «feature.name.toFirstUpper»
 				                        <br><br>
 				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
@@ -910,7 +910,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	
 	                    «FOR Feature f: principal.features»
 	                    «IF((!f.name.equals("password"))&&(!f.name.equals('id'))&&(!f.name.equals('name')))»
-                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+                        «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer"))||(f.type.name.equals("Float")))»
 <h2> «f.name.toFirstUpper»
 	                        <br><br>
 	                        <small> {{«principal.name.toFirstLower».«f.name»}} </small>
@@ -927,7 +927,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
                         <br><br>
                                 «FOR dat: f.type.eAllContents.toIterable»
                                     «var feature =dat as Feature»
-                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Float")))»
 <h2> «feature.name.toFirstUpper»
 				                        <br><br>
 				                        <small> {{«principal.name.toFirstLower».«f.name».«feature.name»}} </small>
@@ -1002,7 +1002,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	                    	$scope.diagnosticsNew.push(dd);
 	                    	«FOR dat : diagnostic.type.eAllContents.toIterable»
 	                        «var feature=dat as Feature»
-	                        «IF(feature.type.name.equals("Integer"))»
+	                        «IF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 	                        $scope.«feature.name».push(dd.«feature.name»);
 	                        «ENDIF»
 	                        «ENDFOR»
@@ -1089,7 +1089,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 	    <div class="row">
 		    «FOR dat : diagnostic.type.eAllContents.toIterable»
 		    «var feature=dat as Feature»
-		    «IF(feature.type.name.equals("Integer"))»
+		    «IF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 		    <div class="col-lg-4">
 		    <div class="panel panel-default">
 		    <div class="panel-heading">
@@ -1385,7 +1385,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 							$scope.diagnosticsH«diag.name.toFirstUpper»=$scope.«principal.name.toFirstLower»H.«diag.name»;
                             «FOR dat: diag.type.eAllContents.toIterable»
                                 «var feature =dat as Feature»
-                                «IF(feature.type.name.equals("Integer"))»
+                                «IF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
                                 $scope.«feature.name»«diag.name.toFirstUpper»=[];
 								«ENDIF»
                             «ENDFOR»
@@ -1395,7 +1395,7 @@ if($scope.«f.name»!=null&&$scope.«f.name»!=''){
 								var dd=$scope.diagnosticsH«diag.name.toFirstUpper»[n];
 	                            «FOR dat: diag.type.eAllContents.toIterable»
 	                                «var feature =dat as Feature»
-	                                «IF(feature.type.name.equals("Integer"))»
+	                                «IF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 	                                $scope.«feature.name»«diag.name.toFirstUpper».push(dd.«feature.name»);
 	                                «ENDIF»
 	                            «ENDFOR»
@@ -1465,7 +1465,7 @@ $scope.continueCS«comm.name.toFirstUpper»=function(){
 			<br>
 	    	«FOR data: diag.type.eAllContents.toIterable»
 	    	«var feature=data as Feature»
-	    	«IF(feature.type.name.equals("Integer"))»
+	    	«IF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 	    	<div class="col-lg-4">
 	    	<div class="panel panel-default">
 	    	<div class="panel-heading">
@@ -1619,7 +1619,7 @@ $scope.«f.name»=null;
 	                                        	<br><br>
 		                                        <input type="text" ng-model="«f.name»">
 		                                        <br><br>
-		                                        «ELSEIF(f.type.name.equals("Integer"))»
+		                                        «ELSEIF(f.type.name.equals("Integer")||f.type.name.equals("Float"))»
 <label> «f.name.toFirstUpper» </label>
 			                                        <br><br>
 			                                        <input type="number" ng-model="«f.name»">
@@ -1639,7 +1639,7 @@ $scope.«f.name»=null;
 					                                        <br><br>
 					                                        <input type="text" ng-model="«feature.name»">
 					                                        <br><br>
-					                                        «ELSEIF(feature.type.name.equals("Integer"))»
+					                                        «ELSEIF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
 					                                        <label> «feature.name.toFirstUpper» </label>
 					                                        <br><br>
 					                                        <input type="number" ng-model="«feature.name»">
@@ -2000,7 +2000,7 @@ $scope.«f.name»=null;
                     	                    <br><br>
                     	                    <input type="date" ng-model="«feature.name»">
                     	                    <br><br>
-                    	                    «ELSEIF(feature.type.name.equals("Integer"))»
+                    	                    «ELSEIF(feature.type.name.equals("Integer")||feature.type.name.equals("Float"))»
                     	                    <label> «feature.name.toFirstUpper» </label>
                     	                    <br><br>
                     	                    <input type="number" ng-model="«feature.name»">
@@ -2391,7 +2391,7 @@ $scope.«f.name»=null;
 	                    <br><br>
 	                    «FOR f : e.features»
 	                    «IF((!f.many)&&(f.type.eAllContents.toIterable.size==0)&&(!f.name.equals("password")&&!f.name.equals("id")))»
-	                    «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer")))»
+	                    «IF((f.type.name.equals("String"))||(f.type.name.equals("Integer"))||(f.type.name.equals("Float")))»
 	                    <h2> «f.name.toFirstUpper»
 	                        <br><br>
 	                        <small> {{principal.«f.name»}} </small>
@@ -2409,7 +2409,7 @@ $scope.«f.name»=null;
 	                    <br><br>
                                 «FOR dat: f.type.eAllContents.toIterable»
                                     «var feature =dat as Feature»
-                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer")))»
+                                    «IF((feature.type.name.equals("String"))||(feature.type.name.equals("Integer"))||(feature.type.name.equals("Float")))»
                                     <h2> «feature.name»
                                     <br><br>
                                     <small> {{principal.«f.name».«feature.name»}} </small>

@@ -1296,8 +1296,7 @@ public class Dsl2Generator extends AbstractGenerator {
                 _builder.append("<br><br>");
                 _builder.newLine();
               } else {
-                boolean _equals_1 = f.getType().getName().equals("Integer");
-                if (_equals_1) {
+                if ((f.getType().getName().equals("Integer") || f.getType().getName().equals("Float"))) {
                   _builder.append("<label> ");
                   String _firstUpper_1 = StringExtensions.toFirstUpper(f.getName());
                   _builder.append(_firstUpper_1);
@@ -1313,8 +1312,8 @@ public class Dsl2Generator extends AbstractGenerator {
                   _builder.append("<br><br>");
                   _builder.newLine();
                 } else {
-                  boolean _equals_2 = f.getType().getName().equals("Date");
-                  if (_equals_2) {
+                  boolean _equals_1 = f.getType().getName().equals("Date");
+                  if (_equals_1) {
                     _builder.append("<label> ");
                     String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
                     _builder.append(_firstUpper_2);
@@ -1351,8 +1350,8 @@ public class Dsl2Generator extends AbstractGenerator {
                     boolean _isTransient = feature.isTransient();
                     if (_isTransient) {
                       {
-                        boolean _equals_3 = feature.getType().getName().equals("String");
-                        if (_equals_3) {
+                        boolean _equals_2 = feature.getType().getName().equals("String");
+                        if (_equals_2) {
                           _builder.append("<label> ");
                           String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
                           _builder.append(_firstUpper_4);
@@ -1370,8 +1369,7 @@ public class Dsl2Generator extends AbstractGenerator {
                           _builder.append("<br><br>");
                           _builder.newLine();
                         } else {
-                          boolean _equals_4 = feature.getType().getName().equals("Integer");
-                          if (_equals_4) {
+                          if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
                             _builder.append("<label> ");
                             String _firstUpper_6 = StringExtensions.toFirstUpper(feature.getName());
                             _builder.append(_firstUpper_6);
@@ -1389,8 +1387,8 @@ public class Dsl2Generator extends AbstractGenerator {
                             _builder.append("<br><br>");
                             _builder.newLine();
                           } else {
-                            boolean _equals_5 = feature.getType().getName().equals("Date");
-                            if (_equals_5) {
+                            boolean _equals_3 = feature.getType().getName().equals("Date");
+                            if (_equals_3) {
                               _builder.append("<label> ");
                               String _firstUpper_8 = StringExtensions.toFirstUpper(feature.getName());
                               _builder.append(_firstUpper_8);
@@ -1670,7 +1668,7 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((!f.getName().equals("password")) && (!f.getName().equals("id"))) && (!f.getName().equals("name")))) {
             {
-              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+              if (((f.getType().getName().equals("String") || f.getType().getName().equals("Integer")) || f.getType().getName().equals("Float"))) {
                 _builder.append("<h2> ");
                 String _firstUpper = StringExtensions.toFirstUpper(f.getName());
                 _builder.append(_firstUpper);
@@ -1734,7 +1732,7 @@ public class Dsl2Generator extends AbstractGenerator {
                         Feature feature = ((Feature) dat);
                         _builder.newLineIfNotEmpty();
                         {
-                          if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                          if (((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Float"))) {
                             _builder.append("<h2> ");
                             String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
                             _builder.append(_firstUpper_3);
@@ -2029,7 +2027,7 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((!f.getName().equals("password")) && (!f.getName().equals("id"))) && (!f.getName().equals("name")))) {
             {
-              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+              if (((f.getType().getName().equals("String") || f.getType().getName().equals("Integer")) || f.getType().getName().equals("Float"))) {
                 _builder.append("<h2> ");
                 String _firstUpper = StringExtensions.toFirstUpper(f.getName());
                 _builder.append(_firstUpper);
@@ -2093,7 +2091,7 @@ public class Dsl2Generator extends AbstractGenerator {
                         Feature feature = ((Feature) dat);
                         _builder.newLineIfNotEmpty();
                         {
-                          if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                          if (((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Float"))) {
                             _builder.append("<h2> ");
                             String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
                             _builder.append(_firstUpper_3);
@@ -2388,7 +2386,7 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((!f.getName().equals("password")) && (!f.getName().equals("id"))) && (!f.getName().equals("name")))) {
             {
-              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+              if (((f.getType().getName().equals("String") || f.getType().getName().equals("Integer")) || f.getType().getName().equals("Float"))) {
                 _builder.append("<h2> ");
                 String _firstUpper = StringExtensions.toFirstUpper(f.getName());
                 _builder.append(_firstUpper);
@@ -2452,7 +2450,7 @@ public class Dsl2Generator extends AbstractGenerator {
                         Feature feature = ((Feature) dat);
                         _builder.newLineIfNotEmpty();
                         {
-                          if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                          if (((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Float"))) {
                             _builder.append("<h2> ");
                             String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
                             _builder.append(_firstUpper_3);
@@ -2699,8 +2697,7 @@ public class Dsl2Generator extends AbstractGenerator {
         Feature feature_1 = ((Feature) dat_1);
         _builder.newLineIfNotEmpty();
         {
-          boolean _equals_1 = feature_1.getType().getName().equals("Integer");
-          if (_equals_1) {
+          if ((feature_1.getType().getName().equals("Integer") || feature_1.getType().getName().equals("Float"))) {
             _builder.append("$scope.");
             String _name_3 = feature_1.getName();
             _builder.append(_name_3);
@@ -2958,8 +2955,7 @@ public class Dsl2Generator extends AbstractGenerator {
         Feature feature_2 = ((Feature) dat_2);
         _builder.newLineIfNotEmpty();
         {
-          boolean _equals_2 = feature_2.getType().getName().equals("Integer");
-          if (_equals_2) {
+          if ((feature_2.getType().getName().equals("Integer") || feature_2.getType().getName().equals("Float"))) {
             _builder.append("\t    ");
             _builder.append("<div class=\"col-lg-4\">");
             _builder.newLine();
@@ -3912,8 +3908,7 @@ public class Dsl2Generator extends AbstractGenerator {
             Feature feature = ((Feature) dat);
             _builder.newLineIfNotEmpty();
             {
-              boolean _equals = feature.getType().getName().equals("Integer");
-              if (_equals) {
+              if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
                 _builder.append("                            ");
                 _builder.append("$scope.");
                 String _name_3 = feature.getName();
@@ -3961,8 +3956,7 @@ public class Dsl2Generator extends AbstractGenerator {
             Feature feature_1 = ((Feature) dat_1);
             _builder.newLineIfNotEmpty();
             {
-              boolean _equals_1 = feature_1.getType().getName().equals("Integer");
-              if (_equals_1) {
+              if ((feature_1.getType().getName().equals("Integer") || feature_1.getType().getName().equals("Float"))) {
                 _builder.append("\t                            ");
                 _builder.append("$scope.");
                 String _name_4 = feature_1.getName();
@@ -4215,8 +4209,7 @@ public class Dsl2Generator extends AbstractGenerator {
             Feature feature = ((Feature) data);
             _builder.newLineIfNotEmpty();
             {
-              boolean _equals = feature.getType().getName().equals("Integer");
-              if (_equals) {
+              if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
                 _builder.append("\t    \t");
                 _builder.append("<div class=\"col-lg-4\">");
                 _builder.newLine();
@@ -4743,8 +4736,7 @@ public class Dsl2Generator extends AbstractGenerator {
                   _builder.append("<br><br>");
                   _builder.newLine();
                 } else {
-                  boolean _equals_2 = f.getType().getName().equals("Integer");
-                  if (_equals_2) {
+                  if ((f.getType().getName().equals("Integer") || f.getType().getName().equals("Float"))) {
                     _builder.append("<label> ");
                     String _firstUpper_2 = StringExtensions.toFirstUpper(f.getName());
                     _builder.append(_firstUpper_2);
@@ -4763,8 +4755,8 @@ public class Dsl2Generator extends AbstractGenerator {
                     _builder.append("<br><br>");
                     _builder.newLine();
                   } else {
-                    boolean _equals_3 = f.getType().getName().equals("Date");
-                    if (_equals_3) {
+                    boolean _equals_2 = f.getType().getName().equals("Date");
+                    if (_equals_2) {
                       _builder.append("<label> ");
                       String _firstUpper_3 = StringExtensions.toFirstUpper(f.getName());
                       _builder.append(_firstUpper_3);
@@ -4798,8 +4790,8 @@ public class Dsl2Generator extends AbstractGenerator {
                             Feature feature = ((Feature) dat);
                             _builder.newLineIfNotEmpty();
                             {
-                              boolean _equals_4 = feature.getType().getName().equals("String");
-                              if (_equals_4) {
+                              boolean _equals_3 = feature.getType().getName().equals("String");
+                              if (_equals_3) {
                                 _builder.append("<label> ");
                                 String _firstUpper_5 = StringExtensions.toFirstUpper(feature.getName());
                                 _builder.append(_firstUpper_5);
@@ -4815,8 +4807,7 @@ public class Dsl2Generator extends AbstractGenerator {
                                 _builder.append("<br><br>");
                                 _builder.newLine();
                               } else {
-                                boolean _equals_5 = feature.getType().getName().equals("Integer");
-                                if (_equals_5) {
+                                if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
                                   _builder.append("<label> ");
                                   String _firstUpper_6 = StringExtensions.toFirstUpper(feature.getName());
                                   _builder.append(_firstUpper_6);
@@ -4832,8 +4823,8 @@ public class Dsl2Generator extends AbstractGenerator {
                                   _builder.append("<br><br>");
                                   _builder.newLine();
                                 } else {
-                                  boolean _equals_6 = feature.getType().getName().equals("Date");
-                                  if (_equals_6) {
+                                  boolean _equals_4 = feature.getType().getName().equals("Date");
+                                  if (_equals_4) {
                                     _builder.append("<label> ");
                                     String _firstUpper_7 = StringExtensions.toFirstUpper(feature.getName());
                                     _builder.append(_firstUpper_7);
@@ -5924,8 +5915,7 @@ public class Dsl2Generator extends AbstractGenerator {
               _builder.append("<br><br>");
               _builder.newLine();
             } else {
-              boolean _equals_1 = feature.getType().getName().equals("Integer");
-              if (_equals_1) {
+              if ((feature.getType().getName().equals("Integer") || feature.getType().getName().equals("Float"))) {
                 _builder.append("<label> ");
                 String _firstUpper_3 = StringExtensions.toFirstUpper(feature.getName());
                 _builder.append(_firstUpper_3);
@@ -5941,8 +5931,8 @@ public class Dsl2Generator extends AbstractGenerator {
                 _builder.append("<br><br>");
                 _builder.newLine();
               } else {
-                boolean _equals_2 = feature.getType().getName().equals("String");
-                if (_equals_2) {
+                boolean _equals_1 = feature.getType().getName().equals("String");
+                if (_equals_1) {
                   _builder.append("<label> ");
                   String _firstUpper_4 = StringExtensions.toFirstUpper(feature.getName());
                   _builder.append(_firstUpper_4);
@@ -7076,7 +7066,7 @@ public class Dsl2Generator extends AbstractGenerator {
         {
           if ((((!f.isMany()) && (IterableExtensions.size(IteratorExtensions.<EObject>toIterable(f.getType().eAllContents())) == 0)) && ((!f.getName().equals("password")) && (!f.getName().equals("id"))))) {
             {
-              if ((f.getType().getName().equals("String") || f.getType().getName().equals("Integer"))) {
+              if (((f.getType().getName().equals("String") || f.getType().getName().equals("Integer")) || f.getType().getName().equals("Float"))) {
                 _builder.append("                    ");
                 _builder.append("<h2> ");
                 String _firstUpper = StringExtensions.toFirstUpper(f.getName());
@@ -7145,7 +7135,7 @@ public class Dsl2Generator extends AbstractGenerator {
                   Feature feature = ((Feature) dat);
                   _builder.newLineIfNotEmpty();
                   {
-                    if ((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer"))) {
+                    if (((feature.getType().getName().equals("String") || feature.getType().getName().equals("Integer")) || feature.getType().getName().equals("Float"))) {
                       _builder.append("                                ");
                       _builder.append("<h2> ");
                       String _name_2 = feature.getName();

@@ -185,7 +185,7 @@ public class Dsl2Validator extends AbstractDsl2Validator {
       for (final EObject dat : _iterable) {
         {
           Feature feature = ((Feature) dat);
-          if ((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date")))) {
+          if (((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date"))) && (!feature.getType().getName().equals("Boolean")))) {
             ans = false;
           } else {
             if ((feature.getType().getName().equals("Date") && feature.getName().equals("date"))) {
@@ -222,7 +222,7 @@ public class Dsl2Validator extends AbstractDsl2Validator {
       for (final EObject dat : _iterable) {
         {
           Feature feature = ((Feature) dat);
-          if ((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date")))) {
+          if (((((((((!feature.getType().getName().equals("String")) && (!feature.getType().getName().equals("Integer"))) && (!feature.getType().getName().equals("Date"))) && (!feature.getType().getName().equals("Float"))) && (!feature.getType().getName().equals("Short"))) && (!feature.getType().getName().equals("Byte"))) && (!feature.getType().getName().equals("Long"))) && (!feature.getType().getName().equals("Double")))) {
             ans = false;
           } else {
             if ((feature.getType().getName().equals("Date") && feature.getName().equals("date"))) {
