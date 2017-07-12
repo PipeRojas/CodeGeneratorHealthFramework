@@ -198,7 +198,7 @@ class Dsl2Validator extends AbstractDsl2Validator {
 			}
 		}
 		if(!ans){
-			error(f.name+" feature is a diagnostic feature and must have features of types String, Integer or Date only", Dsl2Package.Literals.FEATURE__TYPE);
+			error(f.name+" feature is a diagnostic feature and must have features of types String, Integer, Float, Double or Date only", Dsl2Package.Literals.FEATURE__TYPE);
 		}
 	}
 	

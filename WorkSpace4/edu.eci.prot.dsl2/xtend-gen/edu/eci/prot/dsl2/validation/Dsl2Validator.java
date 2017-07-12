@@ -237,7 +237,7 @@ public class Dsl2Validator extends AbstractDsl2Validator {
     }
     if ((!ans)) {
       String _name = f.getName();
-      String _plus = (_name + " feature is a diagnostic feature and must have features of types String, Integer or Date only");
+      String _plus = (_name + " feature is a diagnostic feature and must have features of types String, Integer, Float, Double or Date only");
       this.error(_plus, Dsl2Package.Literals.FEATURE__TYPE);
     }
   }
