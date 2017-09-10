@@ -1,0 +1,65 @@
+datatype String
+datatype Integer
+datatype Date
+
+
+
+
+package com.example.model{
+	entity Patient {
+		principal
+		id: Integer
+		name: transient String
+		password: String
+		role: String
+		lastName: transient String
+		feedbacks: many Feedback
+		address : Address
+		academicInfo: Academic
+		birthDate: Date
+		gender: String
+		email: String
+		age: Integer
+		nihssScales: many diagnostic NHISS
+	}
+	
+	
+	
+	entity NHISS{
+		date: Date
+		synthomsBegin: Date
+		nivelDeConciencia: String "Alerta" "Somnolencia" "Obnubilacion" "Coma"
+		ordenesMotoras: String "Ambas respuestas son correctas" "Una respuesta correcta" "Ninguna respuesta correcta"
+		miradaConjugada: String "Normal" "Paresia parcial de la mirada" "Paresia total o desviacion forzada"
+		camposVisuales: String "Normal" "Hemianopsia parcial" "Hemianopsia completa" "Ceguera bilateral"
+		paresiaFacial: String "Normal" "Paresia leve (asimetria al sonreir)" "Paralisis total de musculo facial superior e inferior"
+		paresiaDeBrazoIzquierdo: String "Mantiene la posición 10 min" "Claudica en menos de 10 min sin llegar a tocar la cama" "Claudica y toca la cama en menos de 10 min" "Hay movimiento pero no vence gravedad" "Paralisis completa" "Extremidad amputada o inmovilizada. No puntua"
+		paresiaDeBrazoDerecho: String "Mantiene la posición 10 min" "Claudica en menos de 10 min sin llegar a tocar la cama" "Claudica y toca la cama en menos de 10 min" "Hay movimiento pero no vence gravedad" "Paralisis completa" "Extremidad amputada o inmovilizada. No puntua"
+		paresiaDePiernaIzquierda: String "Mantiene la posición 5 min" "Claudica en menos de 5 min sin llegar a tocar la cama" "Claudica y toca la cama en menos de 5 min" "Hay movimiento pero no vence gravedad" "Paralisis completa" "Extremidad amputada o inmovilizada. No puntua"
+		paresiaDePiernaDerecha: String "Mantiene la posición 5 min" "Claudica en menos de 5 min sin llegar a tocar la cama" "Claudica y toca la cama en menos de 5 min" "Hay movimiento pero no vence gravedad" "Paralisis completa" "Extremidad amputada o inmovilizada. No puntua"
+		ataxiaDeLasExtremidades: String "Normal" "Ataxia en una extremidad" "Ataxia en dos extremidades"
+		sensibilidad: String "Normal" "Leve o moderada hipoestesia" "Anestesia"
+		lenguaje: String "Normal" "Afasia leve o moderada" "Afasia grave, no posible entenderse" "Afasia global o en coma"
+		disartria: String "Normal" "Leve, se le puede entender" "Grave, ininteligible o anartria" "Intubado. No puntúa"
+		extincionNegligenciaInatencion: String "Normal" "Inatencion/extincion en una modalidad" "Inatencion/extincion en más de una modalidad"
+		
+	}
+	
+	entity Academic{
+		lastGrade: transient String
+		gradeDate: transient Date
+		gpa: transient Integer
+	}
+	
+	entity Address {
+		street: String
+		zip: Integer
+		city: String
+	}
+	
+	entity Feedback{
+		title: String
+		description: String
+		date: Date
+	}
+}
