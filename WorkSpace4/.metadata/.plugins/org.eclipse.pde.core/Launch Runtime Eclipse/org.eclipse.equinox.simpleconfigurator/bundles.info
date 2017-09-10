@@ -10,11 +10,11 @@ com.google.inject.multibindings,3.0.0.v201605172100,file:/C:/Users/andre/.p2/poo
 com.ibm.icu,56.1.0.v201601250100,file:/C:/Users/andre/.p2/pool/plugins/com.ibm.icu_56.1.0.v201601250100.jar,4,false
 com.jcraft.jsch,0.1.54.v20170116-1932,file:/C:/Users/andre/.p2/pool/plugins/com.jcraft.jsch_0.1.54.v20170116-1932.jar,4,false
 com.sun.el,2.2.0.v201303151357,file:/C:/Users/andre/.p2/pool/plugins/com.sun.el_2.2.0.v201303151357.jar,4,false
-edu.eci.prot.dsl2,1.0.0.qualifier,file:/D:/Eclipse%20Workspaces/WorkSpace4/edu.eci.prot.dsl2/,4,false
-edu.eci.prot.dsl2.ide,1.0.0.qualifier,file:/D:/Eclipse%20Workspaces/WorkSpace4/edu.eci.prot.dsl2.ide/,4,false
-edu.eci.prot.dsl2.tests,1.0.0.qualifier,file:/D:/Eclipse%20Workspaces/WorkSpace4/edu.eci.prot.dsl2.tests/,4,false
-edu.eci.prot.dsl2.ui,1.0.0.qualifier,file:/D:/Eclipse%20Workspaces/WorkSpace4/edu.eci.prot.dsl2.ui/,4,false
-edu.eci.prot.dsl2.ui.tests,1.0.0.qualifier,file:/D:/Eclipse%20Workspaces/WorkSpace4/edu.eci.prot.dsl2.ui.tests/,4,false
+edu.eci.prot.dsl2,1.0.0.qualifier,file:/C:/Users/andre/Desktop/CodeGeneratorHealthFramework/WorkSpace4/edu.eci.prot.dsl2/,4,false
+edu.eci.prot.dsl2.ide,1.0.0.qualifier,file:/C:/Users/andre/Desktop/CodeGeneratorHealthFramework/WorkSpace4/edu.eci.prot.dsl2.ide/,4,false
+edu.eci.prot.dsl2.tests,1.0.0.qualifier,file:/C:/Users/andre/Desktop/CodeGeneratorHealthFramework/WorkSpace4/edu.eci.prot.dsl2.tests/,4,false
+edu.eci.prot.dsl2.ui,1.0.0.qualifier,file:/C:/Users/andre/Desktop/CodeGeneratorHealthFramework/WorkSpace4/edu.eci.prot.dsl2.ui/,4,false
+edu.eci.prot.dsl2.ui.tests,1.0.0.qualifier,file:/C:/Users/andre/Desktop/CodeGeneratorHealthFramework/WorkSpace4/edu.eci.prot.dsl2.ui.tests/,4,false
 java_cup.runtime,0.10.0.v201005080400,file:/C:/Users/andre/.p2/pool/plugins/java_cup.runtime_0.10.0.v201005080400.jar,4,false
 javaewah,1.1.6.v20160919-1400,file:/C:/Users/andre/.p2/pool/plugins/javaewah_1.1.6.v20160919-1400.jar,4,false
 javax.activation,1.1.0.v201211130549,file:/C:/Users/andre/.p2/pool/plugins/javax.activation_1.1.0.v201211130549.jar,4,false
