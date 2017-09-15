@@ -1,0 +1,45 @@
+filter ECGSignalFilter
+filter SpO2SignalFilter
+filter BPSignalFilter
+
+datatype String
+datatype Integer
+datatype Date
+
+entity Patient {
+	principal
+	id: Integer
+	name: transient String
+	password: String
+	role: String
+	lastName: transient String
+	address : Address
+	birthDate: Date
+	ecgSignal: ECGSignal
+	spo2Signal: SpO2Signal
+	bpSignal: BPSignal
+	weight: many diagnostic Weight
+}
+
+entity Address {
+	street: String
+	zip: Integer
+	city: String
+}
+entity ECGSignal signal ECGSignalFilter{
+	value: Integer
+	frequency: Integer
+}
+entity SpO2Signal signal SpO2SignalFilter{	
+	value: Integer
+	frequency: Integer
+}
+entity BPSignal signal BPSignalFilter{	
+	systolicBP: Integer
+	diastolicBP: Integer
+	frequency: Integer
+}
+entity Weight {
+	weight: Integer
+	date: Date
+}
