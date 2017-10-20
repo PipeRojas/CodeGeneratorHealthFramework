@@ -14,9 +14,13 @@ Type := DataType | Entity;
 
 DataType := "datatype" , ID;
 
-Entity := "entity", ID, ["extends" (Entity | QualifiedName)], "{", 
+Filter := ID;
+
+Entity := "entity", ID, ["extends" (Entity | QualifiedName)], ["signal" {Filter}*]"{", 
 			["principal"], {Import}*, {Feature}*, "}";
 			
-Feature := ID, ":" ["many"], ["diagnostic"], ["transient"], (Type | QualifiedName);
+Feature := ID, ":" ["many"], ["diagnostic"], ["transient"], (Type | QualifiedName), {Item}*;
+
+Item := ID;
 
 ID := ANY SET OF CHAR

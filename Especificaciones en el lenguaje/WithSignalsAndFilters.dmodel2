@@ -1,0 +1,55 @@
+datatype String
+datatype Integer
+datatype Date
+
+
+
+package com.example.model{
+	entity Patient {
+		principal
+		id: Integer
+		name: transient String
+		password: String
+		role: String
+		lastName: transient String
+		feedbacks: many Feedback
+		address : Address
+		academicInfo: Academic
+		birthDate: Date
+		gender: String
+		email: String
+		age: Integer 
+		ecg: ECG
+		oxygen: Oxygen
+		
+	}
+	
+	
+	entity Oxygen signal OtherFilter{
+		value: Integer
+		frequency: Integer
+	}
+	
+	entity Academic{
+		lastGrade: transient String
+		gradeDate: transient Date
+		gpa: transient Integer
+	}
+	
+	entity Address {
+		street: String
+		zip: Integer
+		city: String
+	}
+	
+	entity Feedback{
+		title: String
+		description: String
+		date: Date
+	}
+	
+	entity ECG signal MyEmptyFilter OtherFilter{
+		value: Integer
+		frequency: Integer
+	}
+}
